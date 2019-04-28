@@ -124,14 +124,14 @@
       toast: Toast
     }
     data = {
-      isCorresponding: true,
-      register_email: null,
-      register_password: null,
-      register_confirm_password: null,
-      GradeIndex: 0,
-      Grades: [2019, 2018, 2017, 2016, 2015, 2014],
-      SexIndex: 0,
-      SexList: ['男', '女']
+      isCorresponding: true,                        // 两次输入是否一直
+      register_email: null,                         // 注册时填写的email
+      register_password: null,                      // 注册时填写的密码
+      register_confirm_password: null,              // 注册时再次填写的密码
+      GradeIndex: 0,                                // 年级数组的下标
+      Grades: [2019, 2018, 2017, 2016, 2015, 2014], // 年级，如何更好的表示？待解决！！！
+      SexIndex: 0,                                  // 性别数组的下标
+      SexList: ['男', '女']                         // 性别
     }
     registerEmail(e) {
       this.data.register_email = e.detail.value
@@ -139,6 +139,9 @@
     registerPassword(e) {
       this.data.register_password = e.detail.value
     }
+    // 获取再次填写的密码
+    // 成功更新两次相同和不相同时isCorresponding变量
+    // isCorresponding变量改变未实现页面中提示的出现和隐藏，待解决！！！
     async registerConfirmPassword(e) {
       this.data.register_confirm_password = e.detail.value
       let password = await this.data.register_password
@@ -158,6 +161,7 @@
     bindSexChange(e) {
       this.SexIndex = e.detail.value
     }
+    // 注册按钮，toast提示
     async registerBtnClick() {
       if (this.data.register_password === this.data.register_confirm_password) {
         console.log('注册成功')

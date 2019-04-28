@@ -8,7 +8,7 @@
 	},
 	"compileType": "miniprogram",
 	"appid": "wx2429f173c7ada70e",
-	"projectname": "client",
+	"projectname": "clientUI",
 	"miniprogramRoot": "dist/",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
