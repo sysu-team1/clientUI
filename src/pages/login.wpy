@@ -1,0 +1,101 @@
+<style lang="less">
+.email-label{
+  font-size: 65%;
+  width: 105px;
+  word-wrap: break-word;
+  word-break: break-all
+}
+.label-front{
+  font-size: 90%;
+  display: block;
+  padding-right: 0.5em;
+}
+.weui-input{
+  height: 2em;
+  min-height: 1.5em;
+  line-height: 1.5em;
+  align-self: center;
+}
+.weui-footer__link{
+  margin: 1em;
+}
+</style>
+
+<template>
+    <view class="page">
+        <view class="page__bd">
+          <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell-input">
+              <view class="weui-cell__hd">
+                <view class="label-front">邮箱</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input class="weui-input" placeholder="请输入您的邮箱" type="email" bindinput="Email"/>
+              </view>
+              <view class="weui-cell__ft">
+                <view class="email-label">@sysu.mail2.edu.cn</view>
+              </view>
+            </view>
+            <view class="weui-cell weui-cell-input">
+              <view class="weui-cell__hd">
+                <view class="label-front">密码</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input class="weui-input" password="true" placeholder="请输入您的密码" bindinput="Password"/>
+              </view>
+            </view>
+          </view>
+          <view class="weui-footer weui-btn-area">
+            <button class="weui-button" type="primary" bindtap="loginBtnClick">登录</button>
+            <view class=" weui-footer weui-footer__link" @tap="registerTap">还没注册？点这里</view>
+          </view>        
+        </view> 
+    </view>   
+</template>
+
+
+<script>
+  import wepy from 'wepy'
+  import 'wepy-async-function'
+  export default class Login extends wepy.page {
+    config = {
+      navigationBarTitleText: '登录'
+    }
+    data = {
+      userEmail: null,
+      userPassword: null
+    }
+
+    async loginBtnClick() {
+      console.log('login in button')
+      this.$parent.globalData.userLoginInfo = {
+        userEmail: this.data.userEmail,
+        userPassword: this.data.userPassword
+      }
+      console.log(this.$parent.globalData.userLoginInfo)
+      await wepy.setStorageSync('userLoginInfo', this.$parent.globalData.userLoginInfo)
+      wepy.switchTab({
+        url: 'index'
+      })
+    }
+    usernameInput(e) {
+      console.log(e)
+      this.data.userEmail = e.detail.value
+      console.log(this.data.userEmail)
+    }
+    passwordInput(e) {
+      console.log(e)
+      this.data.userPassword = e.detail.value
+      console.log(this.data.userPassword)
+    }
+    registerTap(e) {
+      console.log('前往注册')
+      wepy.reLaunch({
+        url: 'register'
+      })
+    }
+    onLoad() {
+      console.log('login页面')
+    }
+  }
+</script>

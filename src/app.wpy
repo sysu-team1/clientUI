@@ -1,0 +1,67 @@
+<style lang="less">
+@import './style/weui.wxss';
+</style>
+
+<script>
+import wepy from 'wepy'
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/index',
+      'pages/authorize',
+      'pages/login',
+      'pages/register',
+      'pages/message',
+      'pages/profile'
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: 'XYFS',
+      navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+      color: '#353535',
+      selectedColor: '#47CFF5',
+      list: [
+        {
+          pagePath: 'pages/index',
+          text: '首页',
+          iconPath: 'images/home.png',
+          selectedIconPath: 'images/home-active.png'
+        },
+        {
+          pagePath: 'pages/message',
+          text: '消息',
+          iconPath: 'images/message.png',
+          selectedIconPath: 'images/message-active.png'
+        },
+        {
+          pagePath: 'pages/profile',
+          text: '我',
+          iconPath: 'images/profile.png',
+          selectedIconPath: 'images/profile-active.png'
+        }
+      ]
+    }
+
+  }
+  globalData = {
+    userInfo: null,
+    userLoginInfo: {
+      userEmail: null,
+      userPassword: null
+    }
+  }
+
+  constructor () {
+    super()
+    this.use('requestfix')
+    this.use('promisify')
+  }
+  onLaunch() {
+    console.log('LOAD APP')
+  }
+}
+</script>

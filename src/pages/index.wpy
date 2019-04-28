@@ -1,0 +1,49 @@
+<style lang="less">
+
+
+</style>
+
+<template>
+  <view class="container">
+hhh
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import 'wepy-async-function'
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '闲余翻身'
+    };
+    onLoad() {
+      console.log('Index 页面')
+      // 是否同意微信授权
+      let userInfo = wepy.getStorageSync('userInfo')
+      if (!userInfo) {
+        console.log('不存在授权，需要授权')
+        wepy.reLaunch({
+          url: 'authorize'
+        })
+      } else {
+        console.log('授权存在')
+        // 是否有缓存登录信息，存在缓存自动登录获取对应的数据
+        let userLoginInfo = wepy.getStorageSync('userLoginInfo')
+        if (!userLoginInfo) {
+          console.log('不存在用户信息，需要登录')
+          wepy.reLaunch({
+            url: 'login'
+          })
+        } else {
+          console.log('用户信息存在，直接登录')
+        }
+      }
+    }
+    onReady() {
+      console.log('onready')
+    }
+    onShow() {
+      console.log('onshow')
+    }
+  }
+</script>

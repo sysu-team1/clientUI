@@ -1,0 +1,81 @@
+<template>
+  <view wx:if="{{canIUse}}">
+    <view class='header'>
+      <image src='../images/authorize.png'/>
+    </view>
+    <view class='content'>
+      <view>申请获取以下权限</view>
+        <text>获得你的公开信息(昵称，头像等)</text>
+    </view>
+      <button class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">授权登录</button>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+export default class Authorize extends wepy.page {
+  config = {
+    navigationBarTitleText: '授权登录'
+  }
+  data = {
+    canIUse: wx.canIUse('button.open-type.getUserInfo')
+  }
+  async onLoad() {
+    console.log('载入授权页面')
+    let _prePage = this.getCurrentPages().slice(-2)[0]
+    console.log(_prePage)
+  }
+  async bindGetUserInfo(e) {
+    if (e.detail.userInfo) {
+      console.log('==授权成功==')
+      console.log(e)
+      await wepy.setStorageSync('userInfo', e.detail.userInfo)
+      wepy.switchTab({
+        url: 'index'
+      })
+    } else {
+      wx.showModel({
+        title: '警告',
+        content: '您取消了授权，将无法进入小程序',
+        showCancel: false,
+        confirmText: '返回授权',
+        success: function(res) {
+          if (res.confirm) {
+            console.log('点击返回授权')
+          }
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style lang="less">
+.header {
+  margin: 90rpx 0 90rpx 50rpx;
+  text-align: center;
+  width: 650rpx;
+  height: 300rpx;
+  line-height: 450rpx;
+}
+.header image {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 100rpx;
+}
+.content {
+  margin-left: 50rpx;
+  margin-bottom: 90rpx;
+}
+.content text {
+  display: block;
+  color: #9d9d9d;
+  margin-top: 40rpx;
+}
+.bottom {
+  border-radius: 80rpx;
+  margin: 70rpx 50rpx;
+  font-size: 35rpx;
+}
+</style>

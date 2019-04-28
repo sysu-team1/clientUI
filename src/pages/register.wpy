@@ -1,0 +1,184 @@
+<style lang="less">
+.email-label{
+  font-size: 65%;
+  width: 105px;
+  word-wrap: break-word;
+  word-break: break-all
+}
+.label-front{
+  font-size: 90%;
+  display: block;
+  padding-right: 0.5em;
+}
+.weui-input{
+  height: 2em;
+  min-height: 1.5em;
+  line-height: 1.5em;
+  align-self: center;
+}
+
+</style>
+
+<template>
+  <view class="page">
+    <view>
+      <toast/>
+    </view>
+    <view class="page__bd">
+      <view class="weui-cells__title">账户信息</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell-input">
+          <view class="weui-cell__hd">
+            <view class="label-front">邮箱</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="请输入您的邮箱" type="email" bindinput="registerEmail"/>
+          </view>
+          <view class="weui-cell__ft">
+            <view class="email-label">@sysu.mail2.edu.cn</view>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell-input">
+          <view class="weui-cell__hd">
+            <view class="label-front">密码</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" password="true" placeholder="请设置您的密码" bindinput="registerPassword"/>           
+          </view>
+        </view>
+        <view class="weui-cell weui-cell-input">
+          <view class="weui-cell__hd">
+            <view class="label-front">确认密码</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" password="true" placeholder="请再次输入以确认您的密码" bindinput="registerConfirmPassword"/>           
+          </view>
+        </view>
+        <view class="weui-cells__tips weui-cell_warn" hidden="{{isCorresponding}}">两次密码不一致</view>
+      </view>
+      <view class="page__bd">
+        <view class="weui-cells__title">个人信息</view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="label-front">姓名</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" bindinput="Name"/>
+            </view>
+          </view>
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="label-front">学号</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" bindinput="NetID"/>
+            </view>                
+          </view>
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="label-front">专业</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" bindinput="Major"/>
+            </view>                
+          </view>
+          <view class="weui-cell weui-cell_select">
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+              <view class="label-front">年级</view>
+            </view>
+            <view class="weui-cell__bd">
+              <picker @change="bindGradeChange" value="{{GradeIndex}}" range="{{Grades}}">
+                <view class="weui-select weui-select_in-select-after">{{Grades[GradeIndex]}}</view>
+              </picker>
+            </view>
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+              <view class="label-front">性别</view>
+            </view>
+            <view class="weui-cell__bd">
+              <picker @change="bindSexChange" value="{{SexIndex}}" range="{{SexList}}">
+                <view class="weui-select weui-select_in-select-after">{{SexList[SexIndex]}}</view>
+              </picker>
+            </view>
+          </view>
+        </view>
+      </view>
+        <view class="weui-btn-area">
+          <button class="weui-btn" type="primary" bindtap="registerBtnClick">注册</button>
+        </view>
+    </view>
+  </view>
+
+
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import 'wepy-async-function'
+  import Toast from 'wepy-com-toast'
+  export default class Register extends wepy.page {
+    config = {
+      navigationBarTitleText: '注册'
+    };
+    components = {
+      toast: Toast
+    }
+    data = {
+      isCorresponding: true,
+      register_email: null,
+      register_password: null,
+      register_confirm_password: null,
+      GradeIndex: 0,
+      Grades: [2019, 2018, 2017, 2016, 2015, 2014],
+      SexIndex: 0,
+      SexList: ['男', '女']
+    }
+    registerEmail(e) {
+      this.data.register_email = e.detail.value
+    }
+    registerPassword(e) {
+      this.data.register_password = e.detail.value
+    }
+    async registerConfirmPassword(e) {
+      this.data.register_confirm_password = e.detail.value
+      let password = await this.data.register_password
+      console.log(e.detail.value, password)
+      if (password === e.detail.value) {
+        console.log(this.data.register_password)
+        this.data.isCorresponding = true
+      } else {
+        this.data.isCorresponding = false
+      }
+      console.log(this.data.isCorresponding)
+      this.$apply()
+    }
+    bindGradeChange(e) {
+      this.GradeIndex = e.detail.value
+    }
+    bindSexChange(e) {
+      this.SexIndex = e.detail.value
+    }
+    async registerBtnClick() {
+      if (this.data.register_password === this.data.register_confirm_password) {
+        console.log('注册成功')
+        this.$parent.globalData.userLoginInfo = {
+          userEmail: this.data.register_email,
+          userPassword: this.data.register_password
+        }
+        await wepy.setStorageSync('userLoginInfo', this.$parent.globalData.userLoginInfo)
+        wepy.switchTab({
+          url: 'index'
+        })
+      } else {
+        console.log('两次输入密码不一致')
+        this.$invoke('toast', 'show', {
+          title: '两次密码不一致'
+        })
+      }
+    }
+
+    onLoad() {
+      console.log('注册页面')
+    }
+  }
+</script>
