@@ -1,5 +1,6 @@
 <style lang="less">
 @import './style/weui.wxss';
+@import "./style/icon";
 </style>
 
 <script>
@@ -8,12 +9,13 @@ import wepy from 'wepy'
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index',
+      'pages/home',
       'pages/authorize',
       'pages/login',
       'pages/register',
       'pages/message',
-      'pages/profile'
+      'pages/profile',
+      'pages/search'
     ],
     window: {
       backgroundTextStyle: 'light',

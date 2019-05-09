@@ -1,0 +1,177 @@
+<template>
+  <view class="page">
+    <view class="page__bd">
+      <view wx:if="{{show}}" class="content">
+        <view class="search">
+          <view class="serch_content">
+            <i class="iconfont icon-search"></i>
+            <input type="text" name="search_input" bindinput="searchInput" class="search_input" focus="true" value="{{search_input_value}}" confirm-type="search" placeholder="搜索任务" />
+            <i wx:if="{{search_input_value!=''}}" @tap="delText" class="iconfont icon-del"></i>
+          </view>
+          <button class="btn btn_cancel" @tap="goBack()" wx:if="{{search_input_value==''}}">取消</button>
+          <button class="btn btn_search" @tap="search()" wx:else>搜索</button>
+        </view>
+      </view>
+      <view class="history {{show?'':'hidden'}}">
+        <view class="doc">历史记录</view>
+        <view class="lable">
+          <view wx:for="{{keywordhisList}}" wx:key="item" @tap.stop="selHisKeyWord" data-id="{{item.id}}">
+            <view class="child {{item.sel=='1' ?'active':''}}">{{item.keyword}}</view>
+          </view>
+        </view>
+        <view class="weui-btn-area">
+          <button class="weui-button" type="primary" @tap.stop="clearHis">清除历史记录</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</template>
+<script>
+import wepy from 'wepy'
+export default class Search extends wepy.page {
+  config = {
+    navigationBarTitleText: '搜索'
+  };
+  data = {
+    search_input_value: '',
+    show: true,
+    keywordhisList: [],
+    keyword: ''
+  }
+  events = {
+
+  }
+  methods = {
+    // 从Input中获取搜索词条
+    searchInput(e) {
+      this.search_input_value = e.detail.value
+      this.$apply()
+    },
+    // 回退到前detal（一）页面
+    goBack() {
+      wepy.navigateBack({
+        delta: 1 // 回退前 delta(默认为1) 页面
+      })
+    },
+    // 搜索
+    search() {
+    },
+    // 删除输入词条
+    delText() {
+      this.search_input_value = ''
+      this.$apply()
+    },
+    show(param) {
+      this.show = param
+      this.$apply()
+    },
+    // 选择历史记录中的词条，选择之后直接搜索改词条
+    selHisKeyWord(e) {
+      console.log(e);
+      var id = e.currentTarget.dataset.id;
+      var hisKeyword = "";
+      for (var i = 0; i < this.keywordhisList.length; i++) {
+        this.keywordhisList[i].sel = 0;
+        if (id == this.keywordhisList[i].id) {
+          hisKeyword = this.keywordhisList[i].keyword;
+          this.keywordhisList[i].sel = 1;
+        }
+      }
+      if (hisKeyword.length > 0) {
+        this.keyword = hisKeyword;
+        this.doSearchGoods(hisKeyword);
+      }
+    }
+
+  }
+
+  onLoad() {
+
+  }
+}
+
+</script>
+<style lang="less">
+.content {
+  padding: 10rpx;
+}
+
+.search {
+  align-items: center;
+  display: flex;
+  margin: 0 auto;
+  width: 680rpx;
+  .serch_content {
+    display: flex;
+    align-items: center;
+    border-radius: 300rpx;
+    color: #333;
+    width: 560rpx;
+    background: #efefef;
+    padding: 5rpx 12rpx;
+    height: 65rpx;
+    .search_input {
+      font-size: 28rpx;
+      width: 100%;
+    }
+  }
+  .icon-search {
+    font-size: 40rpx;
+  }
+  .btn {
+    width: 120rpx;
+    height: 65rpx;
+    font-size: 28rpx;
+    line-height: 65rpx;
+    margin-left: 20rpx;
+    padding-left: 5rpx;
+    padding-right: 5rpx;
+  }
+  .btn_search {
+    color: #fff;
+    background: #e2413c;
+  }
+  .icon-del {
+    height: 60rpx;
+    line-height: 60rpx;
+    width: 60rpx;
+    font-size: 40rpx;
+  }
+}
+
+.history {
+  padding: 20px 27px;
+}
+.doc {
+  color: #999;
+  font-size: 26rpx;
+}
+.lable {
+  margin-top: 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-left: -20rpx;
+  .child {
+    background: #dedede;
+    padding: 10rpx 20rpx;
+    border-radius: 300rpx;
+    margin-left: 20rpx;
+    font-size: 26rpx;
+    margin-top: 5rpx;
+    color: #000;
+  }
+}
+.type_empity {
+  color: #333;
+  border: 1px solid #cccccc;
+}
+.active {
+  border: 1px solid #f23737;
+  color: #f23737;
+}
+
+
+
+</style>

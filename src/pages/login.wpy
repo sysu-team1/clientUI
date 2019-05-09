@@ -75,7 +75,7 @@
       console.log(this.$parent.globalData.userLoginInfo)
       await wepy.setStorageSync('userLoginInfo', this.$parent.globalData.userLoginInfo)
       wepy.switchTab({
-        url: 'index'
+        url: 'home'
       })
     }
     usernameInput(e) {

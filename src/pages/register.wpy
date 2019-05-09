@@ -21,9 +21,6 @@
 
 <template>
   <view class="page">
-    <view>
-      <toast/>
-    </view>
     <view class="page__bd">
       <view class="weui-cells__title">账户信息</view>
       <view class="weui-cells weui-cells_after-title">
@@ -54,7 +51,7 @@
             <input class="weui-input" password="true" placeholder="请再次输入以确认您的密码" bindinput="registerConfirmPassword"/>           
           </view>
         </view>
-        <view class="weui-cells__tips weui-cell_warn" hidden="{{isCorresponding}}">两次密码不一致</view>
+        <view class="weui-cells__tips weui-cell_warn" wx:if="{{!isCorresponding}}">两次密码不一致</view>
       </view>
       <view class="page__bd">
         <view class="weui-cells__title">个人信息</view>
@@ -104,7 +101,7 @@
         </view>
       </view>
         <view class="weui-btn-area">
-          <button class="weui-btn" type="primary" bindtap="registerBtnClick">注册</button>
+          <button class="weui-btn" type="primary" @tap="registerBtnClick">注册</button>
         </view>
     </view>
   </view>
@@ -115,14 +112,10 @@
 <script>
   import wepy from 'wepy'
   import 'wepy-async-function'
-  import Toast from 'wepy-com-toast'
   export default class Register extends wepy.page {
     config = {
       navigationBarTitleText: '注册'
     };
-    components = {
-      toast: Toast
-    }
     data = {
       isCorresponding: true,                        // 两次输入是否一直
       register_email: null,                         // 注册时填写的email
@@ -161,26 +154,36 @@
     bindSexChange(e) {
       this.SexIndex = e.detail.value
     }
-    // 注册按钮，toast提示
-    async registerBtnClick() {
-      if (this.data.register_password === this.data.register_confirm_password) {
-        console.log('注册成功')
-        this.$parent.globalData.userLoginInfo = {
-          userEmail: this.data.register_email,
-          userPassword: this.data.register_password
-        }
-        await wepy.setStorageSync('userLoginInfo', this.$parent.globalData.userLoginInfo)
-        wepy.switchTab({
-          url: 'index'
-        })
-      } else {
-        console.log('两次输入密码不一致')
-        this.$invoke('toast', 'show', {
-          title: '两次密码不一致'
-        })
-      }
+    navigationToHome() {
+      wepy.switchTab({url: 'home'})
     }
+    methods = {
+    // 注册按钮，toast提示
+      async registerBtnClick() {
+        if (this.data.register_password === this.data.register_confirm_password) {
+          console.log('注册成功')
+          this.$parent.globalData.userLoginInfo = {
+            userEmail: this.data.register_email,
+            userPassword: this.data.register_password
+          }
+          await wepy.setStorageSync('userLoginInfo', this.$parent.globalData.userLoginInfo)
+          await wx.showToast({
+            title: '注册成功！',
+            icon: 'success',
+            duration: 2000
+          })
+          setTimeout(this.navigationToHome, 2000)
+        } else {
+          console.log('两次输入密码不一致')
+          wx.showToast({
+            title: '两次密码不一致',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      }
 
+    }
     onLoad() {
       console.log('注册页面')
     }
