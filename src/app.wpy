@@ -26,7 +26,7 @@ export default class extends wepy.app {
       selectedColor: '#47CFF5',
       list: [
         {
-          pagePath: 'pages/index',
+          pagePath: 'pages/home',
           text: '首页',
           iconPath: 'images/home.png',
           selectedIconPath: 'images/home-active.png'
