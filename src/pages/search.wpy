@@ -54,7 +54,7 @@ export default class Search extends wepy.page {
         delta: 1 // 回退前 delta(默认为1) 页面
       })
     },
-    // 搜索
+    // 搜索，并添加当前输入词条到搜索历史中
     search() {
     },
     // 删除输入词条
