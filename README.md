@@ -29,13 +29,15 @@
     ├── images                  //图片文件夹
     ├── pages                   //页面
     │   ├── authorize.wpy       //授权页面
-    |   ├── index.wpy           //首页，主界面
+    |   ├── home.wpy            //首页，主界面
     |   ├── login.wpy           //登录页面
     |   ├── message.wpy         //消息页面 (未写)
     |   ├── profile.wpy         //我页面(未写)
     |   ├── register.wpy        //注册页面
+    |   ├── search.wpy          //搜索页面
     ├── styles                  //样式
     │   ├── weui.wxss           //weui样式文件
+        ├── icon.less           //weui样式文件
     ├── package.json            //配置文件
     ├── wepy.config.js          //配置文件   
 
