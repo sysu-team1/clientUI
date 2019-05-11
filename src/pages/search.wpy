@@ -2,13 +2,12 @@
 .content {
   padding: 10rpx;
 }
-
 .search {
   align-items: center;
   display: flex;
   margin: 0 auto;
   width: 680rpx;
-  .serch_content {
+  .search_content {
     display: flex;
     align-items: center;
     border-radius: 300rpx;
@@ -23,7 +22,9 @@
     }
   }
   .icon-search {
-    font-size: 40rpx;
+    position: block;
+    left: 10px;
+    top: 7px;
   }
   .btn {
     width: 120rpx;
@@ -45,7 +46,6 @@
     font-size: 40rpx;
   }
 }
-
 .history {
   padding: 20px 27px;
 }
@@ -77,6 +77,10 @@
   border: 1px solid #f23737;
   color: #f23737;
 }
+.weui-icon-search_in-box {
+  position: block;
+}
+
 </style>
 
 <template>
@@ -84,8 +88,8 @@
     <view class="page__bd">
       <view wx:if="{{show}}" class="content">
         <view class="search">
-          <view class="serch_content">
-            <i class="iconfont icon-search"></i>
+          <view class="search_content">
+            <icon class=".icon-search" type="search" size="15"/>
             <input type="text" name="search_input" bindinput="searchInput" class="search_input" focus="true" value="{{search_input_value}}" confirm-type="search" placeholder="搜索任务" />
             <i wx:if="{{search_input_value!=''}}" @tap="delText" class="iconfont icon-del"></i>
           </view>
