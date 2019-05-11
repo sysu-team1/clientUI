@@ -32,7 +32,7 @@
     |   ├── home.wpy            //首页，主界面
     |   ├── login.wpy           //登录页面
     |   ├── message.wpy         //消息页面 (未写)
-    |   ├── profile.wpy         //我页面(未写)
+    |   ├── profile.wpy         //我页面(编辑中......)
     |   ├── register.wpy        //注册页面
     |   ├── search.wpy          //搜索页面
     ├── style                   //样式
