@@ -43,6 +43,9 @@
     ├── package.json            //配置文件
     ├── wepy.config.js          //配置文件   
 
+### **其他工具包**
 
+1、 weui样式，参考 https://weui.io/ 以及 https://github.com/Tencent/weui
 
+2、 iconfont图标，参考 https://www.iconfont.cn/， 使用方式参考 https://www.jianshu.com/p/67bbe4d95a85
 
