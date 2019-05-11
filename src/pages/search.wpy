@@ -119,7 +119,7 @@ export default class Search extends wepy.page {
       await wepy.setStorageSync(USER_SEARCH_HISTORY, this.keywordhisList)
     }
   }
-  // 搜索词条
+  // 搜索词条 ！！！未完成
   doSearchTasks(hisKeyword) {
 
   }
