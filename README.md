@@ -35,9 +35,11 @@
     |   ├── profile.wpy         //我页面(未写)
     |   ├── register.wpy        //注册页面
     |   ├── search.wpy          //搜索页面
-    ├── styles                  //样式
+    ├── style                   //样式
     │   ├── weui.wxss           //weui样式文件
-        ├── icon.less           //weui样式文件
+    │   ├── icon.less           //icon样式文件
+    ├── utils                   //工具包
+    │   ├── contant.js          //缓存常量定义文件    
     ├── package.json            //配置文件
     ├── wepy.config.js          //配置文件   
 
