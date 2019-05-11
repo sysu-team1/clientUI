@@ -29,6 +29,7 @@
 </template>
 <script>
 import wepy from 'wepy'
+import {USER_SEARCH_HISTORY} from '../utils/constant'
 export default class Search extends wepy.page {
   config = {
     navigationBarTitleText: '搜索'
@@ -36,6 +37,15 @@ export default class Search extends wepy.page {
   data = {
     search_input_value: '',
     show: true,
+    /*  keywordhisList 结构
+    *   keywordhisList = [
+      {
+        id: number --- range from [1,2,3,....]
+        sel: 0/1   --- not selected / selected
+        keyword: string
+      }
+    ]
+    */
     keywordhisList: [],
     keyword: ''
   }
@@ -54,8 +64,28 @@ export default class Search extends wepy.page {
         delta: 1 // 回退前 delta(默认为1) 页面
       })
     },
-    // 搜索，并添加当前输入词条到搜索历史中
-    search() {
+    // 加当前输入词条到搜索历史中,并执行搜索词条
+    async search() {
+      let len = this.keywordhisList.length
+      let keyw = this.search_input_value
+      let isKeySame = false
+      // 本地列表检索输入的关键词是否是否存在重复，遍历同时重置所有sel=0
+      for (var i = 0; i < this.keywordhisList.length; i++) {
+        this.keywordhisList[i].sel = 0 // sel都置0，确保下次页面加载时所有标签都为sel=0
+        if (keyw === this.keywordhisList[i].keyword) {
+          console.log('存在有重复')
+          isKeySame = true
+        } else {
+          console.log('没有重复，可以添加')
+        }
+      }
+      if (!isKeySame) {
+        // 在本地列表中添加
+        this.keywordhisList.push({id: len + 1, sel: 0, keyword: keyw})
+        // 添加之后存储至缓存
+        await wepy.setStorageSync(USER_SEARCH_HISTORY, this.keywordhisList)
+        console.log(this.keywordhisList)
+      }
     },
     // 删除输入词条
     delText() {
@@ -68,26 +98,48 @@ export default class Search extends wepy.page {
     },
     // 选择历史记录中的词条，选择之后直接搜索改词条
     selHisKeyWord(e) {
-      console.log(e);
-      var id = e.currentTarget.dataset.id;
-      var hisKeyword = "";
+      console.log(e)
+      var id = e.currentTarget.dataset.id
+      var hisKeyword = ''
       for (var i = 0; i < this.keywordhisList.length; i++) {
-        this.keywordhisList[i].sel = 0;
-        if (id == this.keywordhisList[i].id) {
-          hisKeyword = this.keywordhisList[i].keyword;
-          this.keywordhisList[i].sel = 1;
+        this.keywordhisList[i].sel = 0
+        if (id === this.keywordhisList[i].id) {
+          hisKeyword = this.keywordhisList[i].keyword
+          this.keywordhisList[i].sel = 1
         }
       }
       if (hisKeyword.length > 0) {
-        this.keyword = hisKeyword;
-        this.doSearchGoods(hisKeyword);
+        this.keyword = hisKeyword
+        this.doSearchTasks(hisKeyword)
       }
+    },
+    // 清除历史
+    async clearHis() {
+      this.keywordhisList = []
+      await wepy.setStorageSync(USER_SEARCH_HISTORY, this.keywordhisList)
     }
+  }
+  // 搜索词条
+  doSearchTasks(hisKeyword) {
 
   }
-
-  onLoad() {
-
+  // 调用API,得到用户对应的搜索历史列表
+  getUserSearchInfo() {
+    // this.keywordhisList 在此处被赋值
+  }
+  // 加载页面获取用户历史记录
+  onLoad(options) {
+    // 读取缓存，并判断是否需要建立缓存
+    let userSearchHistory = wepy.getStorageSync(USER_SEARCH_HISTORY) || null
+    if (userSearchHistory === null) {
+      console.log('用户不存在搜索历史')
+    } else {
+      // 存在有用户搜索历史缓存
+      // 读取缓存并渲染
+      console.log('用户存在有搜索历史')
+      this.keywordhisList = userSearchHistory
+    }
+    console.log(userSearchHistory)
   }
 }
 
