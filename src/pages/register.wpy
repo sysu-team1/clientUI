@@ -112,6 +112,7 @@
 <script>
   import wepy from 'wepy'
   import 'wepy-async-function'
+  import {USER_LOGIN_INFO} from '../utils/constant'
   export default class Register extends wepy.page {
     config = {
       navigationBarTitleText: '注册'
@@ -166,7 +167,7 @@
             userEmail: this.data.register_email,
             userPassword: this.data.register_password
           }
-          await wepy.setStorageSync('userLoginInfo', this.$parent.globalData.userLoginInfo)
+          await wepy.setStorageSync(USER_LOGIN_INFO, this.$parent.globalData.userLoginInfo)
           await wx.showToast({
             title: '注册成功！',
             icon: 'success',

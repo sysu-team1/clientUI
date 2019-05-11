@@ -57,6 +57,7 @@
 <script>
   import wepy from 'wepy'
   import 'wepy-async-function'
+  import {USER_LOGIN_INFO} from '../utils/constant'  
   export default class Login extends wepy.page {
     config = {
       navigationBarTitleText: '登录'
@@ -73,7 +74,7 @@
         userPassword: this.data.userPassword
       }
       console.log(this.$parent.globalData.userLoginInfo)
-      await wepy.setStorageSync('userLoginInfo', this.$parent.globalData.userLoginInfo)
+      await wepy.setStorageSync(USER_LOGIN_INFO, this.$parent.globalData.userLoginInfo)
       wepy.switchTab({
         url: 'home'
       })

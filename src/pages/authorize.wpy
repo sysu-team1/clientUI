@@ -14,6 +14,7 @@
 <script>
 import wepy from 'wepy'
 import 'wepy-async-function'
+import {USER_WEIXIN_INFO} from '../utils/constant'
 export default class Authorize extends wepy.page {
   config = {
     navigationBarTitleText: '授权登录'
@@ -30,7 +31,7 @@ export default class Authorize extends wepy.page {
     if (e.detail.userInfo) {
       console.log('==授权成功==')
       console.log(e)
-      await wepy.setStorageSync('userWexinInfo', e.detail.userInfo)
+      await wepy.setStorageSync(USER_WEIXIN_INFO, e.detail.userInfo)
       wepy.switchTab({
         url: 'home'
       })

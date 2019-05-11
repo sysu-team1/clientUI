@@ -18,29 +18,13 @@
         </navigator>
       </view>
     </view>
-
-    <view class="page__hd">
-      <view class="weui-search-bar">
-          <view class="weui-search-bar__box">
-            <icon class="weui-icon-search_in-box" type="search" size="14"/>
-            <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
-            <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
-              <icon type="clear" size="14"></icon>
-            </view>
-          </view>
-          <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
-            <icon class="weui-icon-search" type="search" size="14"></icon>
-            <view class="weui-search-bar__text">搜索</view>
-          </label>
-        <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
-      </view>
-    </view>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
   import 'wepy-async-function'
+  import {USER_WEIXIN_INFO, USER_LOGIN_INFO} from '../utils/constant'
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '闲余翻身'
@@ -67,7 +51,7 @@
     onLoad() {
       console.log('Index 页面')
       // 是否同意微信授权
-      let userInfo = wepy.getStorageSync('userWexinInfo')
+      let userInfo = wepy.getStorageSync(USER_WEIXIN_INFO)
       if (!userInfo) {
         console.log('不存在授权，需要授权')
         wepy.reLaunch({
@@ -76,7 +60,7 @@
       } else {
         console.log('授权存在')
         // 是否有缓存登录信息，存在缓存自动登录获取对应的数据
-        let userLoginInfo = wepy.getStorageSync('userLoginInfo')
+        let userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
         if (!userLoginInfo) {
           console.log('不存在用户信息，需要登录')
           wepy.reLaunch({
