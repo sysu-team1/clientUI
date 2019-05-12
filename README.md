@@ -25,6 +25,7 @@
 	https://tencent.github.io/wepy/
 ### **目录结构**
 
+├── src
     ├── app.wpy                 //入口文件
     ├── images                  //图片文件夹
     ├── pages                   //页面
@@ -40,8 +41,8 @@
     │   ├── icon.less           //icon样式文件
     ├── utils                   //工具包
     │   ├── contant.js          //缓存常量定义文件    
-    ├── package.json            //配置文件
-    ├── wepy.config.js          //配置文件   
+├── package.json                //配置文件
+├── wepy.config.js              //配置文件   
 
 ### **其他工具包**
 
