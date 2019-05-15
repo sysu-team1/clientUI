@@ -4,7 +4,7 @@
       <view wx:if="{{show}}" class="content">
         <view class="search">
           <view class="search_content">
-            <icon class=".icon-search" type="search" size="15"/>
+            <icon class="icon-search" type="search" size="15"/>
             <input type="text" name="search_input" bindinput="searchInput" class="search_input" focus="true" value="{{search_input_value}}" confirm-type="search" placeholder="搜索任务" />
             <i wx:if="{{search_input_value!=''}}" @tap="delText" class="iconfont icon-del"></i>
           </view>
@@ -163,6 +163,7 @@ export default class Search extends wepy.page {
     color: #333;
     background: #efefef;
     .search_input {
+      padding-left: 6px;
       width: 100%;
       font-size: 28rpx;
     }
