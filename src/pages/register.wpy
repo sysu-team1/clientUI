@@ -19,7 +19,7 @@
             <view class="label-front">密码</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" password="true" placeholder="请设置您的密码" bindinput="registerPassword"/>           
+            <input class="weui-input" password="true" placeholder="请设置您的密码" bindinput="registerPassword"/>
           </view>
         </view>
         <view class="weui-cell weui-cell-input">
@@ -27,7 +27,7 @@
             <view class="label-front">确认密码</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" password="true" placeholder="请再次输入以确认您的密码" bindinput="registerConfirmPassword"/>           
+            <input class="weui-input" password="true" placeholder="请再次输入以确认您的密码" bindinput="registerConfirmPassword"/>
           </view>
         </view>
         <view class="weui-cells__tips weui-cell_warn" wx:if="{{!isCorresponding}}">两次密码不一致</view>
@@ -49,7 +49,7 @@
             </view>
             <view class="weui-cell__bd">
               <input class="weui-input" bindinput="NetID"/>
-            </view>                
+            </view>
           </view>
           <view class="weui-cell weui-cell_input">
             <view class="weui-cell__hd">
@@ -57,7 +57,7 @@
             </view>
             <view class="weui-cell__bd">
               <input class="weui-input" bindinput="Major"/>
-            </view>                
+            </view>
           </view>
           <view class="weui-cell weui-cell_select">
             <view class="weui-cell__hd weui-cell__hd_in-select-after">
@@ -172,20 +172,20 @@
 
 <style lang="less">
 .email-label{
-  font-size: 65%;
   width: 105px;
+  font-size: 65%;
   word-wrap: break-word;
   word-break: break-all
 }
 .label-front{
-  font-size: 90%;
   display: block;
   padding-right: 0.5em;
+  font-size: 90%;
 }
 .weui-input{
+  align-self: center;
   height: 2em;
   min-height: 1.5em;
   line-height: 1.5em;
-  align-self: center;
 }
 </style>

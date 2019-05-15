@@ -149,22 +149,22 @@ export default class Search extends wepy.page {
   padding: 10rpx;
 }
 .search {
-  align-items: center;
   display: flex;
+  align-items: center;
   margin: 0 auto;
   width: 680rpx;
   .search_content {
     display: flex;
     align-items: center;
     border-radius: 300rpx;
-    color: #333;
-    width: 560rpx;
-    background: #efefef;
     padding: 5rpx 12rpx;
+    width: 560rpx;
     height: 65rpx;
+    color: #333;
+    background: #efefef;
     .search_input {
-      font-size: 28rpx;
       width: 100%;
+      font-size: 28rpx;
     }
   }
   .icon-search {

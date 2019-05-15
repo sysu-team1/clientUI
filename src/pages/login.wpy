@@ -25,9 +25,9 @@
           <view class="weui-footer weui-btn-area">
             <button class="weui-button" type="primary" bindtap="loginBtnClick">登录</button>
             <view class=" weui-footer weui-footer__link" @tap="registerTap">还没注册？点这里</view>
-          </view>        
-        </view> 
-    </view>   
+          </view>
+        </view>
+    </view>
 </template>
 
 
@@ -80,21 +80,21 @@
 
 <style lang="less">
 .email-label{
-  font-size: 65%;
   width: 105px;
+  font-size: 65%;
   word-wrap: break-word;
   word-break: break-all
 }
 .label-front{
-  font-size: 90%;
   display: block;
   padding-right: 0.5em;
+  font-size: 90%;
 }
 .weui-input{
+  align-self: center;
   height: 2em;
   min-height: 1.5em;
   line-height: 1.5em;
-  align-self: center;
 }
 .weui-footer__link{
   margin: 1em;
