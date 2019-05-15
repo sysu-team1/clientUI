@@ -1,3 +1,78 @@
+<template>
+  <view class="page">
+    <view class="page__hd">
+      <view class="header_content">
+        <image class="avatarUrl" src="{{avatarUrl}}"/>
+        <view class="nickName cfff">{{nickName}}</view>
+      </view>
+    </view>
+    <view class="page__bd">
+      <view class="info_block">
+        <navigator class="item" url="/pages/tasks" open-type="navigate">
+          <view class="item_content">
+            <i class="iconfont">&#xec35;</i>
+            <view class="text">我的任务</view>
+          </view>
+        </navigator>
+        <navigator class="item" url="/pages/progress" open-type="navigate">
+          <view class="item_content">
+            <i class="iconfont">&#xe63b;</i>
+            <view class="text">正在进行</view>
+          </view>
+        </navigator>
+        <navigator class="item" url="/pages/points" open-type="navigate">
+          <view class="item_content">
+            <i class="iconfont">&#xe603;</i>
+            <view class="text">我的积分</view>
+          </view>
+        </navigator>
+        <navigator class="item" url="/pages/favorite" open-type="navigate">
+          <view class="item_content">
+            <i class="iconfont item-icon">&#xe624;</i>
+            <view class="text">我的收藏</view>
+          </view>
+        </navigator>
+      </view>
+      <view class="info_block">
+        <navigator class="item" url="/pages/message" open-type="navigate">
+          <view class="item_content">
+            <i class="iconfont">&#xec3b;</i>
+            <view class="text">我的消息</view>
+          </view>
+        </navigator>
+        <navigator class="item" url="/pages/message" open-type="navigate">
+          <view class="item_content">
+            <i class="iconfont">&#xeb67;</i>
+            <view class="text">我的设置</view>
+          </view>
+        </navigator>
+      </view>
+    </view>
+
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import {USER_WEIXIN_INFO} from '../utils/constant'
+  export default class Profile extends wepy.page {
+    config = {
+      navigationBarTitleText: '我'
+    }
+    data = {
+      avatarUrl: '',
+      nickName: ''
+    }
+
+    onLoad() {
+      console.log('onLoad')
+      let userinfo = wepy.getStorageSync(USER_WEIXIN_INFO)
+      this.avatarUrl = userinfo.avatarUrl
+      this.nickName = userinfo.nickName
+    }
+  }
+</script>
+
 <style lang="less">
 .header_content {
   width: 100%;
@@ -38,10 +113,6 @@
   .item-icon {
     font-size: 22px;
   }
-  .arrow {
-    color: #cccccc;
-    font-size: 32rpx;
-  }
   .tip {
     color: #999;
     font-size: 24rpx;
@@ -49,86 +120,4 @@
     margin-left: 60rpx;
   }
 }
-
 </style>
-
-<template>
-  <view class="page">
-    <view class="page__hd">
-      <view class="header_content">
-        <image class="avatarUrl" src="{{avatarUrl}}"/>
-        <view class="nickName cfff">{{nickName}}</view>
-      </view>
-    </view>
-    <view class="page__bd">
-      <view class="info_block">
-        <navigator class="item" url="/pages/tasks" open-type="navigate">
-          <view class="item_content">
-            <i class="iconfont icon-renwujincheng"></i>
-            <view class="text">我的任务</view>
-          </view>
-          <view class="arrow">&gt;</view>
-        </navigator>
-        <navigator class="item" url="/pages/progress" open-type="navigate">
-          <view class="item_content">
-            <i class="iconfont icon-shijian-xianxing"></i>
-            <view class="text">正在进行</view>
-          </view>
-          <view class="arrow">&gt;</view>
-        </navigator>
-        <navigator class="item" url="/pages/points" open-type="navigate">
-          <view class="item_content">
-            <i class="iconfont icon--yu"></i>
-            <view class="text">我的积分</view>
-          </view>
-          <view class="arrow">&gt;</view>
-        </navigator>
-        <navigator class="item" url="/pages/favorite" open-type="navigate">
-          <view class="item_content">
-            <i class="iconfont icon-paihangbang-xianxing item-icon"></i>
-            <view class="text">我的收藏</view>
-          </view>
-          <view class="arrow">&gt;</view>
-        </navigator>
-      </view>
-      <view class="info_block">
-        <navigator class="item" url="/pages/message" open-type="navigate">
-          <view class="item_content">
-            <i class="iconfont icon-xiaoxi"></i>
-            <view class="text">我的消息</view>
-          </view>
-          <view class="arrow">&gt;</view>
-        </navigator>
-        <navigator class="item" url="/pages/message" open-type="navigate">
-          <view class="item_content">
-            <i class="iconfont icon-yingyongguanli"></i>
-            <view class="text">我的设置</view>
-          </view>
-          <view class="arrow">&gt;</view>
-        </navigator>
-      </view>
-    </view>
-
-  </view>
-</template>
-
-<script>
-  import wepy from 'wepy'
-  import {USER_WEIXIN_INFO} from '../utils/constant'
-  export default class Profile extends wepy.page {
-    config = {
-      navigationBarTitleText: '我'
-    }
-    data = {
-      avatarUrl: '',
-      nickName: ''
-    }
-
-    onLoad() {
-      console.log('onLoad')
-      let userinfo = wepy.getStorageSync(USER_WEIXIN_INFO)
-      this.avatarUrl = userinfo.avatarUrl
-      this.nickName = userinfo.nickName
-    }
-  }
-</script>

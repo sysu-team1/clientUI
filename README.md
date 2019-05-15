@@ -25,23 +25,24 @@
 	https://tencent.github.io/wepy/
 ### **目录结构**
 
-    ├── app.wpy                 //入口文件
-    ├── images                  //图片文件夹
-    ├── pages                   //页面
-    │   ├── authorize.wpy       //授权页面
-    |   ├── home.wpy            //首页，主界面
-    |   ├── login.wpy           //登录页面
-    |   ├── message.wpy         //消息页面 (未写)
-    |   ├── profile.wpy         //我页面(编辑中......)
-    |   ├── register.wpy        //注册页面
-    |   ├── search.wpy          //搜索页面
-    ├── style                   //样式
-    │   ├── weui.wxss           //weui样式文件
-    │   ├── icon.less           //icon样式文件
-    ├── utils                   //工具包
-    │   ├── contant.js          //缓存常量定义文件    
-    ├── package.json            //配置文件
-    ├── wepy.config.js          //配置文件   
+    ├── src
+        ├── app.wpy                 //入口文件
+        ├── images                  //图片文件夹
+        ├── pages                   //页面
+        │   ├── authorize.wpy       //授权页面
+        |   ├── home.wpy            //首页，主界面
+        |   ├── login.wpy           //登录页面
+        |   ├── message.wpy         //消息页面 (未写)
+        |   ├── profile.wpy         //我页面(编辑中......)
+        |   ├── register.wpy        //注册页面
+        |   ├── search.wpy          //搜索页面
+        ├── style                   //样式
+        │   ├── weui.wxss           //weui样式文件
+        │   ├── icon.less           //icon样式文件
+        ├── utils                   //工具包
+        │   ├── contant.js          //缓存常量定义文件    
+    ├── package.json                //配置文件
+    ├── wepy.config.js              //配置文件   
 
 ### **其他工具包**
 
