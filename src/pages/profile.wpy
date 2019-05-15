@@ -10,47 +10,41 @@
       <view class="info_block">
         <navigator class="item" url="/pages/tasks" open-type="navigate">
           <view class="item_content">
-            <i class="iconfont icon-renwujincheng"></i>
+            <i class="iconfont">&#xec35;</i>
             <view class="text">我的任务</view>
           </view>
-          <view class="arrow">&gt;</view>
         </navigator>
         <navigator class="item" url="/pages/progress" open-type="navigate">
           <view class="item_content">
-            <i class="iconfont icon-shijian-xianxing"></i>
+            <i class="iconfont">&#xe63b;</i>
             <view class="text">正在进行</view>
           </view>
-          <view class="arrow">&gt;</view>
         </navigator>
         <navigator class="item" url="/pages/points" open-type="navigate">
           <view class="item_content">
-            <i class="iconfont icon--yu"></i>
+            <i class="iconfont">&#xe603;</i>
             <view class="text">我的积分</view>
           </view>
-          <view class="arrow">&gt;</view>
         </navigator>
         <navigator class="item" url="/pages/favorite" open-type="navigate">
           <view class="item_content">
-            <i class="iconfont icon-paihangbang-xianxing item-icon"></i>
+            <i class="iconfont item-icon">&#xe624;</i>
             <view class="text">我的收藏</view>
           </view>
-          <view class="arrow">&gt;</view>
         </navigator>
       </view>
       <view class="info_block">
         <navigator class="item" url="/pages/message" open-type="navigate">
           <view class="item_content">
-            <i class="iconfont icon-xiaoxi"></i>
+            <i class="iconfont">&#xec3b;</i>
             <view class="text">我的消息</view>
           </view>
-          <view class="arrow">&gt;</view>
         </navigator>
         <navigator class="item" url="/pages/message" open-type="navigate">
           <view class="item_content">
-            <i class="iconfont icon-yingyongguanli"></i>
+            <i class="iconfont">&#xeb67;</i>
             <view class="text">我的设置</view>
           </view>
-          <view class="arrow">&gt;</view>
         </navigator>
       </view>
     </view>
@@ -118,10 +112,6 @@
   }
   .item-icon {
     font-size: 22px;
-  }
-  .arrow {
-    color: #cccccc;
-    font-size: 32rpx;
   }
   .tip {
     color: #999;
