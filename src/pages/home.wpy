@@ -1,5 +1,12 @@
 <template>
   <view class="page">
+    <swiper indicator-dots autoplay circular>
+      <block wx:for="{{PicList}}" wx:key="key">
+        <swiper-item>
+          <image mode="aspectFill" src="{{item}}"/>
+        </swiper-item>
+      </block>
+    </swiper>
     <view>
       <view>
         <navigator url="/pages/search" open-type="navigate" hover-class="none">
@@ -26,7 +33,11 @@
     };
     data = {
       inputVal: null,
-      inputShowed: false
+      inputShowed: false,
+      PicList: [
+        '/images/home.png',
+        '/images/home-active.png'
+      ]
     }
     methods = {
       inputTyping (e) {
