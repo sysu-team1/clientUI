@@ -43,11 +43,10 @@
       userEmail: null,
       userPassword: null
     }
-
     async loginBtnClick() {
       console.log('login in button')
       this.$parent.globalData.userLoginInfo = {
-        userEmail: this.data.userEmail,
+        userEmail: this.data.userEmail + '@sysu.mail2.edu.cn',
         userPassword: this.data.userPassword
       }
       console.log(this.$parent.globalData.userLoginInfo)
@@ -56,12 +55,12 @@
         url: 'home'
       })
     }
-    usernameInput(e) {
+    Email(e) {
       console.log(e)
       this.data.userEmail = e.detail.value
       console.log(this.data.userEmail)
     }
-    passwordInput(e) {
+    Password(e) {
       console.log(e)
       this.data.userPassword = e.detail.value
       console.log(this.data.userPassword)
