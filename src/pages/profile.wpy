@@ -63,7 +63,7 @@
 
 <script>
   import wepy from 'wepy'
-  import {USER_WEIXIN_INFO} from '../utils/constant'
+  import {USER_WEIXIN_INFO, USER_LOGIN_INFO} from '../utils/constant'
   export default class Profile extends wepy.page {
     config = {
       navigationBarTitleText: '我'
@@ -79,6 +79,8 @@
       let userinfo = wepy.getStorageSync(USER_WEIXIN_INFO)
       this.avatarUrl = userinfo.avatarUrl
       this.nickName = userinfo.nickName
+      let userLogininfo = wepy.getStorageSync(USER_LOGIN_INFO)
+      this.userEmail = userLogininfo.userEmail
     }
   }
 </script>
