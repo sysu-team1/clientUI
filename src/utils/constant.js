@@ -15,3 +15,5 @@ export const USER_WEIXIN_INFO = "userWexinInfo";
  * 用户邮箱，用户密码，年级，专业，学号
  */
 export const USER_LOGIN_INFO = "userLoginInfo";
+
+export const BASIC_REQUEST_URL = ''
