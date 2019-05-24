@@ -1,24 +1,21 @@
 <template>
   <view class="page">
-    <swiper indicator-dots autoplay circular>
-      <block wx:for="{{PicList}}" wx:key="key">
-        <swiper-item>
-          <image mode="aspectFill" src="{{item}}"/>
-        </swiper-item>
-      </block>
-    </swiper>
-    <view>
-      <view>
-        <navigator url="/pages/search" open-type="navigate" hover-class="none">
-          <view class="weui-search-bar__box">
-            <icon class="weui-icon-search_in-box" type="search" size="14"/>
-            <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
-            <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
-              <icon type="clear" size="14"></icon>
-            </view>
-          </view>          
-        </navigator>
-      </view>
+    <view class="swiper-wrapper">
+      <swiper indicator-dots autoplay circular>
+        <block wx:for="{{PicList}}" wx:key="key">
+          <swiper-item>
+            <image mode="aspectFill" src="{{item}}"/>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    <view class="search-wrapper">
+      <navigator url="/pages/search" open-type="navigate" hover-class="none">
+        <view class="input-wrapper weui-search-bar__box">
+          <icon class="search-icon weui-icon-search_in-box" type="search" size="14" color="#fff"/>
+          <input type="text" class="search-input weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" disabled/>
+        </view>
+      </navigator>
     </view>
   </view>
 </template>
@@ -81,6 +78,22 @@
 </script>
 
 <style lang="less">
+.page {
+  position: relative;
+}
 
+.search-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  border-radius: 20px;
+  width: 80%;
+  background: rgba(0, 0, 0, 0.3);
+  transform: translate(-50%, 0);
+}
+
+.input-wrapper .input-placeholder {
+  color: #efefee;
+}
 
 </style>

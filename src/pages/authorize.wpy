@@ -30,7 +30,6 @@ export default class Authorize extends wepy.page {
   async bindGetUserInfo(e) {
     if (e.detail.userInfo) {
       console.log('==授权成功==')
-      console.log(e)
       await wepy.setStorageSync(USER_WEIXIN_INFO, e.detail.userInfo)
       wepy.switchTab({
         url: 'home'
