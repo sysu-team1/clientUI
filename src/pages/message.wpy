@@ -1,11 +1,17 @@
 <template>
   <view class="page">
     <view class="page__bd">
-      <view class="weui-panel" wx:for="{{messageList}}" wx:key="item" data-id="{{item.id}}">
-        <view class="weui-panel__hd">{{item.title}}</view>
-        <view class="weui-panel__bd">
-          <view class="weui-media-box weui-media-box_text">
-            <view class="weui-media-box__desc">{{item.description}}</view>
+      <view class="weui-form-preview" wx:for="{{messageList}}" wx:key="item" data-id="{{item.id}}">
+        <view class="weui-form-preview__hd">
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">标题</view>
+            <view class="weui-form-preview__value">{{item.title}}</view>
+          </view>
+        </view>
+        <view class="weui-form-preview__bd">
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">描述</view>
+            <view class="weui-form-preview__value">{{item.description}}</view>
           </view>
         </view>
       </view>
