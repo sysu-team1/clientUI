@@ -10,7 +10,10 @@
                 <input class="weui-input" placeholder="请输入您的邮箱" type="email" bindinput="Email"/>
               </view>
               <view class="weui-cell__ft">
-                <view class="email-label">@sysu.mail2.edu.cn</view>
+                <picker @change="bindMailTypeChange" value="{{MailTypeIndex}}" range="{{MailTypes}}">
+                  <view class="email-label weui-select">{{MailTypes[MailTypeIndex]}}</view>
+                </picker>
+                <!-- <view class="email-label">@sysu.mail2.edu.cn</view> -->
               </view>
             </view>
             <view class="weui-cell weui-cell-input">
@@ -41,7 +44,9 @@
     }
     data = {
       userEmail: null,
-      userPassword: null
+      userPassword: null,
+      MailTypeIndex: 0,
+      MailTypes: ['@sysu.mail2.edu.cn', '@sysu.mail.edu.cn']
     }
     async loginBtnClick() {
       console.log('login in button')
@@ -71,6 +76,9 @@
         url: 'register'
       })
     }
+    bindMailTypeChange(e) {
+      this.MailTypeIndex = e.detail.value
+    }
     onLoad() {
       console.log('login页面')
     }
@@ -97,5 +105,8 @@
 }
 .weui-footer__link{
   margin: 1em;
+}
+.weui-select{
+  border-right: 0rpx;
 }
 </style>
