@@ -15,7 +15,8 @@ export default class extends wepy.app {
       'pages/register',
       'pages/message',
       'pages/profile',
-      'pages/search'
+      'pages/search',
+      'pages/detail'
     ],
     window: {
       backgroundTextStyle: 'light',
