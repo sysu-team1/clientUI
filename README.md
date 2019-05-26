@@ -27,15 +27,20 @@
 
     ├── src
         ├── app.wpy                 //入口文件
+        ├── api                     //api接口
+        ├── components              //自定义组件
         ├── images                  //图片文件夹
         ├── pages                   //页面
         │   ├── authorize.wpy       //授权页面
+        |   ├── detail.wpy          //任务详情页面()
         |   ├── home.wpy            //首页，主界面
         |   ├── login.wpy           //登录页面
         |   ├── message.wpy         //消息页面 (未写)
-        |   ├── profile.wpy         //我页面(编辑中......)
+        |   ├── profile.wpy         //我页面
         |   ├── register.wpy        //注册页面
         |   ├── search.wpy          //搜索页面
+        ├── resource                //资源文件
+        │   ├── iview               //iview组件
         ├── style                   //样式
         │   ├── weui.wxss           //weui样式文件
         │   ├── icon.less           //icon样式文件
