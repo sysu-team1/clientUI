@@ -20,7 +20,16 @@
       </view>
     </view>
     <view class="page__bd">
-
+      <i-panel title="任务列表">
+        <view wx:for="{{TaskList}}" wx:key="key" style="padding: 5px;">
+          <navigator url="/pages/detail?id={{item.id}}&title={{item.title}}" open-type="navigate" hover-class="none">
+            <i-card title="{{item.title}}" extra="{{item.reward}}">
+              <view slot="content">{{item.desc}}</view>
+              <view slot="footer"></view>
+            </i-card>
+          </navigator>
+        </view>
+      </i-panel>
     </view>
   </view>
 </template>
@@ -31,7 +40,11 @@
   import {USER_WEIXIN_INFO, USER_LOGIN_INFO} from '../utils/constant'
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '闲余翻身'
+      navigationBarTitleText: '闲余翻身',
+      usingComponents: {
+        'i-card': '../resource/iview/card/index',
+        'i-panel': '../resource/iview/panel/index'
+      }
     };
     data = {
       inputVal: null,
@@ -39,6 +52,20 @@
       PicList: [
         '/images/home.png',
         '/images/home-active.png'
+      ],
+      TaskList: [
+        {
+          id: 1,
+          title: '任务1',
+          reward: '2余币',
+          desc: '测试一下'
+        },
+        {
+          id: 2,
+          title: '任务2',
+          reward: '222余币',
+          desc: '测试一下'
+        }
       ]
     }
     methods = {
