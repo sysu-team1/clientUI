@@ -27,20 +27,22 @@
               <view slot="extra-icon"><i class="iconfont">&#xe603;</i></view>
               <view slot="content">{{item.desc}}</view>
               <view slot="footer">
-                <view>
-                  <i-tag 
-                      wx:for="{{item.tags}}" 
-                      wx:key="{{index}}"
-                      wx:for-item="tag"
-                      bindchange="onChange" 
-                      checkable="{{true}}" 
-                      name="{{index}}" 
-                      color="{{item.color}}" 
-                      checked="{{item.checked}}" 
-                      type="border"
-                      style="margin-right:5px;">
-                      {{tag.name}}
-                  </i-tag>
+                <view class="card-footer">
+                  <view class="card-footer-tags">
+                    <i-tag 
+                        wx:for="{{item.tags}}" 
+                        wx:key="{{index}}"
+                        wx:for-item="tag"
+                        bindchange="onChange" 
+                        checkable="{{true}}" 
+                        name="{{index}}" 
+                        color="{{item.color}}" 
+                        checked="{{item.checked}}" 
+                        type="border"
+                        style="margin-right:5px;">
+                        {{tag.name}}
+                    </i-tag>
+                  </view>
                   <view class="card-footer-button">
                     <button class="weui-btn" type="primary" size="mini">领取任务</button>
                   </view>
@@ -94,11 +96,6 @@
             {
               name: '标签一1',
               color: 'default',
-              checked: false
-            },
-            {
-              name: '标签一2',
-              color: 'red',
               checked: false
             }
           ]
@@ -182,5 +179,19 @@
 .input-wrapper .input-placeholder {
   color: #efefee;
 }
+
+.card-footer{
+  display: flex;
+  flex-direction: row;
+  .card-footer-tags {
+  flex: 1;
+  }
+  .card-footer-btn {
+    position: relative;
+    align-items: center;
+  }
+}
+
+
 
 </style>
