@@ -67,7 +67,7 @@
 }
 .i-card-footer {
   position:relative;
-  padding:6px 16px;
+  padding:2px 10px;
   color:#80848f;
   font-size:12px
 }
