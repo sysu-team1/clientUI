@@ -55,3 +55,5 @@
 
 2、 iconfont图标，参考 https://www.iconfont.cn/， 使用方式参考 https://www.jianshu.com/p/67bbe4d95a85
 
+3、 iview-weapp组件，参考 https://weapp.iviewui.com/
+
