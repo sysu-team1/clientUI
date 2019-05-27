@@ -24,8 +24,28 @@
         <view wx:for="{{TaskList}}" wx:key="key" style="padding: 5px;">
           <navigator url="/pages/detail?id={{item.id}}&title={{item.title}}" open-type="navigate" hover-class="none">
             <i-card title="{{item.title}}" extra="{{item.reward}}">
+              <view slot="extra-icon"><i class="iconfont">&#xe603;</i></view>
               <view slot="content">{{item.desc}}</view>
-              <view slot="footer"></view>
+              <view slot="footer">
+                <view>
+                  <i-tag 
+                      wx:for="{{item.tags}}" 
+                      wx:key="{{index}}"
+                      wx:for-item="tag"
+                      bindchange="onChange" 
+                      checkable="{{true}}" 
+                      name="{{index}}" 
+                      color="{{item.color}}" 
+                      checked="{{item.checked}}" 
+                      type="border"
+                      style="margin-right:5px;">
+                      {{tag.name}}
+                  </i-tag>
+                  <view class="card-footer-button">
+                    <button class="weui-btn" type="primary" size="mini">领取任务</button>
+                  </view>
+                </view>
+              </view>
             </i-card>
           </navigator>
         </view>
@@ -43,7 +63,8 @@
       navigationBarTitleText: '闲余翻身',
       usingComponents: {
         'i-card': '../resource/iview/card/index',
-        'i-panel': '../resource/iview/panel/index'
+        'i-panel': '../resource/iview/panel/index',
+        'i-tag': '../resource/iview/tag/index'
       }
     };
     data = {
@@ -53,18 +74,52 @@
         '/images/home.png',
         '/images/home-active.png'
       ],
+      /*  TaskList {
+          [
+            id: 任务id
+            title: 任务标题
+            reward：任务奖励
+            desc：任务描述
+            tags: [1,2,3] 三个任务tag
+          ]
+        }
+      */
       TaskList: [
         {
           id: 1,
           title: '任务1',
-          reward: '2余币',
-          desc: '测试一下'
+          reward: '2',
+          desc: '测试一下',
+          tags: [
+            {
+              name: '标签一1',
+              color: 'default',
+              checked: false
+            },
+            {
+              name: '标签一2',
+              color: 'red',
+              checked: false
+            }
+          ]
         },
         {
           id: 2,
           title: '任务2',
-          reward: '222余币',
-          desc: '测试一下'
+          reward: '222',
+          desc: '测试一下',
+          tags: [
+            {
+              name: '标签一1',
+              color: 'default',
+              checked: false
+            },
+            {
+              name: '标签一2',
+              color: 'red',
+              checked: false
+            }
+          ]
         }
       ]
     }
