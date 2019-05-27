@@ -151,7 +151,7 @@
         if (this.data.register_password === this.data.register_confirm_password) {
           console.log('注册成功')
           this.$parent.globalData.userLoginInfo = {
-            userEmail: this.data.register_email,
+            userEmail: this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex],
             userPassword: this.data.register_password
           }
           await wepy.setStorageSync(USER_LOGIN_INFO, this.$parent.globalData.userLoginInfo)
