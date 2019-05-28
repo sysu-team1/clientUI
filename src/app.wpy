@@ -36,7 +36,19 @@ export default class extends wepy.app {
         },
         {
           pagePath: 'pages/message',
-          text: '消息',
+          text: '我的任务',
+          iconPath: 'images/message.png',
+          selectedIconPath: 'images/message-active.png'
+        },
+        {
+          pagePath: 'pages/message',
+          text: '去发布',
+          iconPath: 'images/message.png',
+          selectedIconPath: 'images/message-active.png'
+        },
+        {
+          pagePath: 'pages/message',
+          text: '我的发布',
           iconPath: 'images/message.png',
           selectedIconPath: 'images/message-active.png'
         },
