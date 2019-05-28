@@ -72,7 +72,7 @@
     }
     registerTap(e) {
       console.log('前往注册')
-      wepy.reLaunch({
+      wepy.navigateTo({
         url: 'register'
       })
     }
