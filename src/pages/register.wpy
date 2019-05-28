@@ -25,7 +25,7 @@
               <input class="weui-input" placeholder="请输入验证码" />
             </view>
             <view class="weui-cell__ft">
-              <button class="weui-vcode-btn" bindtap="getvcode">获取验证码</button>
+              <button class="weui-vcode-btn" bindtap="getvcode" disabled="{{getvcodeBtnDisabled}}">{{CountTime}}</button>
             </view>
         </view>
         <view class="weui-cell weui-cell_input">
@@ -116,7 +116,10 @@
       SexIndex: 0,                                            // 性别数组的下标
       SexList: ['男', '女'],                                  // 性别
       MailTypeIndex: 0,                                       // 邮箱类型下标
-      MailTypes: ['@sysu.mail2.edu.cn', '@sysu.mail.edu.cn']  // 邮箱类型
+      MailTypes: ['@sysu.mail2.edu.cn', '@sysu.mail.edu.cn'], // 邮箱类型
+      CountTime: '获取验证码',                                 // 获取验证码按钮显示变量
+      second: 6,                                              // 获取验证码等待时间 ，单位 s（秒）,测试6秒，正式为60秒
+      getvcodeBtnDisabled: false                              // 获取验证码按钮是否可点击
     }
     registerEmail(e) {
       this.data.register_email = e.detail.value
@@ -152,6 +155,36 @@
     navigationToHome() {
       wepy.switchTab({url: 'home'})
     }
+    // 倒计时
+    countdown(secondNum) {
+      if (secondNum === 0) {
+        setTimeout(() => {
+          console.log('倒计时结束')
+          this.setData({
+            CountTime: '重新发送验证码',
+            getvcodeBtnDisabled: false
+          })
+        }, 1000)
+        this.CountTime = '重新发送验证码'
+      } else {
+        this.setData({
+          getvcodeBtnDisabled: true
+        })
+        setTimeout(() => {
+          secondNum = secondNum - 1
+          console.log(secondNum)
+          this.setData({
+            CountTime: secondNum + '秒'
+          })
+          this.countdown(secondNum)
+        }, 1000)
+      }
+    }
+    // 获取验证码按钮事件
+    getvcode() {
+      console.log('正在获取验证码....')
+      this.countdown(this.second)
+    }
     methods = {
       // 注册按钮，toast提示
       async registerBtnClick() {
@@ -176,11 +209,8 @@
             duration: 2000
           })
         }
-      },
-      // 获取验证码按钮事件
-      getvcode() {
-        console.log('正在获取验证码....')
       }
+
     }
     onLoad() {
       console.log('注册页面')
