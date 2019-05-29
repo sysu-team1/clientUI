@@ -16,4 +16,7 @@ export const USER_WEIXIN_INFO = "userWexinInfo";
  */
 export const USER_LOGIN_INFO = "userLoginInfo";
 
+/**
+ * API URL前缀
+ */
 export const BASIC_REQUEST_URL = ''

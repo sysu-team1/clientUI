@@ -50,6 +50,12 @@
     }
     async loginBtnClick() {
       console.log('login in button')
+      let params = {
+        email: userEmail,
+        password: userPassword
+      }
+
+
       this.$parent.globalData.userLoginInfo = {
         userEmail: this.data.userEmail + '@sysu.mail2.edu.cn',
         userPassword: this.data.userPassword
