@@ -192,7 +192,8 @@
           console.log('注册成功')
           this.$parent.globalData.userLoginInfo = {
             userEmail: this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex],
-            userPassword: this.data.register_password
+            userPassword: this.data.register_password,
+            loginType: 'student'
           }
           await wepy.setStorageSync(USER_LOGIN_INFO, this.$parent.globalData.userLoginInfo)
           await wx.showToast({
