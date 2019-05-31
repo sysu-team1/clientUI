@@ -19,4 +19,4 @@ export const USER_LOGIN_INFO = "userLoginInfo";
 /**
  * API URL前缀
  */
-export const BASIC_REQUEST_URL = 'http://172.26.107.43:5000'
+export const BASIC_REQUEST_URL = 'http://47.107.99.233:5000'

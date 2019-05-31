@@ -224,12 +224,18 @@
       async registerBtnClick() {
         if (this.data.register_password === this.data.register_confirm_password) {
           console.log('注册成功')
-          let email = this.userEmail
-          let password = this.userPassword
-          let vcode = this.vcode
-          console.log(this.data)
+          let registerInfo = {
+            email: this.register_email + this.MailTypes[this.MailTypeIndex],
+            vcode: this.vcode,
+            password: this.password,
+            name: this.name,
+            student_id: this.student_id,
+            major: this.major,
+            grade: this.grade,
+            sex: this.sex
+          }
           // register网络连接
-          const result = await register(email, password,student_id, major,vcode, )
+          const result = await register(registerInfo)
           if (result.error === 0) {
             // TODO
             this.$parent.globalData.userLoginInfo = {

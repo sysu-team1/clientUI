@@ -1,8 +1,8 @@
 <template>
   <view class="point-wrapper">
     <view class="point">
-      <view>你的积分为: </view>
-      <view>{{point}}</view>
+      <view class="num">{{point}}</view>
+      <view class="text">我的积分</view>
     </view>
   </view>
 </template>
@@ -15,12 +15,35 @@ export default class Point extends wepy.page {
   data = {
     point: 100
   }
+  onLoad() {
+    this.getPoints()
+  }
+  methods = {
+    getPoints() {
+
+    }
+  }
 }
 </script>
 <style>
+page {
+  height: 100%;
+}
 .point-wrapper {
   display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 10px;
+  height: 100%;
   text-align: center;
+  color: #fff;
+  background: linear-gradient(to bottom right,#fc6f02, #f79001);
 }
+
+.point .num {
+  margin-top: -30px;
+  font-size: 60px;
+}
+
+
 </style>
