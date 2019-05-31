@@ -48,6 +48,18 @@ const registerVcode = async(email) => {
   }
 }
 
+const getPoint = async (id) => {
+  let res = await wepy.request({
+    url: BASIC_REQUEST_URL + '',
+    data: {
+      id
+    }
+  })
+  if (res.statusCode === 200) {
+    return res.data
+  }
+}
+
 export {
   login,
   register,
