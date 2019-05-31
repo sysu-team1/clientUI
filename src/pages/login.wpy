@@ -2,7 +2,7 @@
     <view class="page">
         <view class="page__bd">
           <view class="weui-cells weui-cells_after-title">
-            <view class="weui-cell weui-cell-input">
+            <view class="weui-cell weui-cell_input">
               <view class="weui-cell__hd">
                 <view class="label-front">邮箱</view>
               </view>
@@ -16,7 +16,7 @@
                 <!-- <view class="email-label">@sysu.mail2.edu.cn</view> -->
               </view>
             </view>
-            <view class="weui-cell weui-cell-input">
+            <view class="weui-cell weui-cell_input">
               <view class="weui-cell__hd">
                 <view class="label-front">密码</view>
               </view>
@@ -57,7 +57,7 @@
 
 
       this.$parent.globalData.userLoginInfo = {
-        userEmail: this.data.userEmail + '@sysu.mail2.edu.cn',
+        userEmail: this.data.userEmail + this.data.MailTypes[this.data.MailTypeIndex],
         userPassword: this.data.userPassword
       }
       console.log(this.$parent.globalData.userLoginInfo)
@@ -78,7 +78,7 @@
     }
     registerTap(e) {
       console.log('前往注册')
-      wepy.reLaunch({
+      wepy.navigateTo({
         url: 'register'
       })
     }
@@ -92,6 +92,9 @@
 </script>
 
 <style lang="less">
+.weui-cell {
+  padding: 10px 10px;
+}
 .email-label{
   width: 105px;
   font-size: 65%;
@@ -108,6 +111,7 @@
   height: 2em;
   min-height: 1.5em;
   line-height: 1.5em;
+  font-size: 85%;
 }
 .weui-footer__link{
   margin: 1em;

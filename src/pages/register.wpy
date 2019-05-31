@@ -3,7 +3,7 @@
     <view class="page__bd">
       <view class="weui-cells__title">账户信息</view>
       <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell-input">
+        <view class="weui-cell weui-cell_input">
           <view class="weui-cell__hd">
             <view class="label-front">邮箱</view>
           </view>
@@ -17,7 +17,18 @@
             <!-- <view class="email-label">@sysu.mail2.edu.cn</view> -->
           </view>
         </view>
-        <view class="weui-cell weui-cell-input">
+        <view class="weui-cell weui-cell_input weui-cell_vcode">
+            <view class="weui-cell__hd">
+              <view class="label-front">验证码</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" placeholder="请输入验证码" />
+            </view>
+            <view class="weui-cell__ft">
+              <button class="weui-vcode-btn" bindtap="getvcode" disabled="{{getvcodeBtnDisabled}}">{{CountTime}}</button>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
           <view class="weui-cell__hd">
             <view class="label-front">密码</view>
           </view>
@@ -25,7 +36,7 @@
             <input class="weui-input" password="true" placeholder="请设置您的密码" bindinput="registerPassword"/>
           </view>
         </view>
-        <view class="weui-cell weui-cell-input">
+        <view class="weui-cell weui-cell_input">
           <view class="weui-cell__hd">
             <view class="label-front">确认密码</view>
           </view>
@@ -35,50 +46,48 @@
         </view>
         <view class="weui-cells__tips weui-cell_warn" wx:if="{{!isCorresponding}}">两次密码不一致</view>
       </view>
-      <view class="page__bd">
-        <view class="weui-cells__title">个人信息</view>
-        <view class="weui-cells weui-cells_after-title">
-          <view class="weui-cell weui-cell_input">
-            <view class="weui-cell__hd">
-              <view class="label-front">姓名</view>
-            </view>
-            <view class="weui-cell__bd">
-              <input class="weui-input" bindinput="Name"/>
-            </view>
+      <view class="weui-cells__title">个人信息</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="label-front">姓名</view>
           </view>
-          <view class="weui-cell weui-cell_input">
-            <view class="weui-cell__hd">
-              <view class="label-front">学号</view>
-            </view>
-            <view class="weui-cell__bd">
-              <input class="weui-input" bindinput="NetID"/>
-            </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" bindinput="Name"/>
           </view>
-          <view class="weui-cell weui-cell_input">
-            <view class="weui-cell__hd">
-              <view class="label-front">专业</view>
-            </view>
-            <view class="weui-cell__bd">
-              <input class="weui-input" bindinput="Major"/>
-            </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="label-front">学号</view>
           </view>
-          <view class="weui-cell weui-cell_select">
-            <view class="weui-cell__hd weui-cell__hd_in-select-after">
-              <view class="label-front">年级</view>
-            </view>
-            <view class="weui-cell__bd">
-              <picker @change="bindGradeChange" value="{{GradeIndex}}" range="{{Grades}}">
-                <view class="weui-select weui-select_in-select-after">{{Grades[GradeIndex]}}</view>
-              </picker>
-            </view>
-            <view class="weui-cell__hd weui-cell__hd_in-select-after">
-              <view class="label-front">性别</view>
-            </view>
-            <view class="weui-cell__bd">
-              <picker @change="bindSexChange" value="{{SexIndex}}" range="{{SexList}}">
-                <view class="weui-select weui-select_in-select-after">{{SexList[SexIndex]}}</view>
-              </picker>
-            </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" bindinput="NetID"/>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="label-front">专业</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" bindinput="Major"/>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="label-front">年级</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker @change="bindGradeChange" value="{{GradeIndex}}" range="{{Grades}}">
+              <view class="weui-select weui-select_in-select-after">{{Grades[GradeIndex]}}</view>
+            </picker>
+          </view>
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="label-front">性别</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker @change="bindSexChange" value="{{SexIndex}}" range="{{SexList}}">
+              <view class="weui-select weui-select_in-select-after">{{SexList[SexIndex]}}</view>
+            </picker>
           </view>
         </view>
       </view>
@@ -87,8 +96,6 @@
         </view>
     </view>
   </view>
-
-
 </template>
 
 <script>
@@ -111,7 +118,10 @@
       SexIndex: 0,                                            // 性别数组的下标
       SexList: ['男', '女'],                                  // 性别
       MailTypeIndex: 0,                                       // 邮箱类型下标
-      MailTypes: ['@sysu.mail2.edu.cn', '@sysu.mail.edu.cn']  // 邮箱类型
+      MailTypes: ['@sysu.mail2.edu.cn', '@sysu.mail.edu.cn'], // 邮箱类型
+      CountTime: '获取验证码',                                 // 获取验证码按钮显示变量
+      second: 6,                                              // 获取验证码等待时间 ，单位 s（秒）,测试6秒，正式为60秒
+      getvcodeBtnDisabled: false                              // 获取验证码按钮是否可点击
     }
     registerEmail(e) {
       this.data.register_email = e.detail.value
@@ -147,11 +157,42 @@
     navigationToHome() {
       wepy.switchTab({url: 'home'})
     }
+    // 倒计时
+    countdown(secondNum) {
+      if (secondNum === 0) {
+        setTimeout(() => {
+          console.log('倒计时结束')
+          this.setData({
+            CountTime: '重新发送验证码',
+            getvcodeBtnDisabled: false
+          })
+        }, 1000)
+        this.CountTime = '重新发送验证码'
+      } else {
+        this.setData({
+          getvcodeBtnDisabled: true
+        })
+        setTimeout(() => {
+          secondNum = secondNum - 1
+          console.log(secondNum)
+          this.setData({
+            CountTime: secondNum + '秒'
+          })
+          this.countdown(secondNum)
+        }, 1000)
+      }
+    }
+    // 获取验证码按钮事件
+    getvcode() {
+      console.log('正在获取验证码....')
+      this.countdown(this.second)
+    }
     methods = {
-    // 注册按钮，toast提示
+      // 注册按钮，toast提示
       async registerBtnClick() {
         if (this.data.register_password === this.data.register_confirm_password) {
           console.log('注册成功')
+<<<<<<< HEAD
           let email = this.userEmail
           let password = this.userPassword
           const result = await login(email, password)
@@ -168,6 +209,11 @@
               duration: 2000
             })
             setTimeout(this.navigationToHome, 2000)
+=======
+          this.$parent.globalData.userLoginInfo = {
+            userEmail: this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex],
+            userPassword: this.data.register_password
+>>>>>>> 8694fd83cec792935349dcf8a3b07578ccd078cc
           }
         } else {
           console.log('两次输入密码不一致')
@@ -203,6 +249,7 @@
   height: 2em;
   min-height: 1.5em;
   line-height: 1.5em;
+  font-size: 85%;
 }
 .weui-select-style{
   position: relative;
@@ -228,5 +275,15 @@
     top: 50%;
     right: 15px;
     margin-top: -4px
+}
+.weui-cell_input {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.weui-cell {
+  padding: 10px 10px;
+}
+.weui-vcode-btn {
+  font-size: 14px;
 }
 </style>
