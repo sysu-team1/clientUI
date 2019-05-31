@@ -13,7 +13,7 @@
           <view class="weui-cell__ft">
             <picker @change="bindMailTypeChange" value="{{MailTypeIndex}}" range="{{MailTypes}}">
               <view class="email-label weui-select-style">{{MailTypes[MailTypeIndex]}}</view>
-            </picker>            
+            </picker>
             <!-- <view class="email-label">@sysu.mail2.edu.cn</view> -->
           </view>
         </view>
@@ -102,7 +102,9 @@
 <script>
   import wepy from 'wepy'
   import 'wepy-async-function'
+
   import {USER_LOGIN_INFO} from '../utils/constant'
+  import { register } from '../api'
   export default class Register extends wepy.page {
     config = {
       navigationBarTitleText: '注册'
@@ -193,18 +195,28 @@
       async registerBtnClick() {
         if (this.data.register_password === this.data.register_confirm_password) {
           console.log('注册成功')
-          this.$parent.globalData.userLoginInfo = {
-            userEmail: this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex],
-            userPassword: this.data.register_password,
-            loginType: 'student'
+          let email = this.userEmail
+          let password = this.userPassword
+          const result = await register({email, password})
+          if (result.error === 0) {
+            // TODO
+            this.$parent.globalData.userLoginInfo = {
+              userEmail: this.data.register_email,
+              userPassword: this.data.register_password
+            }
+            await wepy.setStorageSync(USER_LOGIN_INFO, this.$parent.globalData.userLoginInfo)
+            await wx.showToast({
+              title: '注册成功！',
+              icon: 'success',
+              duration: 2000
+            })
+            setTimeout(this.navigationToHome, 2000)
+            this.$parent.globalData.userLoginInfo = {
+              userEmail: this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex],
+              userPassword: this.data.register_password,
+              loginType: 'student'
+            }
           }
-          await wepy.setStorageSync(USER_LOGIN_INFO, this.$parent.globalData.userLoginInfo)
-          await wx.showToast({
-            title: '注册成功！',
-            icon: 'success',
-            duration: 2000
-          })
-          setTimeout(this.navigationToHome, 2000)
         } else {
           console.log('两次输入密码不一致')
           wx.showToast({
@@ -214,7 +226,6 @@
           })
         }
       }
-
     }
     onLoad() {
       console.log('注册页面')
