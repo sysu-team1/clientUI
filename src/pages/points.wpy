@@ -1,0 +1,26 @@
+<template>
+  <view class="point-wrapper">
+    <view class="point">
+      <view>你的积分为: </view>
+      <view>{{point}}</view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class Point extends wepy.page {
+  config = {
+    navigationBarTitleText: '积分'
+  }
+  data = {
+    point: 100
+  }
+}
+</script>
+<style>
+.point-wrapper {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+</style>
