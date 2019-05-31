@@ -53,7 +53,7 @@
       userEmail: null,
       userPassword: null,
       MailTypeIndex: 0,
-      MailTypes: ['@sysu.mail2.edu.cn', '@sysu.mail.edu.cn'],
+      MailTypes: ['@mail2.sysu.edu.cn', '@mail.sysu.edu.cn', '@qq.com'],
       loginType: null,
       LoginTypes: [
         {

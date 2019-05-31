@@ -1,0 +1,14 @@
+<template>
+  <view>123</view>
+</template>
+<script>
+  import wepy from 'wepy'
+  export default class Detail extends wepy.page {
+    config = {
+      navigationBarTitleText: '我的任务'
+    }
+}
+</script>
+<style lang="less">
+
+</style>

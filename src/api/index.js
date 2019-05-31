@@ -1,6 +1,7 @@
 import wepy from 'wepy'
 import 'wepy-async-function'
 import { BASIC_REQUEST_URL } from '../utils/constant'
+import json2Form from'../utils/utils'
 
 const login = async (email, password) => {
   let res = await wepy.request({
@@ -37,11 +38,9 @@ const registerVcode = async(email) => {
       email: email
     }, //请求的参数",
     method: 'POST',
-    // dataType: 'json', //如果设为json，会尝试对返回的数据做一次 JSON.parse,
     header: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'chartset': 'utf-8'
-    }
+      'content-type': 'application/x-www-form-urlencoded' // 默认值
+    },
   })
   if (res.statusCode === 200) {
     return res.data

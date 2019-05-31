@@ -22,7 +22,7 @@
               <view class="label-front">验证码</view>
             </view>
             <view class="weui-cell__bd">
-              <input class="weui-input" placeholder="请输入验证码" />
+              <input class="weui-input" bindinput="registerVcode" placeholder="请输入验证码" />
             </view>
             <view class="weui-cell__ft">
               <button class="weui-vcode-btn" bindtap="getvcode" disabled="{{getvcodeBtnDisabled}}">{{CountTime}}</button>
@@ -54,7 +54,7 @@
             <view class="label-front">姓名</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" bindinput="Name"/>
+            <input class="weui-input" bindinput="bindName"/>
           </view>
         </view>
         <view class="weui-cell weui-cell_input">
@@ -62,7 +62,7 @@
             <view class="label-front">学号</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" bindinput="NetID"/>
+            <input class="weui-input" bindinput="bindNetID"/>
           </view>
         </view>
         <view class="weui-cell weui-cell_input">
@@ -70,7 +70,7 @@
             <view class="label-front">专业</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" bindinput="Major"/>
+            <input class="weui-input" bindinput="bindMajor"/>
           </view>
         </view>
         <view class="weui-cell weui-cell_select">
@@ -114,19 +114,25 @@
       register_email: null,                                   // 注册时填写的email
       register_password: null,                                // 注册时填写的密码
       register_confirm_password: null,                        // 注册时再次填写的密码
+      vcode: null,                                            // 用户输入的验证码
+      name: null,                                             // 用户姓名
+      student_id: null,                                       // 用户学号
+      major: null,                                            // 用户专业
       GradeIndex: 0,                                          // 年级数组的下标
       Grades: [2019, 2018, 2017, 2016, 2015, 2014],           // 年级，如何更好的表示？待解决！！！
       SexIndex: 0,                                            // 性别数组的下标
       SexList: ['男', '女'],                                  // 性别
       MailTypeIndex: 0,                                       // 邮箱类型下标
-      MailTypes: ['@sysu.mail2.edu.cn', '@sysu.mail.edu.cn'], // 邮箱类型
+      MailTypes: ['@mail2.sysu.edu.cn', '@mail.sysu.edu.cn', '@qq.com'], // 邮箱类型
       CountTime: '获取验证码',                                 // 获取验证码按钮显示变量
       second: 6,                                              // 获取验证码等待时间 ，单位 s（秒）,测试6秒，正式为60秒
       getvcodeBtnDisabled: false                              // 获取验证码按钮是否可点击
     }
+    // 邮箱
     registerEmail(e) {
       this.data.register_email = e.detail.value
     }
+    // 密码
     registerPassword(e) {
       this.data.register_password = e.detail.value
     }
@@ -147,9 +153,27 @@
       }
       console.log(this.data.isCorresponding)
     }
+    // 验证码
+    registerVcode(e) {
+      this.data.vcode = e.detail.value
+    }
+    // 姓名
+    bindName(e) {
+      this.data.name = e.detail.value
+    }
+    // 学号
+    bindNetID(e) {
+      this.data.student_id = e.detail.value
+    }
+    // 专业
+    bindMajor(e) {
+      this.data.major = e.detail.value
+    }
+    // 年级
     bindGradeChange(e) {
       this.GradeIndex = e.detail.value
     }
+    // 性别
     bindSexChange(e) {
       this.SexIndex = e.detail.value
     }
@@ -202,7 +226,10 @@
           console.log('注册成功')
           let email = this.userEmail
           let password = this.userPassword
-          const result = await register({email, password})
+          let vcode = this.vcode
+          console.log(this.data)
+          // register网络连接
+          const result = await register(email, password,student_id, major,vcode, )
           if (result.error === 0) {
             // TODO
             this.$parent.globalData.userLoginInfo = {
