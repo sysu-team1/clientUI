@@ -25,6 +25,13 @@
               </view>
             </view>
           </view>
+          <view class="login-type-radio">
+            <radio-group bindchange="radioChange">
+              <label wx:for="{{LoginTypes}}" wx:key="key">
+                <radio value="{{item.type}}">{{item.desc}}</radio>
+              </label>
+            </radio-group>
+          </view>
           <view class="weui-footer weui-btn-area">
             <button class="weui-button" type="primary" bindtap="loginBtnClick">登录</button>
             <view class=" weui-footer weui-footer__link" @tap="registerTap">还没注册？点这里</view>
@@ -46,7 +53,18 @@
       userEmail: null,
       userPassword: null,
       MailTypeIndex: 0,
-      MailTypes: ['@sysu.mail2.edu.cn', '@sysu.mail.edu.cn']
+      MailTypes: ['@sysu.mail2.edu.cn', '@sysu.mail.edu.cn'],
+      loginType: null,
+      LoginTypes: [
+        {
+          type: 'student',
+          desc: '我是学生'
+        },
+        {
+          type: 'organization',
+          desc: '我是组织'
+        }
+      ]
     }
     async loginBtnClick() {
       console.log('login in button')
@@ -58,7 +76,8 @@
 
       this.$parent.globalData.userLoginInfo = {
         userEmail: this.data.userEmail + this.data.MailTypes[this.data.MailTypeIndex],
-        userPassword: this.data.userPassword
+        userPassword: this.data.userPassword,
+        loginType: this.data.loginType
       }
       console.log(this.$parent.globalData.userLoginInfo)
       await wepy.setStorageSync(USER_LOGIN_INFO, this.$parent.globalData.userLoginInfo)
@@ -84,6 +103,10 @@
     }
     bindMailTypeChange(e) {
       this.MailTypeIndex = e.detail.value
+    }
+    radioChange(e) {
+      console.log(e)
+      this.data.loginType = e.detail.value
     }
     onLoad() {
       console.log('login页面')
@@ -118,5 +141,10 @@
 }
 .weui-select{
   border-right: 0rpx;
+}
+.login-type-radio{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 </style>
