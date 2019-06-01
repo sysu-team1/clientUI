@@ -1,18 +1,23 @@
 import wepy from 'wepy'
 import 'wepy-async-function'
-import { BASIC_REQUEST_URL , REGISTER_REQUEST_URL, REGISTER_GETVCODE_REQUEST_URL} from '../utils/constant'
+import { BASIC_REQUEST_URL , LOGIN_REQUEST_URL, REGISTER_REQUEST_URL, REGISTER_GETVCODE_REQUEST_URL} from '../utils/constant'
 import json2Form from'../utils/utils'
 
-const login = async (email, password) => {
+const login = async (email, password, type) => {
   let res = await wepy.request({
-    url: BASIC_REQUEST_URL + '',
+    url: BASIC_REQUEST_URL + LOGIN_REQUEST_URL,
     data: {
-      email,
-      password
+      email: email,
+      password: password,
+      type: type
     },
-    method: 'POST'
+    method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded' 
+    },
   })
   if (res.statusCode === 200) {
+    console.log(res.data)
     return res.data
   }
 }
@@ -26,12 +31,16 @@ const register = async (email, vcode, password, name, studentId, major, grade, s
       sex: sex,
       collage: major,
       grade: grade,
-      edu_bg: name,
+      name: name,
       validate_code: vcode
     },
-    method: 'POST'
+    method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded' 
+    },
   })
   if (res.statusCode === 200) {
+    console.log(res.data)
     return res.data
   }
 }
@@ -44,7 +53,7 @@ const registerVcode = async(email) => {
     }, //请求的参数",
     method: 'POST',
     header: {
-      'content-type': 'application/x-www-form-urlencoded' // 默认值
+      'content-type': 'application/x-www-form-urlencoded' 
     },
   })
   if (res.statusCode === 200) {
