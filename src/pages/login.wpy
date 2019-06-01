@@ -76,29 +76,32 @@
       // 网络请求
       var result = await login(email, password, type)
       console.log(result.error)
-      if (result.error === 1) {
-        await wx.showToast({
-          title: result.error_message,
-          icon: 'success',
-          duration: 2000
-        })
-      }
-      else {
-        // 存储openid result.data.openid
-        this.$parent.globalData.userLoginInfo = {
-          userEmail: this.data.register_email,
-          userPassword: this.data.register_password,
-          loginType: 'student'
-        }
-        await wepy.setStorageSync(USER_LOGIN_INFO, this.$parent.globalData.userLoginInfo)
-        wepy.switchTab({
-          url: 'home'
-        })
-        setTimeout(this.navigationToHome, 2000)
-        this.$parent.globalData.userLoginInfo = {
-          userEmail: this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex],
-          userPassword: this.data.register_password,
-          loginType: 'student'
+      if (result != null) {
+        if (result.error == 1) {
+          // 登陆失败，反馈信息
+          console.log(result.error_message)
+          await wx.showToast({
+            title: result.error_message,
+            icon: 'error',
+            duration: 2000
+          })
+        } else {
+          // 存储openid result.data.openid
+          this.$parent.globalData.userLoginInfo = {
+            userEmail: this.data.register_email,
+            userPassword: this.data.register_password,
+            loginType: 'student'
+          }
+          await wepy.setStorageSync(USER_LOGIN_INFO, this.$parent.globalData.userLoginInfo)
+          wepy.switchTab({
+            url: 'home'
+          })
+          setTimeout(this.navigationToHome, 2000)
+          this.$parent.globalData.userLoginInfo = {
+            userEmail: this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex],
+            userPassword: this.data.register_password,
+            loginType: 'student'
+          }
         }
       }
     }

@@ -211,18 +211,27 @@
     // 获取验证码按钮事件
     async getvcode() {
       console.log('正在获取验证码....')
-      this.countdown(this.second)
       // 后台获取对应验证码，并实时验证
       if (this.data.register_email != null) {
         console.log(this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex])
-        let d = await registerVcode(this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex])
-        console.log(d)
+        let result = await registerVcode(this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex])
+        console.log(result)
+        if (result != null) {
+          // 成功获得验证码
+          if (result.error == 0) {
+            console.log('成功获得验证码')
+            this.countdown(this.second)
+          }
+        } else {
+          console.log(result.error_message)
+        }
+      } else {
+        console.log('请输入邮箱')
       }
     }
     // 注册按钮，toast提示
     async registerBtnClick() {
       if (this.data.register_password === this.data.register_confirm_password) {
-        console.log('注册成功')
         var email = this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex]
         var vcode = this.data.vcode
         var password = this.data.register_password
@@ -234,25 +243,35 @@
         console.log(email, vcode, password, name, studentId, major, grade, sex)
         // register网络连接
         var result = await register(email, vcode, password, name, studentId, major, grade, sex)
-        // if (result.error === 0)存在bug, 连通之后查看数据再修改
+        // 确保有返回信息
+        console.log(result)
         if (result != null) {
-          // TODO
-          this.$parent.globalData.userLoginInfo = {
-            userEmail: this.data.register_email,
-            userPassword: this.data.register_password,
-            loginType: 'student'
-          }
-          await wepy.setStorageSync(USER_LOGIN_INFO, this.$parent.globalData.userLoginInfo)
-          await wx.showToast({
-            title: '注册成功！',
-            icon: 'success',
-            duration: 2000
-          })
-          setTimeout(this.navigationToHome, 2000)
-          this.$parent.globalData.userLoginInfo = {
-            userEmail: this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex],
-            userPassword: this.data.register_password,
-            loginType: 'student'
+          // 注册成功
+          console.log(result.error)
+          if (result.error == 0) {
+            // TODO
+            // open_id 请求数据 openid = result.data.openid
+            console.log('注册成功')
+            this.$parent.globalData.userLoginInfo = {
+              userEmail: this.data.register_email,
+              userPassword: this.data.register_password,
+              loginType: 'student'
+            }
+            await wepy.setStorageSync(USER_LOGIN_INFO, this.$parent.globalData.userLoginInfo)
+            await wx.showToast({
+              title: '注册成功！',
+              icon: 'success',
+              duration: 2000
+            })
+            setTimeout(this.navigationToHome, 2000)
+            this.$parent.globalData.userLoginInfo = {
+              userEmail: this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex],
+              userPassword: this.data.register_password,
+              loginType: 'student'
+            }
+          } else {
+            // 注册失败，反馈信息
+            console.log(result.error_message)
           }
         }
       } else {

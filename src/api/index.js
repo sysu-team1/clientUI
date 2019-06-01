@@ -16,6 +16,14 @@ const login = async (email, password, type) => {
       'content-type': 'application/x-www-form-urlencoded' 
     },
   })
+  // 返回信息
+  // error： 1表示出错， 0表示正常
+  // error_message: 
+  //     '密码错误'
+  //     '账号不存在'
+  // data:
+  //   openid: 账号的唯一id
+  //
   if (res.statusCode === 200) {
     console.log(res.data)
     return res.data
@@ -39,9 +47,18 @@ const register = async (email, vcode, password, name, studentId, major, grade, s
       'content-type': 'application/x-www-form-urlencoded' 
     },
   })
+  // 返回信息
+  // error： 1表示出错， 0表示正常
+  // error_message: 
+  //     '未获取验证码或验证码过期'
+  //     '验证码错误'
+  //     '已经存在'
+  //     ''         表示注册成功
+  // data:
+  //   openid: 账号的唯一id
+  //
   if (res.statusCode === 200) {
-    console.log(res.data)
-    return res.data
+    return JSON.parse(res.data.replace(/'/g, '"'))
   }
 }
 
@@ -50,14 +67,19 @@ const registerVcode = async(email) => {
     url: BASIC_REQUEST_URL + REGISTER_GETVCODE_REQUEST_URL, // 获取验证码开发者服务器接口地址
     data: {
       email: email
-    }, //请求的参数",
+    }, 
     method: 'POST',
     header: {
       'content-type': 'application/x-www-form-urlencoded' 
     },
   })
+  // 返回信息
+  // error： 1表示出错， 0表示正常
+  // error_message: 
+  //     '原验证码未过期'
+  //     '验证码已发送'
   if (res.statusCode === 200) {
-    return res.data
+    return JSON.parse(res.data.replace(/'/g, '"'))
   }
 }
 
@@ -69,7 +91,7 @@ const getPoint = async (id) => {
     }
   })
   if (res.statusCode === 200) {
-    return res.data
+    return JSON.parse(res.data.replace(/'/g, '"'))
   }
 }
 
