@@ -219,51 +219,49 @@
         console.log(d)
       }
     }
-    methods = {
-      // 注册按钮，toast提示
-      async registerBtnClick() {
-        if (this.data.register_password === this.data.register_confirm_password) {
-          console.log('注册成功')
-          let registerInfo = {
-            email: this.register_email + this.MailTypes[this.MailTypeIndex],
-            vcode: this.vcode,
-            password: this.password,
-            name: this.name,
-            student_id: this.student_id,
-            major: this.major,
-            grade: this.grade,
-            sex: this.sex
+    // 注册按钮，toast提示
+    async registerBtnClick() {
+      if (this.data.register_password === this.data.register_confirm_password) {
+        console.log('注册成功')
+        var email = this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex]
+        var vcode = this.data.vcode
+        var password = this.data.register_password
+        var name = this.data.name
+        var studentId = this.data.student_id
+        var major = this.data.major
+        var grade = this.data.Grades[this.data.GradeIndex]
+        var sex = this.data.SexList[this.data.SexIndex]
+        console.log(email, vcode, password, name, studentId, major, grade, sex)
+        // register网络连接
+        var result = await register(email, vcode, password, name, studentId, major, grade, sex)
+        // if (result.error === 0)存在bug, 连通之后查看数据再修改
+        if (result != null) {
+          // TODO
+          this.$parent.globalData.userLoginInfo = {
+            userEmail: this.data.register_email,
+            userPassword: this.data.register_password,
+            loginType: 'student'
           }
-          // register网络连接
-          const result = await register(registerInfo)
-          if (result.error === 0) {
-            // TODO
-            this.$parent.globalData.userLoginInfo = {
-              userEmail: this.data.register_email,
-              userPassword: this.data.register_password,
-              loginType: 'student'
-            }
-            await wepy.setStorageSync(USER_LOGIN_INFO, this.$parent.globalData.userLoginInfo)
-            await wx.showToast({
-              title: '注册成功！',
-              icon: 'success',
-              duration: 2000
-            })
-            setTimeout(this.navigationToHome, 2000)
-            this.$parent.globalData.userLoginInfo = {
-              userEmail: this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex],
-              userPassword: this.data.register_password,
-              loginType: 'student'
-            }
-          }
-        } else {
-          console.log('两次输入密码不一致')
-          wx.showToast({
-            title: '两次密码不一致',
-            icon: 'none',
+          await wepy.setStorageSync(USER_LOGIN_INFO, this.$parent.globalData.userLoginInfo)
+          await wx.showToast({
+            title: '注册成功！',
+            icon: 'success',
             duration: 2000
           })
+          setTimeout(this.navigationToHome, 2000)
+          this.$parent.globalData.userLoginInfo = {
+            userEmail: this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex],
+            userPassword: this.data.register_password,
+            loginType: 'student'
+          }
         }
+      } else {
+        console.log('两次输入密码不一致')
+        wx.showToast({
+          title: '两次密码不一致',
+          icon: 'none',
+          duration: 2000
+        })
       }
     }
     onLoad() {
