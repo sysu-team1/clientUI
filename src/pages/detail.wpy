@@ -1,9 +1,34 @@
 <template>
-    <view>123</view>
+    <view>{{taskid}}</view>
 </template>
 <script>
   import wepy from 'wepy'
   export default class Detail extends wepy.page {
+    config = {
+      navigationBarTitleText: '任务详情'
+    }
+    data = {
+      taskid: ''
+    }
+    onReady() {
+      this.setData({taskid: this.data.taskid})
+      console.log(this.data.taskid)
+      console.log('onready')
+      this.$apply()
+    }
+    onShow() {
+      this.setData({taskid: this.data.taskid})
+      console.log(this.data.taskid)
+      console.log('onshow')
+      this.$apply()
+    }
+    onLoad(prop) {
+      console.log(prop, prop.id)
+      this.data.taskid = prop.id
+      console.log(this.data.taskid)
+      this.$apply()
+      console.log('onload')
+    }
 }
 </script>
 <style lang="less">
