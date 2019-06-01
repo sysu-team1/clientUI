@@ -1,5 +1,5 @@
 <template>
-    <view>{{taskid}}</view>
+  <view>{{taskid}}</view>
 </template>
 <script>
   import wepy from 'wepy'

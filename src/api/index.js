@@ -21,7 +21,7 @@ const login = async (email, password, type) => {
   })
   // 返回信息
   // error： 1表示出错， 0表示正常
-  // error_message: 
+  // error_message:
   //     '密码错误'
   //     '账号不存在'
   // data:
@@ -52,7 +52,7 @@ const register = async (email, vcode, password, name, studentId, major, grade, s
   })
   // 返回信息
   // error： 1表示出错， 0表示正常
-  // error_message: 
+  // error_message:
   //     '未获取验证码或验证码过期'
   //     '验证码错误'
   //     '已经存在'
@@ -70,7 +70,7 @@ const registerVcode = async(email) => {
     url: BASIC_REQUEST_URL + REGISTER_GETVCODE_REQUEST_URL, // 获取验证码开发者服务器接口地址
     data: {
       email: email
-    }, 
+    },
     method: 'POST',
     header: {
       'content-type': POST_CONTENT_TYPE
@@ -78,7 +78,7 @@ const registerVcode = async(email) => {
   })
   // 返回信息
   // error： 1表示出错， 0表示正常
-  // error_message: 
+  // error_message:
   //     '原验证码未过期'
   //     '验证码已发送'
   if (res.statusCode === 200) {
@@ -95,6 +95,18 @@ const getPoint = async (id) => {
   })
   if (res.statusCode === 200) {
     return JSON.parse(res.data.replace(/'/g, '"'))
+  }
+}
+
+const searchTask = async (params) => {
+  let res = await wepy.request({
+    url: BASIC_REQUEST_URL + '',
+    data: params,
+    method: 'GET'
+  })
+
+  if (res.statusCode === 200) {
+    return res.data
   }
 }
 

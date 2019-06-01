@@ -49,7 +49,7 @@
             <view class="text">我的消息</view>
           </view>
         </navigator>
-        <navigator class="item" url="/pages/message" open-type="navigate">
+        <navigator class="item" url="/pages/setting" open-type="navigate">
           <view class="item_content">
             <i class="iconfont">&#xeb67;</i>
             <view class="text">我的设置</view>
