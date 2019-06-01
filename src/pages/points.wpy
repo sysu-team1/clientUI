@@ -8,6 +8,7 @@
 </template>
 <script>
 import wepy from 'wepy'
+import { getPoints } from '../api'
 export default class Point extends wepy.page {
   config = {
     navigationBarTitleText: '积分'
@@ -19,7 +20,8 @@ export default class Point extends wepy.page {
     this.getPoints()
   }
   methods = {
-    getPoints() {
+    async getPoints() {
+      let data = await getPoints()
 
     }
   }

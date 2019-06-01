@@ -3,6 +3,9 @@ import 'wepy-async-function'
 import { BASIC_REQUEST_URL , LOGIN_REQUEST_URL, REGISTER_REQUEST_URL, REGISTER_GETVCODE_REQUEST_URL} from '../utils/constant'
 import json2Form from'../utils/utils'
 
+// 只有post请求的时候才加这个header
+const POST_CONTENT_TYPE = 'application/x-www-form-urlencoded'
+
 const login = async (email, password, type) => {
   let res = await wepy.request({
     url: BASIC_REQUEST_URL + LOGIN_REQUEST_URL,
@@ -13,7 +16,7 @@ const login = async (email, password, type) => {
     },
     method: 'POST',
     header: {
-      'content-type': 'application/x-www-form-urlencoded' 
+      'content-type': POST_CONTENT_TYPE
     },
   })
   // 返回信息
@@ -44,7 +47,7 @@ const register = async (email, vcode, password, name, studentId, major, grade, s
     },
     method: 'POST',
     header: {
-      'content-type': 'application/x-www-form-urlencoded' 
+      'content-type': POST_CONTENT_TYPE
     },
   })
   // 返回信息
@@ -70,7 +73,7 @@ const registerVcode = async(email) => {
     }, 
     method: 'POST',
     header: {
-      'content-type': 'application/x-www-form-urlencoded' 
+      'content-type': POST_CONTENT_TYPE
     },
   })
   // 返回信息
