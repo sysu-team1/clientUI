@@ -1,6 +1,11 @@
 import wepy from 'wepy'
 import 'wepy-async-function'
-import { BASIC_REQUEST_URL , LOGIN_REQUEST_URL, REGISTER_REQUEST_URL, REGISTER_GETVCODE_REQUEST_URL} from '../utils/constant'
+import {
+  BASIC_REQUEST_URL ,
+  LOGIN_REQUEST_URL,
+  REGISTER_REQUEST_URL,
+  REGISTER_GETVCODE_REQUEST_URL
+} from '../utils/constant'
 import json2Form from'../utils/utils'
 
 // 只有post请求的时候才加这个header
@@ -98,9 +103,10 @@ const getPoint = async (id) => {
   }
 }
 
+
 const searchTask = async (params) => {
   let res = await wepy.request({
-    url: BASIC_REQUEST_URL + '',
+    url: BASIC_REQUEST_URL + '/task/search',
     data: params,
     method: 'GET'
   })
@@ -110,8 +116,96 @@ const searchTask = async (params) => {
   }
 }
 
+
+/**
+ * 查询某个发布者发布的任务
+ * @param {String} publisherId 发布者id
+ * @param {String} lastId 上次请求的数据最后一条数据的id, 可选
+ */
+
+const searchTaskByPulisherId = async (publisherId, lastId) => {
+  let params = { publisher_id: publisherId }
+  if (lastId) {
+    params.last_id = lastId
+  }
+  return searchTask(params)
+}
+
+
+/**
+ * 查询自己接受的任务
+ * @param {String} accepterId 当前用户的id
+ * @param {String} lastId 上次请求的数据最后一条数据的id 可选
+ */
+
+const searchTaskByAccepterId = async (accepterId, lastId) => {
+  let params = { accepter_id: accepterId }
+  if (lastId) {
+    params.last_id = lastId
+  }
+  return searchTask(params)
+}
+
+/**
+ * 根据标签查询任务
+ * @param {String} tag 任务标签
+ * @param {*} lastId
+ */
+
+const searchTaskByTag = async (tag, lastId) => {
+  let params = { tag }
+  if (lastId) {
+    params.last_id = lastId
+  }
+  return searchTask(params)
+}
+
+/**
+ * 根据内容搜索任务
+ * @param {String} text 内容
+ * @param {String} lastId 可选
+ */
+
+const searchTaskByText = async (text, lastId) => {
+  let params = { text }
+  if (lastId) {
+    params.last_id = lastId
+  }
+  return searchTask(params)
+}
+
+// 发问卷
+const publishQuestionPaper = async (id, quest_name, questions, deadline_date, people_type, paticipate_number) => {
+  let res = await wepy.request({
+    url: BASIC_REQUEST_URL + '/user/questpaper',
+    method: 'POST',
+    data: {
+      id,
+      quest_name,
+      questions,
+      deadline_date,
+      people_type,
+      paticipate_number
+    },
+    header: {
+      'content-type': POST_CONTENT_TYPE
+    }
+  })
+  if (res.statusCode === 200) {
+    return res.data
+  }
+}
+
+
+//
+
 export {
   login,
   register,
-  registerVcode
+  registerVcode,
+  getPoints,
+  searchTaskByPulisherId,
+  searchTaskByAccepterId,
+  searchTaskByTag,
+  searchTaskByText
 }
