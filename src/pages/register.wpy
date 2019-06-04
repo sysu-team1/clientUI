@@ -218,7 +218,7 @@
         console.log(result)
         if (result != null) {
           // 成功获得验证码
-          if (result.error == 0) {
+          if (result.error === 0) {
             console.log('成功获得验证码')
             this.countdown(this.second)
           }
@@ -248,7 +248,7 @@
         if (result != null) {
           // 注册成功
           console.log(result.error)
-          if (result.error == 0) {
+          if (result.error === 0) {
             // TODO
             // open_id 请求数据 openid = result.data.openid
             console.log('注册成功')
