@@ -91,7 +91,7 @@ const registerVcode = async(email) => {
   }
 }
 
-const getPoint = async (id) => {
+const getPoints = async (id) => {
   let res = await wepy.request({
     url: BASIC_REQUEST_URL + '',
     data: {
@@ -197,6 +197,71 @@ const publishQuestionPaper = async (id, quest_name, questions, deadline_date, pe
 }
 
 
+/* 
+任务的创建
+	input：
+        publish_id, 发布人id ，也就是open_id
+        limit_time, ddl
+        limit_num, 限制人数数量
+        title, task标题
+        content, 内容（如果tag为'w问卷'，则内容为问卷的内容）
+        tag, 标签['问卷', '取快递', '其他']
+        reward, 赏额
+        problem_content， 当tag为问卷的时候才有，否则默认值为""， 使用^作为problem的切分，使用$作为题目与答案的切分，使用#作为答案的切分
+	output： 
+	"error": 0/1,
+		"data": {
+			"msg": "余额不足/创建成功/没有图片上传/创建成功/图片上传失败",
+	}
+使用例子
+  async test() {
+      var result = await publishTask()
+      console.log(result)
+    }
+测试样例
+  id = 1000000
+  limit_time = '2000-01-01 00:00:00'
+  limit_num = 11
+  title = '测试'
+  content = '内容'
+  tag = '问卷'
+  reward = 8
+  problem_content = 'p1$a#b#c#d^p2$a#b#c#d' => p1 : a , b, c, d ; p2: a, b, c, d
+*/
+const publishTask = async (id='', limit_time='', limit_num='', title='', content='', tag='', reward='', problem_content='') => {
+  var _this = this 
+  wx.chooseImage({
+    // 选择图片的最大数量
+    // 详情可见链接：https://www.cnblogs.com/srgk/p/8989515.html
+    count: 1, 
+    sizeType: ['original', 'compressed'], 
+    sourceType: ['album', 'camera'], 
+    success: function (res) {
+      var tempFilePaths = res.tempFilePaths
+      console.log(tempFilePaths)
+      wx.uploadFile({
+        url: BASIC_REQUEST_URL + '/tasks/create/', //仅为示例，非真实的接口地址
+        filePath: tempFilePaths[0],
+        name: 'photo',
+        formData: {
+          "openid": id,
+          "limit_time": limit_time,
+          "limit_num": limit_num,
+          "title": title,
+          "content": content,
+          "tag": tag,
+          "reward": reward,
+          "problem_content": problem_content
+        },
+        success (res){
+          var datas = JSON.parse(res.data.replace(/'/g, '"'))
+          console.log(datas)
+        }
+      })
+    }
+  })
+}
+
 //
 
 export {
@@ -207,5 +272,6 @@ export {
   searchTaskByPulisherId,
   searchTaskByAccepterId,
   searchTaskByTag,
-  searchTaskByText
+  searchTaskByText,
+  publishTask
 }

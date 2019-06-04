@@ -22,7 +22,7 @@ export default class Point extends wepy.page {
   methods = {
     async getPoints() {
       let data = await getPoints()
-
+      console.log(data)
     }
   }
 }
