@@ -39,6 +39,8 @@
   export default class Detail extends wepy.page {
     config = {
       navigationBarTitleText: '我的任务',
+      enablePullDownRefresh: true, // 当前页
+      backgroundTextStyle: 'dark', // 顶部显示颜色为深色的三个点
       usingComponents: {
         'i-card': '../resource/iview/card/index',
         'i-panel': '../resource/iview/panel/index',
@@ -75,12 +77,21 @@
             },
             {
               name: '标签一2',
-              color: 'red',
+              color: 'green',
               checked: false
             }
           ]
         }
       ]
+    }
+    fetchTaskList() {
+      console.log('刷新列表')
+    }
+    onPullDownRefresh() {
+      console.log('下拉刷新')
+    }
+    onLoad() {
+      console.log('我的任务页面')
     }
 }
 </script>

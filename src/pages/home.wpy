@@ -63,6 +63,8 @@
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '闲余翻身',
+      enablePullDownRefresh: true, // 当前页
+      backgroundTextStyle: 'dark', // 顶部显示颜色为深色的三个点
       usingComponents: {
         'i-card': '../resource/iview/card/index',
         'i-panel': '../resource/iview/panel/index',
@@ -118,7 +120,10 @@
             }
           ]
         }
-      ]
+      ],
+      loading: true,
+      currentPage: 1,
+      totalPage: 0
     }
     methods = {
       inputTyping (e) {
@@ -135,8 +140,19 @@
         this.inputShowed = false
       }
     }
+    fetchTaskList(currentPage, operation) {
+      // operation: ['refresh','loadmore']
+      console.log('刷新列表')
+    }
+    onPullDownRefresh() {
+      console.log('下拉刷新')
+      // this.fetchTaskList()
+    }
+    onReachBottom() {
+      console.log('上滑加载')
+    }
     onLoad() {
-      console.log('Index 页面')
+      console.log('Home 页面')
       // 是否同意微信授权
       let userInfo = wepy.getStorageSync(USER_WEIXIN_INFO)
       if (!userInfo) {
@@ -155,6 +171,7 @@
           })
         } else {
           console.log('用户信息存在，直接登录')
+          this.fetchTaskList()
         }
       }
     }
