@@ -1,377 +1,376 @@
 <template>
-<view>
-  <view id="title">
-    <text>标题:</text>
-    <input class='titleContent' value='描述概况'/>
+  <view>
+    <view id="title">
+      <text>标题:</text>
+      <input class='titleContent' value='描述概况'/>
+    </view>
+    <!-- <view class="divLine"></view> -->
+
+    <view id="request">
+      <textarea  class='requestContent' value='要求：描述任务详情'></textarea>
+    </view>
+    <!-- <view class="divLine"></view> -->
+    <view>
+      <picker value="{{newIndex}}" range='{{typeArray}}' bindchange="bindTypeChange">
+          <image class='addNewQuestion' src='{{addIconPath}}'/> 
+      </picker>
+    </view>
+
+
+
+    <view id = 'body' wx:for="{{questionnaireArray}}" wx:key="id" wx:for-index='fatherIndex'>
+      <view wx:if="{{item.type === 'SCQ'}}">
+        <view class = 'SCQ' data-id='{{fatherIndex}}'>
+          <view class='SCQTitle'>
+            <view class='SCQQ'>Q</view>
+            <view class='SCQindex'>{{fatherIndex+1}}</view>
+            <view class='SCQquto'>:</view>
+            <textarea auto-height='true' class='SCQDiscription' value='{{item.content.description}}' bindblur='bindblurSCQ' data-id='{{fatherIndex}}'></textarea>
+            <image class='SCQaddIcon1' src='{{addIconPath1}}' mode='widthFix' catchtap='addSCQ' data-id='{{fatherIndex}}'/>
+            <image class='SCQdeleteIcon1' src='{{deletePath1}}' mode='widthFix' catchtap='deleteSCQ' data-id='{{fatherIndex}}'/>
+          </view>
+          <view class='SCQOption' wx:for="{{item.content.options}}" wx:key="SCQID" data-id='{{fatherIndex}}' bindtouchstart='getTempFatherIndex'>
+            <!-- <image class='SCQselectIcon' src="{{item.isSelected?'../../../images/SAQ2.png':'../../../images/SAQ1.png'}}" mode='widthFix'></image> -->
+            <textarea auto-height='true' value='{{item.name}}' class='SCQText' bindblur='bindblurOneOfSCQ' data-id='{{index}}'></textarea>
+            <image class='SCQdeleteIcon' src='{{deletePath}}' mode='widthFix' data-id='{{index}}' catchtap='deleteOneOfSCQ'/>
+          </view>
+        </view>
+      </view>
+      <view wx:if="{{item.type === 'MCQ'}}">
+        <view class = 'MCQ' data-id='{{fatherIndex}}'>
+          <view class='MCQTitle'>
+            <view class='MCQQ'>Q</view>
+            <view class='MCQindex'>{{fatherIndex+1}}</view>
+            <view class='MCQquto'>:</view>
+            <textarea auto-height='true' class='MCQDiscription' value='{{item.content.description}}' data-id='{{fatherIndex}}' bindblur='bindblurMCQ'></textarea>
+            <image class='MCQaddIcon1' src='{{addIconPath1}}' mode='widthFix' bindtap='addMCQ' data-id='{{fatherIndex}}'/>
+            <image class='MCQdeleteIcon1' src='{{deletePath1}}' mode='widthFix' bindtap='deleteMCQ' data-id='{{fatherIndex}}'/>
+          </view>
+          <view class='MCQOption' wx:for="{{item.content.options}}" wx:key="MCQID" data-id='{{fatherIndex}}' bindtouchstart='getTempFatherIndex'>
+            <!-- <image class='MCQselectIcon' src="{{item.isSelected?'../../../images/MAQ2.png':'../../../images/MAQ1.png'}}" mode='widthFix'></image> -->
+            <textarea auto-height='true' class='MCQText' value='{{item.name}}' data-id='{{index}}' bindblur='bindblurOneOfMCQ'></textarea>
+            <image class='MCQdeleteIcon' src='{{deletePath}}' mode='widthFix' catchtap='deleteOneOfMCQ' data-id='{{index}}'/>
+          </view>
+        </view>
+      </view>
+      
+      <view wx:if="{{item.type === 'SAQ'}}">
+        <view class = 'SAQ' data-id='{{fatherIndex}}'>
+          <view class='SAQTitle'>
+            <view class='SAQQ'>Q</view>
+            <view class='SAQindex'>{{fatherIndex+1}}</view>
+            <view class='SAQquto'>:</view>
+            <textarea auto-height='true' class='SAQDiscription' value='{{item.content.description}}' data-id='{{fatherIndex}}' bindblur='bindblurSAQ'></textarea>
+            <image class='SAQdeleteIcon' src='{{deletePath1}}' mode='widthFix' bindtap='deleteSAQ' data-id='{{fatherIndex}}'/>
+          </view>
+          <textarea auto-height='true' class = "SAQAnswer" value='{{item.content.answer}}' bindblur='bindblurAnswerOfSAQ' data-id='{{fatherIndex}}'></textarea>
+        </view>
+      </view>
+    </view>
+    <button class="weui-btn" type="primary" bindtap='showQ'>下一步</button>
   </view>
-  <!-- <view class="divLine"></view> -->
-
-  <view id="request">
-    <textarea  class='requestContent' value='要求：描述任务详情'></textarea >
-  </view>
-  <!-- <view class="divLine"></view> -->
-
-<picker value="{{newIndex}}" range='{{typeArray}}' bindchange="bindTypeChange">
-    <image class='addNewQuestion' src='{{addIconPath}}'/> 
-</picker>
-
-
-<view id = 'body' wx:for="{{questionnaireArray}}" wx:key="id" wx:for-index='fatherIndex'>
-  <block wx:if="{{item.type === 'SCQ'}}">
-    <view class = 'SCQ' data-id='{{fatherIndex}}'>
-      <view class='SCQTitle'>
-        <view class='SCQQ'>Q</view>
-        <view class='SCQindex'>{{fatherIndex+1}}</view>
-        <view class='SCQquto'>:</view>
-        <textarea auto-height='true' class='SCQDiscription' value='{{item.content.description}}' bindblur='bindblurSCQ' data-id='{{fatherIndex}}'></textarea>
-        <image class='SCQaddIcon1' src='{{addIconPath1}}' mode='widthFix' catchtap='addSCQ' data-id='{{fatherIndex}}'/>
-        <image class='SCQdeleteIcon1' src='{{deletePath1}}' mode='widthFix' catchtap='deleteSCQ' data-id='{{fatherIndex}}'/>
-      </view>
-      <view class='SCQOption' wx:for="{{item.content.options}}" wx:key="SCQID" data-id='{{fatherIndex}}' bindtouchstart='getTempFatherIndex'>
-        <!-- <image class='SCQselectIcon' src="{{item.isSelected?'../../../images/SAQ2.png':'../../../images/SAQ1.png'}}" mode='widthFix'></image> -->
-        <textarea auto-height='true' value='{{item.name}}' class='SCQText' bindblur='bindblurOneOfSCQ' data-id='{{index}}'></textarea>
-        <image class='SCQdeleteIcon' src='{{deletePath}}' mode='widthFix' data-id='{{index}}' catchtap='deleteOneOfSCQ'/>
-      </view>
-    </view>
-  </block>
-  <block wx:if="{{item.type === 'MCQ'}}">
-    <view class = 'MCQ' data-id='{{fatherIndex}}'>
-      <view class='MCQTitle'>
-        <view class='MCQQ'>Q</view>
-        <view class='MCQindex'>{{fatherIndex+1}}</view>
-        <view class='MCQquto'>:</view>
-        <textarea auto-height='true' class='MCQDiscription' value='{{item.content.description}}' data-id='{{fatherIndex}}' bindblur='bindblurMCQ'></textarea>
-        <image class='MCQaddIcon1' src='{{addIconPath1}}' mode='widthFix' bindtap='addMCQ' data-id='{{fatherIndex}}'/>
-        <image class='MCQdeleteIcon1' src='{{deletePath1}}' mode='widthFix' bindtap='deleteMCQ' data-id='{{fatherIndex}}'/>
-      </view>
-      <view class='MCQOption' wx:for="{{item.content.options}}" wx:key="MCQID" data-id='{{fatherIndex}}' bindtouchstart='getTempFatherIndex'>
-        <!-- <image class='MCQselectIcon' src="{{item.isSelected?'../../../images/MAQ2.png':'../../../images/MAQ1.png'}}" mode='widthFix'></image> -->
-        <textarea auto-height='true' class='MCQText' value='{{item.name}}' data-id='{{index}}' bindblur='bindblurOneOfMCQ'></textarea>
-        <image class='MCQdeleteIcon' src='{{deletePath}}' mode='widthFix' catchtap='deleteOneOfMCQ' data-id='{{index}}'/>
-      </view>
-    </view>
-  </block>
-  
-  <block wx:if="{{item.type === 'SAQ'}}">
-    <view class = 'SAQ' data-id='{{fatherIndex}}'>
-      <view class='SAQTitle'>
-        <view class='SAQQ'>Q</view>
-        <view class='SAQindex'>{{fatherIndex+1}}</view>
-        <view class='SAQquto'>:</view>
-        <textarea auto-height='true' class='SAQDiscription' value='{{item.content.description}}' data-id='{{fatherIndex}}' bindblur='bindblurSAQ'></textarea>
-        <image class='SAQdeleteIcon' src='{{deletePath1}}' mode='widthFix' bindtap='deleteSAQ' data-id='{{fatherIndex}}'/>
-      </view>
-      <textarea auto-height='true' class = "SAQAnswer" value='{{item.content.answer}}' bindblur='bindblurAnswerOfSAQ' data-id='{{fatherIndex}}'></textarea>
-    </view>
-  </block>
-</view>
-
-<button class="weui-btn" type="primary" bindtap='showQ'>下一步</button>
-</view>
-
 </template>
 
-
 <script>
-import wepy from 'wepy'
-export default class Profile extends wepy.page {
-  /**
-   * 页面的初始数据
-   */
-  data= {
-    addIconPath1: '../images/logo.png',
-    deletePath: '../images/logo.png',
-    deletePath1: '../images/logo.png',
-    typeArray: ['单选', '多选', '问答'],
-    newIndex: 0,
-    addIconPath: '../images/logo.png',
-    currentFatherIndex: 0,
-    questionnaireArray: [
-      {
-        'type': 'SCQ',
-        'content': {
-          'description': 'Which fruit do you like best?',
-          'options':
-          [
-              { 'id': 1, 'name': 'Lua', 'isSelected': false },
-              { 'id': 2, 'name': 'Java', 'isSelected': true },
-              { 'id': 3, 'name': 'C++', 'isSelected': false }
-          ]
+  import wepy from 'wepy'
+  export default class Question extends wepy.page {
+    /**
+     * 页面的初始数据
+     */
+    data= {
+      addIconPath1: '../images/logo.png',
+      deletePath: '../images/logo.png',
+      deletePath1: '../images/logo.png',
+      typeArray: ['单选', '多选', '问答'],
+      newIndex: 0,
+      addIconPath: '../images/logo.png',
+      currentFatherIndex: 0,
+      questionnaireArray: [
+        {
+          'type': 'SCQ',
+          'content': {
+            'description': 'Which fruit do you like best?',
+            'options':
+            [
+                { 'id': 1, 'name': 'Lua', 'isSelected': false },
+                { 'id': 2, 'name': 'Java', 'isSelected': true },
+                { 'id': 3, 'name': 'C++', 'isSelected': false }
+            ]
+          }
+        },
+        {
+          'type': 'MCQ',
+          'content': {
+            'description': 'Which fruit do you like?',
+            'options':
+            [
+                { 'id': 1, 'name': 'OK', 'isSelected': true },
+                { 'id': 2, 'name': 'Java', 'isSelected': false },
+                { 'id': 3, 'name': 'C++', 'isSelected': true }
+            ]
+          }
+        },
+        {
+          'type': 'SAQ',
+          'content': {
+            'description': 'What is your name?',
+            'answer': 'i dont know'
+          }
         }
-      },
-      {
-        'type': 'MCQ',
-        'content': {
-          'description': 'Which fruit do you like?',
-          'options':
-          [
-              { 'id': 1, 'name': 'OK', 'isSelected': true },
-              { 'id': 2, 'name': 'Java', 'isSelected': false },
-              { 'id': 3, 'name': 'C++', 'isSelected': true }
-          ]
-        }
-      },
-      {
-        'type': 'SAQ',
-        'content': {
-          'description': 'What is your name?',
-          'answer': 'i dont know'
-        }
-      }
-    ]
-  }
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad() {
-
-  }
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  }
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  }
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  }
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  }
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  }
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  }
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  }
-
-  bindTypeChange(e) {
-    this.setData({
-      newIndex: e.detail.value
-    })
-    console.log(e.detail.value)
-    var tempArray = this.data.questionnaireArray
-    if (this.data.newIndex == 0) {  //eslint-disable-line
-      var temp0 = {
-        'type': 'SCQ',
-        'content': {
-          'description': 'Which fruit do you like best?',
-          'options':
-          [
-              { 'id': 1, 'name': 'Lua', 'isSelected': false }
-          ]
-        }
-      }
-      tempArray.push(temp0)
-    } else if (this.data.newIndex == 1) { //eslint-disable-line
-      temp0 = {
-        'type': 'MCQ',
-        'content': {
-          'description': 'Which fruit do you like best?',
-          'options':
-          [
-              { 'id': 1, 'name': 'Lua', 'isSelected': false }
-          ]
-        }
-      }
-      tempArray.push(temp0)
-    } else if (this.data.newIndex == 2) { //eslint-disable-line
-      temp0 = {
-        'type': 'SAQ',
-        'content': {
-          'description': 'Which fruit do you like best?'
-        }
-      }
-      tempArray.push(temp0)
+      ]
     }
-    this.setData({
-      questionnaireArray: tempArray
-    })
-  }
 
-  deleteSCQ(input) {
-    var tempIndex = input.currentTarget.dataset.id
-    console.log(tempIndex)
-    var tempArray = this.data.questionnaireArray
-    tempArray.splice(tempIndex, 1)
-    this.setData({
-      questionnaireArray: tempArray
-    })
-  }
+    /**
+     * 生命周期函数--监听页面加载
+     */
+    onLoad() {
 
-  deleteMCQ(input) {
-    var tempIndex = input.currentTarget.dataset.id
-    console.log(tempIndex)
-    var tempArray = this.data.questionnaireArray
-    tempArray.splice(tempIndex, 1)
-    this.setData({
-      questionnaireArray: tempArray
-    })
-  }
+    }
 
-  deleteSAQ(input) {
-    var tempIndex = input.currentTarget.dataset.id
-    console.log(tempIndex)
-    var tempArray = this.data.questionnaireArray
-    tempArray.splice(tempIndex, 1)
-    this.setData({
-      questionnaireArray: tempArray
-    })
-  }
+    /**
+     * 生命周期函数--监听页面初次渲染完成
+     */
+    onReady() {
 
-  getTempFatherIndex(input) {
-    var tempFatherIndex = input.currentTarget.dataset.id
-    console.log('currentFatherIndex: ' + tempFatherIndex)
-    this.setData({
-      currentFatherIndex: tempFatherIndex
-    })
-  }
+    }
 
-  deleteOneOfSCQ(input) {
-    var tempFatherIndex = this.data.currentFatherIndex
-    var tempSonIndex = input.target.dataset.id
-    // console.log(tempSonIndex);
-    var tempArray = this.data.questionnaireArray
-    // console.log(tempArray[tempFatherIndex].content.options[tempSonIndex]);
-    tempArray[tempFatherIndex].content.options.splice(tempSonIndex, 1)
-    this.setData({
-      questionnaireArray: tempArray
-    })
-  }
+    /**
+     * 生命周期函数--监听页面显示
+     */
+    onShow() {
 
-  deleteOneOfMCQ(input) {
-    var tempFatherIndex = this.data.currentFatherIndex
-    var tempSonIndex = input.target.dataset.id
-    // console.log('tempFatherIndex: ' + tempFatherIndex);
-    // console.log('tempSonIndex: ' + tempSonIndex);
-    var tempArray = this.data.questionnaireArray
-    // console.log(tempArray[tempFatherIndex].content.options[tempSonIndex]);
-    tempArray[tempFatherIndex].content.options.splice(tempSonIndex, 1)
-    this.setData({
-      questionnaireArray: tempArray
-    })
-  }
+    }
 
-  addSCQ(input) {
-    var tempIndex = input.currentTarget.dataset.id
-    var tempArray = this.data.questionnaireArray
-    var tempSCQ = { 'id': 1, 'name': 'Lua', 'isSelected': false }
-    console.log(tempIndex)
-    tempArray[tempIndex].content.options.push(tempSCQ)
-    this.setData({
-      questionnaireArray: tempArray
-    })
-  }
+    /**
+     * 生命周期函数--监听页面隐藏
+     */
+    onHide() {
 
-  addMCQ(input) {
-    var tempIndex = input.currentTarget.dataset.id
-    var tempArray = this.data.questionnaireArray
-    var tempMCQ = { 'id': 1, 'name': 'Lua', 'isSelected': false }
-    console.log(tempIndex)
-    tempArray[tempIndex].content.options.push(tempMCQ)
-    this.setData({
-      questionnaireArray: tempArray
-    })
-  }
+    }
 
-  showQ() {
-    console.log(this.data.questionnaireArray)
-  }
+    /**
+     * 生命周期函数--监听页面卸载
+     */
+    onUnload() {
 
-  bindblurSCQ(input) {
-    var tempIndex = input.currentTarget.dataset.id
-    var tempArray = this.data.questionnaireArray
-    tempArray[tempIndex].content.description = input.detail.value
-    this.setData({
-      questionnaireArray: tempArray
-    })
-  }
+    }
 
-  bindblurOneOfSCQ(input) {
-    var tempFatherIndex = this.data.currentFatherIndex
-    var tempSonIndex = input.target.dataset.id
-    var tempArray = this.data.questionnaireArray
-    tempArray[tempFatherIndex].content.options[tempSonIndex].name = input.detail.value
-    this.setData({
-      questionnaireArray: tempArray
-    })
-  }
+    /**
+     * 页面相关事件处理函数--监听用户下拉动作
+     */
+    onPullDownRefresh() {
 
-  bindblurMCQ(input) {
-    var tempIndex = input.currentTarget.dataset.id
-    var tempArray = this.data.questionnaireArray
-    tempArray[tempIndex].content.description = input.detail.value
-    this.setData({
-      questionnaireArray: tempArray
-    })
-  }
+    }
 
-  bindblurOneOfMCQ(input) {
-    var tempFatherIndex = this.data.currentFatherIndex
-    var tempSonIndex = input.target.dataset.id
-    var tempArray = this.data.questionnaireArray
-    tempArray[tempFatherIndex].content.options[tempSonIndex].name = input.detail.value
-    this.setData({
-      questionnaireArray: tempArray
-    })
-  }
+    /**
+     * 页面上拉触底事件的处理函数
+     */
+    onReachBottom() {
 
-  bindblurSAQ(input) {
-    var tempIndex = input.currentTarget.dataset.id
-    var tempArray = this.data.questionnaireArray
-    tempArray[tempIndex].content.description = input.detail.value
-    this.setData({
-      questionnaireArray: tempArray
-    })
-  }
+    }
 
-  bindblurAnswerOfSAQ(input) {
-    var tempIndex = input.currentTarget.dataset.id
-    var tempArray = this.data.questionnaireArray
-    tempArray[tempIndex].content.answer = input.detail.value
-    // console.log(tempArray[tempIndex].content);
-    this.setData({
-      questionnaireArray: tempArray
-    })
-  }
+    /**
+     * 用户点击右上角分享
+     */
+    onShareAppMessage() {
+
+    }
+
+    bindTypeChange(e) {
+      this.setData({
+        newIndex: e.detail.value
+      })
+      console.log(e.detail.value)
+      var tempArray = this.data.questionnaireArray
+      if (this.data.newIndex == 0) {  //eslint-disable-line
+        var temp0 = {
+          'type': 'SCQ',
+          'content': {
+            'description': 'Which fruit do you like best?',
+            'options':
+            [
+                { 'id': 1, 'name': 'Lua', 'isSelected': false }
+            ]
+          }
+        }
+        tempArray.push(temp0)
+      } else if (this.data.newIndex == 1) { //eslint-disable-line
+        temp0 = {
+          'type': 'MCQ',
+          'content': {
+            'description': 'Which fruit do you like best?',
+            'options':
+            [
+                { 'id': 1, 'name': 'Lua', 'isSelected': false }
+            ]
+          }
+        }
+        tempArray.push(temp0)
+      } else if (this.data.newIndex == 2) { //eslint-disable-line
+        temp0 = {
+          'type': 'SAQ',
+          'content': {
+            'description': 'Which fruit do you like best?'
+          }
+        }
+        tempArray.push(temp0)
+      }
+      this.setData({
+        questionnaireArray: tempArray
+      })
+    }
+
+    deleteSCQ(input) {
+      var tempIndex = input.currentTarget.dataset.id
+      console.log(tempIndex)
+      var tempArray = this.data.questionnaireArray
+      tempArray.splice(tempIndex, 1)
+      this.setData({
+        questionnaireArray: tempArray
+      })
+    }
+
+    deleteMCQ(input) {
+      var tempIndex = input.currentTarget.dataset.id
+      console.log(tempIndex)
+      var tempArray = this.data.questionnaireArray
+      tempArray.splice(tempIndex, 1)
+      this.setData({
+        questionnaireArray: tempArray
+      })
+    }
+
+    deleteSAQ(input) {
+      var tempIndex = input.currentTarget.dataset.id
+      console.log(tempIndex)
+      var tempArray = this.data.questionnaireArray
+      tempArray.splice(tempIndex, 1)
+      this.setData({
+        questionnaireArray: tempArray
+      })
+    }
+
+    getTempFatherIndex(input) {
+      var tempFatherIndex = input.currentTarget.dataset.id
+      console.log('currentFatherIndex: ' + tempFatherIndex)
+      this.setData({
+        currentFatherIndex: tempFatherIndex
+      })
+    }
+
+    deleteOneOfSCQ(input) {
+      var tempFatherIndex = this.data.currentFatherIndex
+      var tempSonIndex = input.target.dataset.id
+      // console.log(tempSonIndex);
+      var tempArray = this.data.questionnaireArray
+      // console.log(tempArray[tempFatherIndex].content.options[tempSonIndex]);
+      tempArray[tempFatherIndex].content.options.splice(tempSonIndex, 1)
+      this.setData({
+        questionnaireArray: tempArray
+      })
+    }
+
+    deleteOneOfMCQ(input) {
+      var tempFatherIndex = this.data.currentFatherIndex
+      var tempSonIndex = input.target.dataset.id
+      // console.log('tempFatherIndex: ' + tempFatherIndex);
+      // console.log('tempSonIndex: ' + tempSonIndex);
+      var tempArray = this.data.questionnaireArray
+      // console.log(tempArray[tempFatherIndex].content.options[tempSonIndex]);
+      tempArray[tempFatherIndex].content.options.splice(tempSonIndex, 1)
+      this.setData({
+        questionnaireArray: tempArray
+      })
+    }
+
+    addSCQ(input) {
+      var tempIndex = input.currentTarget.dataset.id
+      var tempArray = this.data.questionnaireArray
+      var tempSCQ = { 'id': 1, 'name': 'Lua', 'isSelected': false }
+      console.log(tempIndex)
+      tempArray[tempIndex].content.options.push(tempSCQ)
+      this.setData({
+        questionnaireArray: tempArray
+      })
+    }
+
+    addMCQ(input) {
+      var tempIndex = input.currentTarget.dataset.id
+      var tempArray = this.data.questionnaireArray
+      var tempMCQ = { 'id': 1, 'name': 'Lua', 'isSelected': false }
+      console.log(tempIndex)
+      tempArray[tempIndex].content.options.push(tempMCQ)
+      this.setData({
+        questionnaireArray: tempArray
+      })
+    }
+
+    showQ() {
+      console.log(this.data.questionnaireArray)
+    }
+
+    bindblurSCQ(input) {
+      var tempIndex = input.currentTarget.dataset.id
+      var tempArray = this.data.questionnaireArray
+      tempArray[tempIndex].content.description = input.detail.value
+      this.setData({
+        questionnaireArray: tempArray
+      })
+    }
+
+    bindblurOneOfSCQ(input) {
+      var tempFatherIndex = this.data.currentFatherIndex
+      var tempSonIndex = input.target.dataset.id
+      var tempArray = this.data.questionnaireArray
+      tempArray[tempFatherIndex].content.options[tempSonIndex].name = input.detail.value
+      this.setData({
+        questionnaireArray: tempArray
+      })
+    }
+
+    bindblurMCQ(input) {
+      var tempIndex = input.currentTarget.dataset.id
+      var tempArray = this.data.questionnaireArray
+      tempArray[tempIndex].content.description = input.detail.value
+      this.setData({
+        questionnaireArray: tempArray
+      })
+    }
+
+    bindblurOneOfMCQ(input) {
+      var tempFatherIndex = this.data.currentFatherIndex
+      var tempSonIndex = input.target.dataset.id
+      var tempArray = this.data.questionnaireArray
+      tempArray[tempFatherIndex].content.options[tempSonIndex].name = input.detail.value
+      this.setData({
+        questionnaireArray: tempArray
+      })
+    }
+
+    bindblurSAQ(input) {
+      var tempIndex = input.currentTarget.dataset.id
+      var tempArray = this.data.questionnaireArray
+      tempArray[tempIndex].content.description = input.detail.value
+      this.setData({
+        questionnaireArray: tempArray
+      })
+    }
+
+    bindblurAnswerOfSAQ(input) {
+      var tempIndex = input.currentTarget.dataset.id
+      var tempArray = this.data.questionnaireArray
+      tempArray[tempIndex].content.answer = input.detail.value
+      // console.log(tempArray[tempIndex].content);
+      this.setData({
+        questionnaireArray: tempArray
+      })
+    }
 }
 </script>
 
 <style>
 
-page{
+.page{
   height: 100%;
 }
 

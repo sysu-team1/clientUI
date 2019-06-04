@@ -19,7 +19,8 @@ export default class extends wepy.app {
       'pages/detail',
       'pages/points',
       'pages/mytask',
-      'pages/setting'
+      'pages/setting',
+      'pages/question'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -44,7 +45,7 @@ export default class extends wepy.app {
           selectedIconPath: 'images/message-active.png'
         },
         {
-          pagePath: 'pages/message',
+          pagePath: 'pages/question',
           text: '去发布',
           iconPath: 'images/message.png',
           selectedIconPath: 'images/message-active.png'
