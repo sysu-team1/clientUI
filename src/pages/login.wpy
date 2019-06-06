@@ -75,7 +75,6 @@
       console.log(email, password, type)
       // 网络请求
       var result = await login(email, password, type)
-      console.log(result.error)
       if (result != null) {
         if (result.error === 1) {
           // 登陆失败，反馈信息
