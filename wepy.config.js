@@ -18,6 +18,10 @@ module.exports = {
       ],
       plugins: [
         'babel-plugin-transform-class-properties',
+        'transform-class-properties',
+        'transform-decorators-legacy',
+        'transform-object-rest-spread',
+        'transform-async-to-generator',
         'transform-export-extensions',
         'syntax-export-extensions'
       ]
