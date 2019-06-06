@@ -105,15 +105,25 @@ const getPoints = async (id) => {
 
 
 const searchTask = async (params) => {
+  console.log(params)
   let res = await wepy.request({
-    url: BASIC_REQUEST_URL + '/task/search',
+    url: BASIC_REQUEST_URL + '/tasks/search/',
     data: params,
     method: 'GET'
   })
 
   if (res.statusCode === 200) {
-    return res.data
+    return JSON.parse(res.data.replace(/'/g, '"'))
   }
+}
+
+/**
+ * 首页刷新与下拉加载，传入lastid，第一次请求lastid为-1
+ * @param {String} lastId 上一次请求数据最后一数据的id，必选
+ */
+const homePageRefresh = async (lastId) => {
+  let params = { last_id: lastId }
+  return searchTask(params)
 }
 
 
@@ -273,5 +283,6 @@ export {
   searchTaskByAccepterId,
   searchTaskByTag,
   searchTaskByText,
-  publishTask
+  publishTask,
+  homePageRefresh
 }
