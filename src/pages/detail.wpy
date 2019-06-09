@@ -8,19 +8,11 @@
       navigationBarTitleText: '任务详情'
     }
     data = {
-      taskid: ''
+      taskid: -1
     }
     onReady() {
-      this.setData({taskid: this.data.taskid})
-      console.log(this.data.taskid)
-      console.log('onready')
-      this.$apply()
     }
     onShow() {
-      this.setData({taskid: this.data.taskid})
-      console.log(this.data.taskid)
-      console.log('onshow')
-      this.$apply()
     }
     onLoad(prop) {
       console.log(prop, prop.id)

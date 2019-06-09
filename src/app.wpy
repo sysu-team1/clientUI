@@ -69,7 +69,9 @@ export default class extends wepy.app {
     userInfo: null,
     userLoginInfo: {
       userEmail: null,
-      userPassword: null
+      userPassword: null,
+      loginType: '',
+      openid: ''
     }
   }
 

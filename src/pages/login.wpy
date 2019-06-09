@@ -87,16 +87,18 @@
         } else {
           // 存储openid result.data.openid
           this.$parent.globalData.userLoginInfo = {
-            userEmail: this.data.register_email,
+            userEmail: this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex],
             userPassword: this.data.register_password,
-            loginType: 'student'
+            loginType: 'student',
+            openid: result.data.openid
           }
           await wepy.setStorageSync(USER_LOGIN_INFO, this.$parent.globalData.userLoginInfo)
           setTimeout(this.navigationToHome, 2000)
           this.$parent.globalData.userLoginInfo = {
             userEmail: this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex],
             userPassword: this.data.register_password,
-            loginType: 'student'
+            loginType: 'student',
+            openid: result.data.openid
           }
         }
       }

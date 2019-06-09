@@ -22,7 +22,7 @@
     <view class="page__bd">
       <i-panel title="任务列表">
         <view wx:for="{{TaskList}}" wx:key="key" style="padding: 5px;">
-          <navigator url="/pages/detail?id={{item.id}}&title={{item.title}}" open-type="navigate" hover-class="none">
+          <navigator url="/pages/detail?id={{item.id}}" open-type="navigate" hover-class="none">
             <i-card title="{{item.title}}" extra="{{item.reward}}" thumb="{{item.image_path}}">
               <view slot="extra-icon"><i class="iconfont">&#xe603;</i></view>
               <view slot="content">{{item.content}}</view>
@@ -32,7 +32,7 @@
                     <i-tag type="border" style="margin-right:5px;">{{item.tag}}</i-tag>
                   </view>
                   <view class="card-footer-button">
-                    <button class="weui-btn" type="primary" size="mini">领取任务</button>
+                    <button class="weui-btn" type="primary" size="mini">任务详情</button>
                   </view>
                 </view>
               </view>
@@ -43,7 +43,7 @@
       <view wx:if="{{this.loading}}">
         <i-loadmore tip="" loading="{{true}}"></i-loadmore>
       </view>
-      <view wx:else>
+      <view wx:elif="{{!this.loading}}">
         <i-loadmore tip="没有更多啦" loading="{{false}}"></i-loadmore>
       </view>
     </view>
@@ -149,29 +149,31 @@
     onPullDownRefresh() {
       if (this.loading === false) {
         console.log('下拉刷新')
-        var that = this
         this.currentLastID = -1
         this.loading = true
-        this.fetchTaskList(this.currentLastID, 'refresh').then(function () {
-          that.loading = false
-          console.log(that.loading)
-        })
-        setTimeout(function () {
+        this.setData({ loading: true })
+        this.fetchTaskList(this.currentLastID, 'refresh')
+        setTimeout(() => {
           wepy.stopPullDownRefresh()
+          this.loading = false
+          this.$apply()
+          console.log(this.loading)
         }, 3000)
         console.log(this.loading)
       }
     }
     onReachBottom() {
       if (this.loading === false) {
-        var that = this
         console.log('上滑加载')
         this.loading = true
-        this.fetchTaskList(this.currentLastID, 'loadmore').then(function () {
-          that.loading = false
-          console.log(that.loading)
-        })
-        this.loading = false
+        this.setData({ loading: true })
+        this.fetchTaskList(this.currentLastID, 'loadmore')
+        console.log(this.loading)
+        setTimeout(() => {
+          this.loading = false
+          this.$apply()
+          console.log(this.loading)
+        }, 3000)
       }
     }
     onLoad() {
