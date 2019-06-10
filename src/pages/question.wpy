@@ -1,13 +1,16 @@
 <template>
-  <view>
-    <view id="title">
-      <text>标题:</text>
-      <input class='titleContent' value='描述概况'/>
+<view>
+  <view class="head">  
+    <view class="weui-cell__bd">
+      <input class="weui-input" placeholder="标题" />
+      <input class="weui-input" placeholder="描述任务详情" />
+      <input class="weui-input" placeholder="问卷数量" />
+      <input class="weui-input" placeholder="奖励金额" />
     </view>
-    <!-- <view class="divLine"></view> -->
-
-    <view id="request">
-      <textarea  class='requestContent' value='要求：描述任务详情'></textarea>
+    <view class="weui-cell__ft">
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+        <view class="email-label weui-select">有效天数：{{array[index]}} 天</view>
+      </picker>
     </view>
     <!-- <view class="divLine"></view> -->
     <view>
@@ -15,9 +18,9 @@
           <image class='addNewQuestion' src='{{addIconPath}}'/> 
       </picker>
     </view>
+  </view>
 
-
-
+  <view>
     <view id = 'body' wx:for="{{questionnaireArray}}" wx:key="id" wx:for-index='fatherIndex'>
       <view wx:if="{{item.type === 'SCQ'}}">
         <view class = 'SCQ' data-id='{{fatherIndex}}'>
@@ -25,18 +28,22 @@
             <view class='SCQQ'>Q</view>
             <view class='SCQindex'>{{fatherIndex+1}}</view>
             <view class='SCQquto'>:</view>
-            <textarea auto-height='true' class='SCQDiscription' value='{{item.content.description}}' bindblur='bindblurSCQ' data-id='{{fatherIndex}}'></textarea>
-            <image class='SCQaddIcon1' src='{{addIconPath1}}' mode='widthFix' catchtap='addSCQ' data-id='{{fatherIndex}}'/>
+            <input class='SCQDiscription' value='{{item.content.description}}' bindblur='bindblurSCQ' data-id='{{fatherIndex}}' placeholder="请输入问题描述" />
             <image class='SCQdeleteIcon1' src='{{deletePath1}}' mode='widthFix' catchtap='deleteSCQ' data-id='{{fatherIndex}}'/>
           </view>
           <view class='SCQOption' wx:for="{{item.content.options}}" wx:key="SCQID" data-id='{{fatherIndex}}' bindtouchstart='getTempFatherIndex'>
             <!-- <image class='SCQselectIcon' src="{{item.isSelected?'../../../images/SAQ2.png':'../../../images/SAQ1.png'}}" mode='widthFix'></image> -->
-            <textarea auto-height='true' value='{{item.name}}' class='SCQText' bindblur='bindblurOneOfSCQ' data-id='{{index}}'></textarea>
             <image class='SCQdeleteIcon' src='{{deletePath}}' mode='widthFix' data-id='{{index}}' catchtap='deleteOneOfSCQ'/>
+            <input auto-height='true' value='{{item.name}}' class='SCQText' bindblur='bindblurOneOfSCQ' data-id='{{index}}' placeholder="请输入选项" />
+          </view>
+          <view class="add-option">
+            <image class='SCQaddIcon1' src='{{addIconPath1}}' mode='widthFix' catchtap='addSCQ' data-id='{{fatherIndex}}'/>
+            <view class='add-option-text'>添加选项</view>
           </view>
         </view>
       </view>
-      <view wx:if="{{item.type === 'MCQ'}}">
+
+      <!-- <view wx:if="{{item.type === 'MCQ'}}">
         <view class = 'MCQ' data-id='{{fatherIndex}}'>
           <view class='MCQTitle'>
             <view class='MCQQ'>Q</view>
@@ -47,7 +54,6 @@
             <image class='MCQdeleteIcon1' src='{{deletePath1}}' mode='widthFix' bindtap='deleteMCQ' data-id='{{fatherIndex}}'/>
           </view>
           <view class='MCQOption' wx:for="{{item.content.options}}" wx:key="MCQID" data-id='{{fatherIndex}}' bindtouchstart='getTempFatherIndex'>
-            <!-- <image class='MCQselectIcon' src="{{item.isSelected?'../../../images/MAQ2.png':'../../../images/MAQ1.png'}}" mode='widthFix'></image> -->
             <textarea auto-height='true' class='MCQText' value='{{item.name}}' data-id='{{index}}' bindblur='bindblurOneOfMCQ'></textarea>
             <image class='MCQdeleteIcon' src='{{deletePath}}' mode='widthFix' catchtap='deleteOneOfMCQ' data-id='{{index}}'/>
           </view>
@@ -65,10 +71,12 @@
           </view>
           <textarea auto-height='true' class = "SAQAnswer" value='{{item.content.answer}}' bindblur='bindblurAnswerOfSAQ' data-id='{{fatherIndex}}'></textarea>
         </view>
-      </view>
+      </view> -->
+      
     </view>
     <button class="weui-btn" type="primary" bindtap='showQ'>下一步</button>
   </view>
+</view>
 </template>
 
 <script>
@@ -78,45 +86,60 @@
      * 页面的初始数据
      */
     data= {
-      addIconPath1: '../images/logo.png',
-      deletePath: '../images/logo.png',
-      deletePath1: '../images/logo.png',
-      typeArray: ['单选', '多选', '问答'],
+      addIconPath1: '../images/add-choice.png',
+      deletePath: '../images/delete-choice.png',
+      deletePath1: '../images/delete-question.png',
+      index: 0,
+      array: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      typeArray: ['单选', '敬请期待新题型'],
       newIndex: 0,
-      addIconPath: '../images/logo.png',
+      addIconPath: '../images/add-question.png',
       currentFatherIndex: 0,
       questionnaireArray: [
         {
           'type': 'SCQ',
           'content': {
-            'description': 'Which fruit do you like best?',
+            'description': '你所在的年级是?',
             'options':
             [
-                { 'id': 1, 'name': 'Lua', 'isSelected': false },
-                { 'id': 2, 'name': 'Java', 'isSelected': true },
-                { 'id': 3, 'name': 'C++', 'isSelected': false }
+                { 'id': 1, 'name': '大一', 'isSelected': false },
+                { 'id': 2, 'name': '大二', 'isSelected': true },
+                { 'id': 3, 'name': '大三', 'isSelected': false },
+                { 'id': 3, 'name': '大四', 'isSelected': false }
             ]
           }
         },
         {
-          'type': 'MCQ',
+          'type': 'SCQ',
           'content': {
-            'description': 'Which fruit do you like?',
+            'description': '你所在的专业属于?',
             'options':
             [
-                { 'id': 1, 'name': 'OK', 'isSelected': true },
-                { 'id': 2, 'name': 'Java', 'isSelected': false },
-                { 'id': 3, 'name': 'C++', 'isSelected': true }
+                { 'id': 1, 'name': '理科', 'isSelected': false },
+                { 'id': 2, 'name': '文科', 'isSelected': true },
+                { 'id': 3, 'name': '工科', 'isSelected': false }
             ]
-          }
-        },
-        {
-          'type': 'SAQ',
-          'content': {
-            'description': 'What is your name?',
-            'answer': 'i dont know'
           }
         }
+        // {
+        //   'type': 'MCQ',
+        //   'content': {
+        //     'description': 'Which fruit do you like?',
+        //     'options':
+        //     [
+        //         { 'id': 1, 'name': 'OK', 'isSelected': true },
+        //         { 'id': 2, 'name': 'Java', 'isSelected': false },
+        //         { 'id': 3, 'name': 'C++', 'isSelected': true }
+        //     ]
+        //   }
+        // },
+        // {
+        //   'type': 'SAQ',
+        //   'content': {
+        //     'description': 'What is your name?',
+        //     'answer': 'i dont know'
+        //   }
+        // }
       ]
     }
 
@@ -186,10 +209,11 @@
         var temp0 = {
           'type': 'SCQ',
           'content': {
-            'description': 'Which fruit do you like best?',
+            'description': '',
             'options':
             [
-                { 'id': 1, 'name': 'Lua', 'isSelected': false }
+                { 'id': 1, 'name': '', 'isSelected': false },
+                { 'id': 1, 'name': '', 'isSelected': false }
             ]
           }
         }
@@ -217,6 +241,13 @@
       }
       this.setData({
         questionnaireArray: tempArray
+      })
+    }
+
+    bindPickerChange(e) {
+      console.log('picker发送选择改变，携带值为', e.detail.value)
+      this.setData({
+        index: e.detail.value
       })
     }
 
@@ -261,9 +292,9 @@
     deleteOneOfSCQ(input) {
       var tempFatherIndex = this.data.currentFatherIndex
       var tempSonIndex = input.target.dataset.id
-      // console.log(tempSonIndex);
+      console.log(tempSonIndex)
       var tempArray = this.data.questionnaireArray
-      // console.log(tempArray[tempFatherIndex].content.options[tempSonIndex]);
+      console.log(tempArray[tempFatherIndex].content.options[tempSonIndex])
       tempArray[tempFatherIndex].content.options.splice(tempSonIndex, 1)
       this.setData({
         questionnaireArray: tempArray
@@ -286,7 +317,7 @@
     addSCQ(input) {
       var tempIndex = input.currentTarget.dataset.id
       var tempArray = this.data.questionnaireArray
-      var tempSCQ = { 'id': 1, 'name': 'Lua', 'isSelected': false }
+      var tempSCQ = { 'id': 1, 'name': '', 'isSelected': false }
       console.log(tempIndex)
       tempArray[tempIndex].content.options.push(tempSCQ)
       this.setData({
@@ -311,6 +342,7 @@
 
     bindblurSCQ(input) {
       var tempIndex = input.currentTarget.dataset.id
+      console.log('sdhbuias'+tempIndex)
       var tempArray = this.data.questionnaireArray
       tempArray[tempIndex].content.description = input.detail.value
       this.setData({
@@ -370,10 +402,25 @@
 
 <style>
 
+.weui-input{
+  text-align: center;
+  justify-content: center;
+  border-bottom: 2rpx solid #999;
+  margin: 10px;
+}
+
 .page{
   height: 100%;
 }
 
+.head{
+  margin: 10rpx;
+  border: 2rpx solid #999;
+}
+
+.weui-cell__ft{
+  text-align: center;
+}
 /* .divLine{
  background: #E0E3DA;
  width: 100%;
@@ -414,17 +461,32 @@
   align-items: center;
 }
 
+.add-option{
+  display: flex;
+  flex-direction: row;
+  margin-top: 20rpx;
+  align-items: center;
+}
+
+.add-option-text{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #999;
+  padding: 5px;
+}
+
 .MCQselectIcon{
   width: 60rpx;
 }
+
 .SCQ{
   padding: 20rpx;
   border: 2rpx dashed #999;
 }
+
 .SCQText{
   margin-left: 20rpx;
   /* color: #E3E3E3; */
-  border: 2rpx solid #999;
+  border-bottom: 2rpx solid #999;
   width: 80%;
 }
 .MCQ{
@@ -471,8 +533,8 @@
 }
 
 .SCQDiscription{
-  border: 2rpx solid #999;
-  width: 70%;
+  border-bottom: 2rpx solid #999;
+  width: 85%;
 }
 
 .MCQDiscription{
@@ -486,8 +548,8 @@
 }
 
 .SCQdeleteIcon{
-  width: 80rpx;
-  margin-left: 20rpx;
+  width: 60rpx;
+  margin-left: 15rpx;
 }
 
 .MCQdeleteIcon{
@@ -512,7 +574,7 @@
 
 .SCQaddIcon1{
   width:60rpx;
-  margin-left: 20rpx;
+  margin-left: 15rpx;
 }
 
 .MCQaddIcon1{
