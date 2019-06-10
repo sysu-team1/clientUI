@@ -1,6 +1,6 @@
 <template>
   <view class="page">
-    <view class="page__hd">
+    <view class="page__hd profile-header">
       <view class="weui-panel weui-panel_access">
         <view class="weui-panel__bd">
           <navigator url="{{}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
@@ -8,27 +8,65 @@
               <image class="weui-media-box__thumb avatar-url" src="{{avatarUrl}}" />
             </view>
             <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-              <view class="weui-media-box__title">{{nickName}}</view>
-              <view class="weui-media-box__desc">邮箱：{{userEmail}}</view>
+              <view class="weui-media-box__title nick-name">{{nickName}}</view>
+              <view class="weui-media-box__desc user-email">邮箱：{{userEmail}}</view>
             </view>
           </navigator>
         </view>
       </view>
     </view>
-    <view class="page__bd">
+    <view class="page__bd profile-content">
+      <view class="my-item">
+        <view class="title">我的任务</view>
+        <view class="content">
+          <view class="status-list">
+            <navigator>
+              <view class="item">
+                <view class="iconfont">&#xe630;</view>
+                <view class="text">进行中</view>
+              </view>
+            </navigator>
+            <navigator>
+              <view class="item">
+                <view class="iconfont">&#xe631;</view>
+                <view class="text">已完成</view>
+              </view>
+            </navigator>
+            <navigator>
+              <view class="item">
+                <view class="iconfont">&#xe62f;</view>
+                <view class="text">已结束</view>
+              </view>
+            </navigator>
+          </view>
+        </view>
+      </view>
+      <view class="my-item">
+        <view class="title">我的发布</view>
+        <view class="content">
+          <view class="status-list">
+            <navigator>
+              <view class="item">
+                <view class="iconfont">&#xe633;</view>
+                <view class="text">新发布</view>
+              </view>
+            </navigator>
+            <navtigator>
+              <view class="item">
+                <view class="iconfont">&#xe630;</view>
+                <view class="text">进行中</view>
+              </view>
+            </navtigator>
+            <navigator>
+              <view class="item">
+                <view class="iconfont">&#xe631;</view>
+                <view class="text">已完成</view>
+              </view>
+            </navigator>
+          </view>
+        </view>
+      </view>
       <view class="info_block">
-        <navigator class="item" url="/pages/tasks" open-type="navigate">
-          <view class="item_content">
-            <i class="iconfont">&#xec35;</i>
-            <view class="text">我的任务</view>
-          </view>
-        </navigator>
-        <navigator class="item" url="/pages/progress" open-type="navigate">
-          <view class="item_content">
-            <i class="iconfont">&#xe63b;</i>
-            <view class="text">正在进行</view>
-          </view>
-        </navigator>
         <navigator class="item" url="/pages/points" open-type="navigate">
           <view class="item_content">
             <i class="iconfont">&#xe603;</i>
@@ -63,10 +101,12 @@
 
 <script>
   import wepy from 'wepy'
-  import {USER_WEIXIN_INFO, USER_LOGIN_INFO} from '../utils/constant'
+  import { USER_WEIXIN_INFO, USER_LOGIN_INFO, USER_DETAIL_INFO } from '../utils/constant'
+  import { getInfo } from '../api'
   export default class Profile extends wepy.page {
     config = {
-      navigationBarTitleText: '我'
+      navigationBarTitleText: '我',
+      navigationBarBackgroundColor: '#53a8ff'
     }
     data = {
       avatarUrl: '',
@@ -74,35 +114,83 @@
       userEmail: ''
     }
 
-    onLoad() {
+    async onLoad() {
       console.log('onLoad')
       let userinfo = wepy.getStorageSync(USER_WEIXIN_INFO)
       this.avatarUrl = userinfo.avatarUrl
-      this.nickName = userinfo.nickName
+      this.__getInfo()
+    }
+
+    async __getInfo() {
       let userLogininfo = wepy.getStorageSync(USER_LOGIN_INFO)
-      this.userEmail = userLogininfo.userEmail
+      let data = await getInfo(userLogininfo.openid)
+      this.setData({
+        userEmail:  data.email,
+        nickName: data.name
+      })
+      wepy.setStorageSync(USER_DETAIL_INFO, data)
     }
   }
 </script>
 
 <style lang="less">
-.header_content {
-  margin: 0 auto;
-  padding-top: 48rpx;
-  width: 100%;
+.pd-16 {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.page {
+  margin-top: -1rpx;
+  background: #f4f4f5;
+}
+
+.profile-header {
+  margin-bottom: 8px;
+  background: linear-gradient(#53a8ff, #79bbff);
+}
+
+.profile-header .weui-panel {
+  background-color: inherit;
+}
+
+.profile-content .my-item {
+  margin-bottom: 8px;
+  padding: 0 16px;
+  background: #fff;
+}
+
+.profile-content .my-item .title {
+  padding: 16px 0 2px;
+  border-bottom: 1px solid  #dcdfe6;
+}
+
+.profile-content .status-list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.profile-content .status-list .item {
+  width: 50px;
   text-align: center;
 }
+
+.profile-content .status-list .iconfont {
+  font-size: 30px;
+}
+
+.profile-content .status-list .text {
+  font-size: 12px;
+}
+
 .avatar-url {
   border-radius: 50%;
   width: 122rpx;
   height: 122rpx;
 }
-.nickName {
-  padding-top: 15rpx;
-  font-size: 30rpx;
+.user-email {
+  color: #606266;
 }
+
 .info_block {
-  margin-top: 10rpx;
   .item {
     display: flex;
     justify-content: space-between;

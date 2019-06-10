@@ -1,51 +1,74 @@
 <template>
-  <view class="point-wrapper">
-    <view class="point">
-      <view class="num">{{point}}</view>
+  <view class="page">
+    <view class="header">
       <view class="text">我的积分</view>
+      <view class="num">{{cash}}</view>
+    </view>
+    <view class="content">
+      <view class="weui-cells">
+        <navigator class="weui-cell weui-cell_access">
+          <view class="weui-cell__bd">
+            <i class="iconfont">&#xe638;</i>
+            充值
+          </view>
+          <view class="weui-cell__ft"></view>
+        </navigator>
+        <navigator class="weui-cell weui-cell_access">
+          <view class="weui-cell__bd">
+            <i class="iconfont">&#xe652;</i>
+            充值记录
+          </view>
+          <view class="weui-cell__ft"></view>
+        </navigator>
+      </view>
     </view>
   </view>
 </template>
 <script>
 import wepy from 'wepy'
-import { getPoints } from '../api'
+import { USER_DETAIL_INFO } from '../utils/constant.js'
 export default class Point extends wepy.page {
   config = {
-    navigationBarTitleText: '积分'
+    navigationBarTitleText: '积分',
+    navigationBarBackgroundColor: '#53a8ff'
   }
   data = {
-    point: 100
+    cash: 0.00.toFixed(2)
   }
   onLoad() {
-    this.getPoints()
-  }
-  methods = {
-    async getPoints() {
-      let data = await getPoints()
-      console.log(data)
-    }
+    let userInfo = wepy.getStorageSync(USER_DETAIL_INFO)
+    this.cash = Number(userInfo.cash).toFixed(2)
   }
 }
 </script>
 <style>
 page {
   height: 100%;
+  background: #f4f4f5;
 }
-.point-wrapper {
+
+.iconfont {
+  margin-right: 3px;
+}
+
+.page .header {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  padding: 10px;
-  height: 100%;
+  margin-bottom: 8px;
+  height: 200px;
   text-align: center;
   color: #fff;
-  background: linear-gradient(to bottom right,#fc6f02, #f79001);
+  background: linear-gradient(#53a8ff, #79bbff)
 }
 
-.point .num {
-  margin-top: -30px;
-  font-size: 60px;
+.page .header .text {
+  margin-top: -35px;
+  font-size: 14px;
 }
 
+.page .header .num {
+  font-size: 35px;
+}
 
 </style>

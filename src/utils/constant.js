@@ -16,15 +16,16 @@ export const USER_WEIXIN_INFO = "userWexinInfo";
  */
 export const USER_LOGIN_INFO = "userLoginInfo";
 
+export const USER_DETAIL_INFO = 'USER_DETAIL_INFO'
 /**
  * API URL前缀
  */
 // export const BASIC_REQUEST_URL = 'http://127.0.0.1:5000'
-export const BASIC_REQUEST_URL = 'http://47.107.99.233:5000' 
+export const BASIC_REQUEST_URL = 'http://47.107.99.233:5000'
 
 /**
  * API URL后缀
  */
-export const REGISTER_REQUEST_URL = '/user/register/' 
+export const REGISTER_REQUEST_URL = '/user/register/'
 export const REGISTER_GETVCODE_REQUEST_URL = '/user/get_verification_code/'
 export const LOGIN_REQUEST_URL = '/user/login/'

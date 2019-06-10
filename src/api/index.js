@@ -207,7 +207,7 @@ const publishQuestionPaper = async (id, quest_name, questions, deadline_date, pe
 }
 
 
-/* 
+/*
 任务的创建
 	input：
         publish_id, 发布人id ，也就是open_id
@@ -218,7 +218,7 @@ const publishQuestionPaper = async (id, quest_name, questions, deadline_date, pe
         tag, 标签['问卷', '取快递', '其他']
         reward, 赏额
         problem_content， 当tag为问卷的时候才有，否则默认值为""， 使用^作为problem的切分，使用$作为题目与答案的切分，使用#作为答案的切分
-	output： 
+	output：
 	"error": 0/1,
 		"data": {
 			"msg": "余额不足/创建成功/没有图片上传/创建成功/图片上传失败",
@@ -239,13 +239,13 @@ const publishQuestionPaper = async (id, quest_name, questions, deadline_date, pe
   problem_content = 'p1$a#b#c#d^p2$a#b#c#d' => p1 : a , b, c, d ; p2: a, b, c, d
 */
 const publishTask = async (id='', limit_time='', limit_num='', title='', content='', tag='', reward='', problem_content='') => {
-  var _this = this 
+  var _this = this
   wx.chooseImage({
     // 选择图片的最大数量
     // 详情可见链接：https://www.cnblogs.com/srgk/p/8989515.html
-    count: 1, 
-    sizeType: ['original', 'compressed'], 
-    sourceType: ['album', 'camera'], 
+    count: 1,
+    sizeType: ['original', 'compressed'],
+    sourceType: ['album', 'camera'],
     success: function (res) {
       var tempFilePaths = res.tempFilePaths
       console.log(tempFilePaths)
@@ -274,6 +274,18 @@ const publishTask = async (id='', limit_time='', limit_num='', title='', content
 
 //
 
+const getInfo = async (id) => {
+  let res = await wepy.request({
+    url: BASIC_REQUEST_URL + '/my/' + String(id), // 获取验证码开发者服务器接口地址
+    method: 'GET',
+  })
+  // 学生：返回['email', 'student_id', 'name', 'sex', 'collage', 'grade', 'edu_bg', 'cash']
+  // 组织：返回['email', 'name', 'cash']
+  if (res.statusCode === 200) {
+    return res.data
+  }
+}
+
 export {
   login,
   register,
@@ -284,5 +296,6 @@ export {
   searchTaskByTag,
   searchTaskByText,
   publishTask,
-  homePageRefresh
+  homePageRefresh,
+  getInfo
 }
