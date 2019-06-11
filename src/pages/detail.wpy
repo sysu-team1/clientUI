@@ -1,28 +1,134 @@
 <template>
-  <view>{{taskid}}</view>
+  <view class="page">
+    <view class="page__bd">
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">任务标题</view>
+          <view class="weui-cell__ft">{{loadedData.title}}</view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd">任务类型</view>
+          <view class="weui-cell__ft">{{loadedData.tag}}</view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd">发布时间</view>
+          <view class="weui-cell__ft">{{loadedData.publish_time}}</view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd">结束时间</view>
+          <view class="weui-cell__ft">{{loadedData.limit_time}}</view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd">酬金</view>
+          <view class="weui-cell__ft ft__style">
+            <view class="reward_number">{{loadedData.reward}}</view>
+            <view class="reward_icon"><i class="iconfont">&#xe603;</i></view>
+          </view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd">参与人数</view>
+          <view class="weui-cell__ft ft__style">
+            <view class="reward_icon">{{loadedData.accept_num}}</view>
+            /{{loadedData.limit_num}}
+          </view>
+        </view>
+        <view class="weui-panel">
+          <view class="weui-panel__bd">
+            <view class="weui-media-box weui-media-box_text">
+              <view class="weui-media-box__title weui-media-box__title_in-text">任务要求</view>
+              <view class="weui-media-box__desc">{{loadedData.content}}</view>
+            </view>
+          </view>
+        </view>
+        <view class="weui-panel">
+          <view class="weui-panel__bd">
+            <view class="weui-media-box weui-media-box_text">
+              <view class="weui-media-box__title weui-media-box__title_in-text">图片说明</view>
+              <view class="weui-media-box__desc">
+                <image class="image__style" src="{{loadedData.image_path}}"/>
+              </view>
+            </view>
+          </view>
+        </view>     
+      </view>
+    </view>
+    <view class="page__ft">
+      <button type="primary" bindtap="collectTask">领取任务</button>
+    </view>
+  </view>
 </template>
 <script>
   import wepy from 'wepy'
+  import {searchTaskByTaskID, acceptTask} from '../api'
+  import {USER_LOGIN_INFO} from '../utils/constant'
   export default class Detail extends wepy.page {
     config = {
       navigationBarTitleText: '任务详情'
     }
     data = {
-      taskid: -1
+      taskid: '',
+      loadedData: []
     }
-    onReady() {
+    methods = {
+      collectTask() {
+        console.log('领取任务')
+        var userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
+        console.log(userLoginInfo.openid)
+        this.collectTheTask(userLoginInfo.openid, this.data.taskid)
+      }
     }
-    onShow() {
+    async collectTheTask(accepterID, taskID) {
+      console.log(accepterID, taskID)
+      var result = await acceptTask(accepterID, taskID)
+      console.log(result)
+      // 输出相应的提示
+      if (result.error === 0) {
+        console.log('领取成功')
+        await wx.showToast({
+          title: '领取成功',
+          icon: 'success',
+          duration: 2000
+        })
+      } else {
+        console.log('领取失败')
+        await wx.showToast({
+          title: result.data.msg,
+          icon: 'success',
+          duration: 2000
+        })
+      }
     }
+    async getTaskDetail(taskid) {
+      console.log(taskid)
+      var load = await searchTaskByTaskID(parseInt(taskid))
+      console.log(load)
+      this.loadedData = load.data.tasks[0]
+      console.log(this.loadedData)
+    }
+
     onLoad(prop) {
       console.log(prop, prop.id)
       this.data.taskid = prop.id
       console.log(this.data.taskid)
-      this.$apply()
+      this.getTaskDetail(this.data.taskid)
       console.log('onload')
     }
 }
 </script>
 <style lang="less">
-
+.ft__style{
+  display: flex;
+  flex-direction: row;
+}
+.reward_number{
+  color: black;
+  padding-right: 0.5em;
+}
+.reward_icon{
+  color:red;
+}
+.image__style{
+  width: 80px;
+  height: 80px;
+}
 </style>

@@ -4,7 +4,8 @@ import {
   BASIC_REQUEST_URL ,
   LOGIN_REQUEST_URL,
   REGISTER_REQUEST_URL,
-  REGISTER_GETVCODE_REQUEST_URL
+  REGISTER_GETVCODE_REQUEST_URL,
+  ACCEPT_TASK_URL
 } from '../utils/constant'
 import json2Form from'../utils/utils'
 
@@ -103,7 +104,6 @@ const getPoints = async (id) => {
   }
 }
 
-
 const searchTask = async (params) => {
   console.log(params)
   let res = await wepy.request({
@@ -149,9 +149,9 @@ const searchTaskByPulisherId = async (publisherId, lastId) => {
  */
 
 const searchTaskByAccepterId = async (accepterId, lastId) => {
-  let params = { accepter_id: accepterId }
-  if (lastId) {
-    params.last_id = lastId
+  let params = {
+    accepter_id: accepterId,
+    last_id: lastId
   }
   return searchTask(params)
 }
@@ -182,6 +182,38 @@ const searchTaskByText = async (text, lastId) => {
     params.last_id = lastId
   }
   return searchTask(params)
+}
+
+/**
+ * 
+ * @param {Int} taskid 
+ */
+const searchTaskByTaskID = async  (taskID) => {
+  let params = { task_id: taskID }
+  return searchTask(params)
+}
+
+/**
+ * @param {Int} accepterId
+ * @param {Int} taskID 
+ */
+const acceptTask = async (accepterId, taskID) => {
+  console.log(accepterId, taskID)
+  let res = await wepy.request({
+    url: BASIC_REQUEST_URL + ACCEPT_TASK_URL, //开发者服务器接口地址",
+    data: {
+      accepter_id: accepterId,
+      task_id: taskID
+    }, //请求的参数",
+    method: 'POST',
+    header: {
+      'content-type': POST_CONTENT_TYPE
+    },
+  });
+  if (res.statusCode === 200) {
+    console.log(res.data)
+    return JSON.parse(res.data.replace(/'/g, '"'))
+  }
 }
 
 // 发问卷
@@ -295,6 +327,8 @@ export {
   searchTaskByAccepterId,
   searchTaskByTag,
   searchTaskByText,
+  searchTaskByTaskID,
+  acceptTask,
   publishTask,
   homePageRefresh,
   getInfo
