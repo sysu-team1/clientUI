@@ -92,7 +92,8 @@
       console.log('刷新列表')
       let userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
       var openid = userLoginInfo.openid
-      this.loadedData = await searchTaskByAccepterId(openid, -1)
+      var load = await searchTaskByAccepterId(parseInt(openid), -1)
+      this.loadedData = load
       console.log(this.loadedData)
     }
     onPullDownRefresh() {
