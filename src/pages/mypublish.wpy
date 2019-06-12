@@ -1,10 +1,119 @@
 <template>
-
+  <view class="page">
+      <i-panel>
+        <view wx:for="{{TaskList}}" wx:key="key" style="padding: 5px;">
+          <navigator url="/pages/detail?id={{item.id}}&title={{item.title}}" open-type="navigate" hover-class="none">
+            <i-card title="{{item.title}}" extra="{{item.reward}}">
+              <view slot="extra-icon"><i class="iconfont">&#xe603;</i></view>
+              <view slot="content">{{item.desc}}</view>
+              <view slot="footer">
+                <view class="card-footer">
+                  <view class="card-footer-tags">
+                    <i-tag 
+                        wx:for="{{item.tags}}" 
+                        wx:key="{{index}}"
+                        wx:for-item="tag"
+                        bindchange="onChange" 
+                        checkable="{{true}}" 
+                        name="{{index}}" 
+                        color="{{item.color}}" 
+                        checked="{{item.checked}}" 
+                        type="border"
+                        style="margin-right:5px;">
+                        {{tag.name}}
+                    </i-tag>
+                  </view>
+                  <view class="card-footer-button">
+                    <button type="primary" class="weui-btn {{item.completed?'btn-gray':''}}" size="mini" disabled="{{item.completed}}">{{item.completed?'已完成':'去完成'}}</button>
+                  </view>
+                </view>
+              </view>
+            </i-card>
+          </navigator>
+        </view>
+      </i-panel>
+  </view>
 </template>
 <script>
-export default {
+  import wepy from 'wepy'
+  import {USER_LOGIN_INFO} from '../utils/constant'
+  export default class MyPublish extends wepy.page {
+    config = {
+      navigationBarTitleText: '我发布的',
+      enablePullDownRefresh: true, // 当前页
+      backgroundTextStyle: 'dark', // 顶部显示颜色为深色的三个点
+      usingComponents: {
+        'i-card': '../resource/iview/card/index',
+        'i-panel': '../resource/iview/panel/index',
+        'i-tag': '../resource/iview/tag/index'
+      }
+    }
+    data = {
+      loadedData: [],
+      currentLastID: -1,
+      TaskList: [
+        {
+          id: 1,
+          title: '任务1',
+          reward: '2',
+          desc: '测试一下',
+          completed: false,
+          tags: [
+            {
+              name: '标签一1',
+              color: 'default',
+              checked: false
+            }
+          ]
+        },
+        {
+          id: 2,
+          title: '任务2',
+          reward: '222',
+          desc: '测试一下',
+          completed: true,
+          tags: [
+            {
+              name: '标签一1',
+              color: 'default',
+              checked: false
+            },
+            {
+              name: '标签一2',
+              color: 'green',
+              checked: false
+            }
+          ]
+        }
+      ]
+    }
+    async fetchTaskList() {
+      console.log('刷新列表')
+      let userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
+      var openid = userLoginInfo.openid
+      console.log(openid)
+    }
+    onPullDownRefresh() {
+      console.log('下拉刷新')
+    }
+    onLoad() {
+      console.log('我的任务页面')
+      this.fetchTaskList()
+    }
 }
 </script>
-<style>
+<style lang="less">
+.card-footer{
+  display: flex;
+  flex-direction: row;
+  .card-footer-tags {
+  flex: 1;
+  }
+  .card-footer-btn {
+    position: relative;
+    align-items: center;
+  }
+}
+
 
 </style>
