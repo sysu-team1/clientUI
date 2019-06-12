@@ -2,12 +2,9 @@
   <view class="setting">
     <view class="page list">
       <view class="weui-cells">
-        <view class="weui-cell weui-cell_access">
-          <view class="weui-cell__bd">修改昵称</view>
-        </view>
-        <view class="weui-cell weui-cell_access">
+        <navigator url="/pages/setpass" class="weui-cell weui-cell_access">
           <view class="weui-cell__bd">修改密码</view>
-        </view>
+        </navigator>
       </view>
     </view>
   </view>

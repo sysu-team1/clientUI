@@ -26,7 +26,8 @@ export default class extends wepy.app {
       'pages/setting',
       'pages/question',
       'pages/userinfo',
-      'pages/edit-user-info'
+      'pages/edit-user-info',
+      'pages/setpass'
     ],
     window: {
       backgroundTextStyle: 'light',

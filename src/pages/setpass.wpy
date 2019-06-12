@@ -1,0 +1,83 @@
+<template>
+  <view class="set-pass">
+    <input type="password" @input="onPassInput" placeholder="请输入原密码"/>
+    <input type="password" @input="onNewPassInput" placeholder="请输入新密码"/>
+    <input type="password" @input="onConfirmPassInput" placeholder="确认新密码"/>
+    <view @tap="submit" class="confirm-btn">确定</view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+// import { USER_LOGIN_INFO } from '../utils/constant'
+
+export default class EditUserInfo extends wepy.page {
+  config = {
+    navigationBarTitleText: '修改密码'
+  }
+  data = {
+    oldPass: '',
+    newPass: '',
+    confirmPass: ''
+  }
+  methods = {
+    onPassInput(e) {
+      this.oldPass = e.detail.value
+    },
+    onNewPassInput(e) {
+      this.newPass = e.detail.value
+    },
+    onConfirmPassInput(e) {
+      this.confirmPass = e.detail.value
+    },
+    submit(e) {
+      if (!this.oldPass) {
+        wepy.showToast({
+          title: '请输入原密码',
+          icon: 'none'
+        })
+        return
+      }
+      if (!this.newPass) {
+        wepy.showToast({
+          title: '请输入新密码',
+          icon: 'none'
+        })
+        return
+      }
+      if (this.newPass !== this.confirmPass) {
+        wepy.showToast({
+          title: '两次输入密码不一致',
+          icon: 'none'
+        })
+        return
+      }
+      // TODO
+    }
+  }
+}
+</script>
+
+<style scoped>
+.set-pass {
+  margin-top: 8px;
+}
+
+input {
+  margin-bottom: 20px;
+  padding: 7px 12px;
+  background: #fff;
+  font-size: 16px;
+}
+
+.confirm-btn {
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 5px 0;
+  width: 80%;
+  background: #53a8ff;
+  text-align: center;
+  color: #fff;
+  font-size: 16px;
+}
+</style>
