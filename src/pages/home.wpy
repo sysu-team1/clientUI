@@ -68,8 +68,7 @@
       usingComponents: {
         'i-card': '../resource/iview/card/index',
         'i-panel': '../resource/iview/panel/index',
-        'i-tag': '../resource/iview/tag/index',
-        'i-loadmore': '../resource/iview/load-more/index'
+        'i-tag': '../resource/iview/tag/index'
       }
     };
     data = {
