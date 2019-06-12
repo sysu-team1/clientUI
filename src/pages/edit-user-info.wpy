@@ -1,0 +1,78 @@
+<template>
+  <view class="edit-user-info">
+    <input  @input="onInput" value="{{value}}"/>
+    <view @tap="submit" class="confirm-btn">确定</view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { USER_LOGIN_INFO } from '../utils/constant'
+import { editUserInfo } from '../api'
+export default class EditUserInfo extends wepy.page {
+  config={
+
+  }
+  data = {
+    param: '',
+    value: '',
+    map: {
+      name: '昵称',
+      email: '邮箱',
+      student_id: '学号',
+      collage: '学院',
+      edu_bg: '学位',
+      grade: '年级'
+    }
+  }
+  methods = {
+    submit() {
+      this.__edit()
+    },
+    onInput(e) {
+      this.value = e.detail.value
+    }
+  }
+  async __edit() {
+    let params = {}
+    params[this.param] = this.value
+    let userLogininfo = wepy.getStorageSync(USER_LOGIN_INFO)
+    params['openid'] = userLogininfo.openid
+    let res = await editUserInfo(params)
+    if (res.error === 0) {
+      // TODO
+    }
+  }
+  onLoad(options) {
+    wepy.setNavigationBarTitle({
+      title: '修改' + this.map[options.param]
+    })
+    this.param = options.param
+    this.value = options.value
+  }
+}
+</script>
+
+<style scoped>
+.edit-user-info {
+  margin-top: 8px;
+}
+
+input {
+  margin-bottom: 20px;
+  padding: 7px 12px;
+  background: #fff;
+  font-size: 16px;
+}
+
+.confirm-btn {
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 5px 0;
+  width: 80%;
+  background: #53a8ff;
+  text-align: center;
+  color: #fff;
+  font-size: 16px;
+}
+</style>

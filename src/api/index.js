@@ -318,6 +318,17 @@ const getInfo = async (id) => {
   }
 }
 
+const editUserInfo = async (params)  => {
+  let res = await wepy.request({
+    url: BASIC_REQUEST_URL + ''
+    method: 'POST',
+    data: params,
+    header: {
+      'content-type': POST_CONTENT_TYPE
+    }
+  })
+}
+
 export {
   login,
   register,
@@ -331,5 +342,6 @@ export {
   acceptTask,
   publishTask,
   homePageRefresh,
-  getInfo
+  getInfo,
+  editUserInfo
 }

@@ -25,7 +25,8 @@ export default class extends wepy.app {
       'pages/mytask',
       'pages/setting',
       'pages/question',
-      'pages/userinfo'
+      'pages/userinfo',
+      'pages/edit-user-info'
     ],
     window: {
       backgroundTextStyle: 'light',

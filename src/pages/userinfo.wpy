@@ -7,43 +7,42 @@
         </view>
         <view class="weui-cell__ft">{{userinfo.email}}</view>
       </view>
-      <view class="weui-cell weui-cell_access">
+      <navigator url="/pages/edit-user-info?param=name&value={{userinfo.name}}" class="weui-cell weui-cell_access">
         <view class="weui-cell__bd">
           昵称
         </view>
         <view class="weui-cell__ft">{{userinfo.name}}</view>
-      </view>
+      </navigator>
       <view class="weui-cell weui-cell_access">
         <view class="weui-cell__bd">
           性别
         </view>
         <view class="weui-cell__ft">{{userinfo.sex}}</view>
       </view>
-      <view class="weui-cell weui-cell_access">
+      <navigator url="/pages/edit-user-info?param=student_id&value={{userinfo.student_id}}" class="weui-cell weui-cell_access">
         <view class="weui-cell__bd">
           学号
         </view>
         <view class="weui-cell__ft">{{userinfo.student_id}}</view>
-      </view>
-      <view class="weui-cell weui-cell_access">
+      </navigator>
+      <navigator url="/pages/edit-user-info?param=collage&value={{userinfo.collage}}" class="weui-cell weui-cell_access">
         <view class="weui-cell__bd">
           学院
         </view>
         <view class="weui-cell__ft">{{userinfo.collage}}</view>
-      </view>
-      <view class="weui-cell weui-cell_access">
+      </navigator>
+      <navigator url="/pages/edit-user-info?param=edu_bg&value={{userinfo.edu_bg}}" class="weui-cell weui-cell_access">
         <view class="weui-cell__bd">
           学位
         </view>
         <view class="weui-cell__ft">{{userinfo.edu_bg}}</view>
-      </view>
-      <view class="weui-cell weui-cell_access">
+      </navigator>
+      <navigator url="/pages/edit-user-info?param=grade&value={{userinfo.grade}}" class="weui-cell weui-cell_access">
         <view class="weui-cell__bd">
           年级
         </view>
         <view class="weui-cell__ft">{{userinfo.grade}}</view>
-      </view>
-
+      </navigator>
     </view>
   </view>
 </template>
@@ -66,7 +65,7 @@ export default class UserInfo extends wepy.page {
 }
 </script>
 
-<style scoped>
+<style>
 .weui-cells {
   margin-top: 0;
 }
