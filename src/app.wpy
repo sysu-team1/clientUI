@@ -27,7 +27,8 @@ export default class extends wepy.app {
       'pages/question',
       'pages/userinfo',
       'pages/edit-user-info',
-      'pages/setpass'
+      'pages/setpass',
+      'pages/createtask'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -58,7 +59,7 @@ export default class extends wepy.app {
           selectedIconPath: 'images/message-active.png'
         },
         {
-          pagePath: 'pages/message',
+          pagePath: 'pages/createtask',
           text: '我的发布',
           iconPath: 'images/message.png',
           selectedIconPath: 'images/message-active.png'
