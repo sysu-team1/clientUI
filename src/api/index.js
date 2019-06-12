@@ -185,8 +185,8 @@ const searchTaskByText = async (text, lastId) => {
 }
 
 /**
- * 
- * @param {Int} taskid 
+ *
+ * @param {Int} taskid
  */
 const searchTaskByTaskID = async  (taskID) => {
   let params = { task_id: taskID }
@@ -195,7 +195,7 @@ const searchTaskByTaskID = async  (taskID) => {
 
 /**
  * @param {Int} accepterId
- * @param {Int} taskID 
+ * @param {Int} taskID
  */
 const acceptTask = async (accepterId, taskID) => {
   console.log(accepterId, taskID)
@@ -320,13 +320,16 @@ const getInfo = async (id) => {
 
 const editUserInfo = async (params)  => {
   let res = await wepy.request({
-    url: BASIC_REQUEST_URL + ''
+    url: BASIC_REQUEST_URL + '',
     method: 'POST',
     data: params,
     header: {
       'content-type': POST_CONTENT_TYPE
     }
   })
+  if (res.statusCode === 200) {
+    return res.data
+  }
 }
 
 export {

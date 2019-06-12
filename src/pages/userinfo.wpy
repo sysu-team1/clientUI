@@ -13,11 +13,15 @@
         </view>
         <view class="weui-cell__ft">{{userinfo.name}}</view>
       </navigator>
-      <view class="weui-cell weui-cell_access">
-        <view class="weui-cell__bd">
-          性别
-        </view>
-        <view class="weui-cell__ft">{{userinfo.sex}}</view>
+      <view class="weui-cell weui-cell_access sex-item">
+          <view class="weui-cell__ft">
+            性别
+          </view>
+          <view class="weui-cell__bd">
+            <picker @change="onSexChange" range="{{sexArr}}" value="{{sexArrIndex}}">
+              <view>{{userinfo.sex}}</view>
+            </picker>
+          </view>
       </view>
       <navigator url="/pages/edit-user-info?param=student_id&value={{userinfo.student_id}}" class="weui-cell weui-cell_access">
         <view class="weui-cell__bd">
@@ -49,13 +53,34 @@
 
 <script>
 import wepy from 'wepy'
-import { USER_DETAIL_INFO } from '../utils/constant'
+import { USER_DETAIL_INFO, USER_LOGIN_INFO } from '../utils/constant'
+import { editUserInfo } from '../api'
 export default class UserInfo extends wepy.page {
   config = {
     navigationBarTitleText: '我的信息'
   }
   data = {
-    userinfo: {}
+    userinfo: {},
+    sexArr: ['男', '女']
+  }
+  methods = {
+    async onSexChange(e) {
+      let value = this.sexArr[e.detail.value]
+      let userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
+      let params = {
+        sex: value,
+        openid: userLoginInfo.openid
+      }
+      let res = await editUserInfo(params)
+      if (res.error === 0) {
+        // TODO
+      }
+    }
+  }
+  computed = {
+    sexArrIndex() {
+      return this.sexArr.indexOf(this.userinfo.sex)
+    }
   }
   onLoad() {
     let userinfo = wepy.getStorageSync(USER_DETAIL_INFO)
@@ -71,5 +96,8 @@ export default class UserInfo extends wepy.page {
 }
 .weui-cell__ft {
   color: #333;
+}
+.sex-item .weui-cell__bd {
+  text-align: right;
 }
 </style>
