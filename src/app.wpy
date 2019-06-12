@@ -1,6 +1,10 @@
 <style lang="less">
 @import './style/weui.wxss';
 @import "./style/icon";
+page {
+  height: 100%;
+  background: #f4f4f5;
+}
 </style>
 
 <script>
@@ -20,11 +24,12 @@ export default class extends wepy.app {
       'pages/points',
       'pages/mytask',
       'pages/setting',
-      'pages/question'
+      'pages/question',
+      'pages/userinfo'
     ],
     window: {
       backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
+      navigationBarBackgroundColor: '#53a8ff',
       navigationBarTitleText: 'XYFS',
       navigationBarTextStyle: 'black'
     },

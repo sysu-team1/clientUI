@@ -3,7 +3,7 @@
     <view class="page__hd profile-header">
       <view class="weui-panel weui-panel_access">
         <view class="weui-panel__bd">
-          <navigator url="{{}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+          <navigator url="/pages/userinfo" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
             <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
               <image class="weui-media-box__thumb avatar-url" src="{{avatarUrl}}" />
             </view>
@@ -11,6 +11,7 @@
               <view class="weui-media-box__title nick-name">{{nickName}}</view>
               <view class="weui-media-box__desc user-email">邮箱：{{userEmail}}</view>
             </view>
+            <view>&gt;</view>
           </navigator>
         </view>
       </view>
@@ -114,10 +115,12 @@
       userEmail: ''
     }
 
-    async onLoad() {
+    onLoad() {
       console.log('onLoad')
       let userinfo = wepy.getStorageSync(USER_WEIXIN_INFO)
       this.avatarUrl = userinfo.avatarUrl
+      // let userLogininfo = wepy.getStorageSync(USER_LOGIN_INFO)
+
       this.__getInfo()
     }
 
@@ -125,9 +128,11 @@
       let userLogininfo = wepy.getStorageSync(USER_LOGIN_INFO)
       let data = await getInfo(userLogininfo.openid)
       this.setData({
-        userEmail:  data.email,
+        userEmail: data.email,
         nickName: data.name
       })
+      this.userEmail = data.email
+      this.nickName = data.name
       wepy.setStorageSync(USER_DETAIL_INFO, data)
     }
   }
@@ -141,6 +146,10 @@
 .page {
   margin-top: -1rpx;
   background: #f4f4f5;
+}
+
+.weui-cell_active {
+  background: #53a8ff;
 }
 
 .profile-header {

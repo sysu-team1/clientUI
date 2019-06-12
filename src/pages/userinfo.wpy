@@ -1,0 +1,76 @@
+<template>
+  <view class="userinfo">
+    <view class="weui-cells">
+      <view class="weui-cell weui-cell_access">
+        <view class="weui-cell__bd">
+          邮箱
+        </view>
+        <view class="weui-cell__ft">{{userinfo.email}}</view>
+      </view>
+      <view class="weui-cell weui-cell_access">
+        <view class="weui-cell__bd">
+          昵称
+        </view>
+        <view class="weui-cell__ft">{{userinfo.name}}</view>
+      </view>
+      <view class="weui-cell weui-cell_access">
+        <view class="weui-cell__bd">
+          性别
+        </view>
+        <view class="weui-cell__ft">{{userinfo.sex}}</view>
+      </view>
+      <view class="weui-cell weui-cell_access">
+        <view class="weui-cell__bd">
+          学号
+        </view>
+        <view class="weui-cell__ft">{{userinfo.student_id}}</view>
+      </view>
+      <view class="weui-cell weui-cell_access">
+        <view class="weui-cell__bd">
+          学院
+        </view>
+        <view class="weui-cell__ft">{{userinfo.collage}}</view>
+      </view>
+      <view class="weui-cell weui-cell_access">
+        <view class="weui-cell__bd">
+          学位
+        </view>
+        <view class="weui-cell__ft">{{userinfo.edu_bg}}</view>
+      </view>
+      <view class="weui-cell weui-cell_access">
+        <view class="weui-cell__bd">
+          年级
+        </view>
+        <view class="weui-cell__ft">{{userinfo.grade}}</view>
+      </view>
+
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { USER_DETAIL_INFO } from '../utils/constant'
+export default class UserInfo extends wepy.page {
+  config = {
+    navigationBarTitleText: '我的信息'
+  }
+  data = {
+    userinfo: {}
+  }
+  onLoad() {
+    let userinfo = wepy.getStorageSync(USER_DETAIL_INFO)
+    console.log(userinfo)
+    this.userinfo = userinfo
+  }
+}
+</script>
+
+<style scoped>
+.weui-cells {
+  margin-top: 0;
+}
+.weui-cell__ft {
+  color: #333;
+}
+</style>
