@@ -8,8 +8,8 @@
       <input class="weui-input" placeholder="奖励金额" />
     </view>
     <view class="weui-cell__ft">
-      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-        <view class="email-label weui-select">有效天数：{{array[index]}} 天</view>
+      <picker @change="bindPickerChange" value="{{DayIndex}}" range="{{array}}">
+        <view class="email-label weui-select">有效天数：{{array[DayIndex]}} 天</view>
       </picker>
     </view>
     <!-- <view class="divLine"></view> -->
@@ -89,7 +89,7 @@
       addIconPath1: '../images/add-choice.png',
       deletePath: '../images/delete-choice.png',
       deletePath1: '../images/delete-question.png',
-      index: 0,
+      DayIndex: 0,
       array: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       typeArray: ['单选', '敬请期待新题型'],
       newIndex: 0,
@@ -199,6 +199,7 @@
 
     }
 
+    // 增加新的问题
     bindTypeChange(e) {
       this.setData({
         newIndex: e.detail.value
@@ -245,10 +246,12 @@
     }
 
     bindPickerChange(e) {
-      console.log('picker发送选择改变，携带值为', e.detail.value)
-      this.setData({
-        index: e.detail.value
-      })
+      // console.log('picker发送选择改变，携带值为', e.detail.value)
+      this.DayIndex = e.detail.value
+      // this.setData({
+      //   DayIndex: e.detail.value
+      // })
+      // console.log(this.data.DayIndex)
     }
 
     deleteSCQ(input) {
@@ -284,9 +287,10 @@
     getTempFatherIndex(input) {
       var tempFatherIndex = input.currentTarget.dataset.id
       console.log('currentFatherIndex: ' + tempFatherIndex)
-      this.setData({
-        currentFatherIndex: tempFatherIndex
-      })
+      this.currentFatherIndex = tempFatherIndex
+      // this.setData({
+      //   currentFatherIndex: tempFatherIndex
+      // })
     }
 
     deleteOneOfSCQ(input) {
@@ -342,7 +346,7 @@
 
     bindblurSCQ(input) {
       var tempIndex = input.currentTarget.dataset.id
-      console.log('sdhbuias'+tempIndex)
+      console.log('sdhbuias' + tempIndex)
       var tempArray = this.data.questionnaireArray
       tempArray[tempIndex].content.description = input.detail.value
       this.setData({
