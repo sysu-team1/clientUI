@@ -34,11 +34,26 @@
             </picker>
           </view>
         </view>
-        <i-input i-class="i-input-position" value="{{reward}}" title="酬金" autofocus type="number"></i-input>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="label-front">酬金</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" type="number" bindinput="bindRewardInput"/>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="label-front">参与人数</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" type="number" bindinput="bindLimitNumbersInput"/>
+          </view>
+        </view>
         <view class="task-content-container">
           <view class="task-content-label-front">任务描述</view>
           <view class="textarea-position">
-            <textarea class="textarea-class" fixed="true" placeholder="请输入内容" placeholder-class="placeholder-class" bindinput="inputContent" name="content" value="{{content}}" maxlength="-1" auto-height="true" />
+            <textarea class="textarea-class" fixed="true" placeholder="请输入内容" placeholder-class="placeholder-class" bindinput="bindInputContent" name="content" value="{{content}}" maxlength="-1" auto-height="true" />
           </view>
         </view>
         <view class="task-content-container">
@@ -56,6 +71,7 @@
 </template>
 <script>
   import wepy from 'wepy'
+  import {BASIC_REQUEST_URL, USER_LOGIN_INFO} from '../utils/constant'
   export default class CreateTask extends wepy.page {
     config = {
       navigationBarTitleText: '任务详情',
@@ -65,11 +81,15 @@
       }
     }
     data = {
+      openid: '',
       taskTitle: '',
       TaskTypeIndex: 0,
       TaskTypes: ['取快递', '其他'],
       endDate: '',
       endTime: '',
+      reward: '',
+      limit_num: '',
+      content: '',
       image_src: '../images/add-choice.png'
     }
     bindTaskTypeChange(e) {
@@ -77,9 +97,23 @@
     }
     bindDateChange(e) {
       this.endDate = e.detail.value
+      console.log(this.endDate)
     }
     bindTimeChange(e) {
       this.endTime = e.detail.value
+      console.log(this.endTime)
+    }
+    bindRewardInput(e) {
+      this.reward = e.detail.value
+      console.log(this.reward)
+    }
+    bindLimitNumbersInput(e) {
+      this.limit_num = e.detail.value
+      console.log(this.limit_num)      
+    }
+    bindInputContent(e) {
+      this.content = e.detail.value
+      console.log(this.content)
     }
     selectImg() {
       var that = this
@@ -92,10 +126,39 @@
           that.setData({
             image_src: tempFilePaths
           })
+          that.image_src = tempFilePaths
+        }
+      })
+    }
+    createTask() {
+      var that = this
+      console.log(this.image_src)
+      wx.uploadFile({
+        url: BASIC_REQUEST_URL + '/tasks/create/',
+        filePath: that.image_src[0],
+        name: 'photo',
+        formData: {
+          "openid": that.openid,
+          "limit_time": that.endDate + ' ' + that.endTime + '00',
+          "limit_num": parseInt(that.limit_num),
+          "title": that.title,
+          "content": that.content,
+          "tag": that.TaskTypes[that.TaskTypeIndex],
+          "reward": parseInt(that.reward),
+          "problem_content": ''
+        },
+        success (res){
+          console.log(res)
+          var datas = JSON.parse(res.data.replace(/'/g, '"'))
+          console.log(datas)
         }
       })
     }
     onLoad(prop) {
+      var userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
+      console.log(userLoginInfo.openid)
+      this.openid = userLoginInfo.openid
+      console.log(this.openid)
     }
 }
 </script>
