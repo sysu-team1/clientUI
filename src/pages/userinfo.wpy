@@ -13,7 +13,7 @@
         </view>
         <view class="weui-cell__ft">{{userinfo.name}}</view>
       </navigator>
-      <view class="weui-cell weui-cell_access sex-item">
+      <view class="weui-cell weui-cell_access sex-item" wx:if="{{isStudent}}">
           <view class="weui-cell__ft">
             性别
           </view>
@@ -23,25 +23,25 @@
             </picker>
           </view>
       </view>
-      <navigator url="/pages/edit-user-info?param=student_id&value={{userinfo.student_id}}" class="weui-cell weui-cell_access">
+      <navigator url="/pages/edit-user-info?param=student_id&value={{userinfo.student_id}}" class="weui-cell weui-cell_access"  wx:if="{{isStudent}}">
         <view class="weui-cell__bd">
           学号
         </view>
         <view class="weui-cell__ft">{{userinfo.student_id}}</view>
       </navigator>
-      <navigator url="/pages/edit-user-info?param=collage&value={{userinfo.collage}}" class="weui-cell weui-cell_access">
+      <navigator url="/pages/edit-user-info?param=collage&value={{userinfo.collage}}" class="weui-cell weui-cell_access"  wx:if="{{isStudent}}">
         <view class="weui-cell__bd">
           学院
         </view>
         <view class="weui-cell__ft">{{userinfo.collage}}</view>
       </navigator>
-      <navigator url="/pages/edit-user-info?param=edu_bg&value={{userinfo.edu_bg}}" class="weui-cell weui-cell_access">
+      <navigator url="/pages/edit-user-info?param=edu_bg&value={{userinfo.edu_bg}}" class="weui-cell weui-cell_access"  wx:if="{{isStudent}}">
         <view class="weui-cell__bd">
           学位
         </view>
         <view class="weui-cell__ft">{{userinfo.edu_bg}}</view>
       </navigator>
-      <navigator url="/pages/edit-user-info?param=grade&value={{userinfo.grade}}" class="weui-cell weui-cell_access">
+      <navigator url="/pages/edit-user-info?param=grade&value={{userinfo.grade}}" class="weui-cell weui-cell_access"  wx:if="{{isStudent}}">
         <view class="weui-cell__bd">
           年级
         </view>
@@ -61,7 +61,8 @@ export default class UserInfo extends wepy.page {
   }
   data = {
     userinfo: {},
-    sexArr: ['男', '女']
+    sexArr: ['男', '女'],
+    loginType: 'organization'
   }
   methods = {
     async onSexChange(e) {
@@ -73,19 +74,41 @@ export default class UserInfo extends wepy.page {
       }
       let res = await editUserInfo(params)
       if (res.error === 0) {
-        // TODO
+        let _userinfo = {...this.userinfo}
+        _userinfo.sex = value
+        wepy.setStorageSync(USER_DETAIL_INFO, _userinfo)
+        this.setData({
+          userinfo: _userinfo
+        })
+        wepy.showToast({
+          title: '修改成功'
+        })
+      } else {
+        this.showToast({
+          title: '出了点故障，请稍后重试',
+          icon: 'none'
+        })
       }
     }
   }
   computed = {
     sexArrIndex() {
       return this.sexArr.indexOf(this.userinfo.sex)
+    },
+    isStudent() {
+      return this.loginType === 'student'
     }
   }
   onLoad() {
+    let userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
+    this.loginType = userLoginInfo.loginType
+  }
+  onShow() {
     let userinfo = wepy.getStorageSync(USER_DETAIL_INFO)
-    console.log(userinfo)
     this.userinfo = userinfo
+    this.setData({
+      userinfo: userinfo
+    })
   }
 }
 </script>

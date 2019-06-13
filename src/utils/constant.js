@@ -30,3 +30,8 @@ export const REGISTER_REQUEST_URL = '/user/register/'
 export const REGISTER_GETVCODE_REQUEST_URL = '/user/get_verification_code/'
 export const LOGIN_REQUEST_URL = '/user/login/'
 export const ACCEPT_TASK_URL = '/tasks/accept/'
+
+
+// Header
+export const POST_CONTENT_TYPE = 'application/x-www-form-urlencoded'
+export const CONTENT_TYPE = 'content-type'

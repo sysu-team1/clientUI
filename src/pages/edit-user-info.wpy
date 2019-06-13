@@ -7,7 +7,7 @@
 
 <script>
 import wepy from 'wepy'
-import { USER_LOGIN_INFO } from '../utils/constant'
+import { USER_LOGIN_INFO, USER_DETAIL_INFO } from '../utils/constant'
 import { editUserInfo } from '../api'
 export default class EditUserInfo extends wepy.page {
   config={
@@ -40,7 +40,17 @@ export default class EditUserInfo extends wepy.page {
     params['openid'] = userLogininfo.openid
     let res = await editUserInfo(params)
     if (res.error === 0) {
-      // TODO
+      wepy.showToast({
+        title: '修改成功'
+      })
+      let userDetailInfo = wepy.getStorageSync(USER_DETAIL_INFO)
+      userDetailInfo[this.param] = this.value
+      wepy.setStorageSync(USER_DETAIL_INFO, userDetailInfo)
+    } else {
+      wepy.showToast({
+        title: '出了点故障，请稍后重试',
+        icon: 'none'
+      })
     }
   }
   onLoad(options) {

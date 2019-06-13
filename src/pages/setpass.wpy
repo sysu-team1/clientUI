@@ -9,7 +9,8 @@
 
 <script>
 import wepy from 'wepy'
-// import { USER_LOGIN_INFO } from '../utils/constant'
+import { USER_LOGIN_INFO } from '../utils/constant'
+import { editUserInfo } from '../api'
 
 export default class EditUserInfo extends wepy.page {
   config = {
@@ -30,7 +31,7 @@ export default class EditUserInfo extends wepy.page {
     onConfirmPassInput(e) {
       this.confirmPass = e.detail.value
     },
-    submit(e) {
+    async submit(e) {
       if (!this.oldPass) {
         wepy.showToast({
           title: '请输入原密码',
@@ -52,7 +53,22 @@ export default class EditUserInfo extends wepy.page {
         })
         return
       }
-      // TODO
+      let params = {}
+      let userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
+      params.openid = userLoginInfo.openid
+      params['password'] = this.newPass
+      params['old_password'] = this.oldPass
+      let res = await editUserInfo(params)
+      if (res.error === 0) {
+        wepy.showToast({
+          title: '修改密码成功'
+        })
+      } else {
+        wepy.showToast({
+          title: '出了点故障，请稍后重试',
+          icon: 'none'
+        })
+      }
     }
   }
 }
