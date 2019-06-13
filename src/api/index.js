@@ -6,7 +6,13 @@ import {
   register,
   registerVcode,
   getInfo,
-  editUserInfo
+  editUserInfo,
+  getOnGingTask,
+  getFinishedTask,
+  getCompleteTask,
+  getNewPublish,
+  getOngingPublish,
+  getFinishedPulish
 } from './user'
 
 import {
@@ -285,6 +291,12 @@ export {
   registerVcode,
   getInfo,
   editUserInfo,
+  getOnGingTask,
+  getFinishedTask,
+  getCompleteTask,
+  getNewPublish,
+  getOngingPublish,
+  getFinishedPulish,
   searchTaskByPulisherId,
   searchTaskByAccepterId,
   searchTaskByTag,

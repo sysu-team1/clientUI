@@ -8,7 +8,8 @@ import {
   CONTENT_TYPE,
   POST_CONTENT_TYPE
 } from '../utils/constant'
-
+import { searchTask } from './task'
+import { convertDateToString } from '../utils/utils'
 /**
  * 用户登录功能
  * @param {String} email 登录邮箱
@@ -147,12 +148,105 @@ const editUserInfo = async (params)  => {
   }
 }
 
+const ON_GOING = 'ongoing'
+const FINISHED = 'finished'
+const COMPLETE = 'complete'
 
+/**
+ *
+ * @param {String} accepter_id 接受者id
+ * @param {Date} last_accept_time
+ */
+
+const getOnGingTask = async (accepter_id, last_accept_time) => {
+  let params = {
+    accepter_id,
+    last_accept_time: convertDateToString(last_accept_time),
+    status: ON_GOING
+  }
+  return searchTask(params)
+}
+
+/**
+ *
+ * @param {String} accepter_id 接受者id
+ * @param {Date} last_accept_time
+ */
+const getFinishedTask = async (accepter_id, last_accept_time) => {
+  let params = {
+    accepter_id,
+    last_accept_time: convertDateToString(last_accept_time),
+    status: FINISHED
+  }
+  return searchTask(params)
+}
+
+/**
+ *
+ * @param {String} accepter_id 接受者id
+ * @param {Date} last_accept_time
+ */
+const getCompleteTask = async (accepter_id, last_accept_time) => {
+  let params = {
+    accepter_id,
+    last_accept_time: convertDateToString(last_accept_time),
+    status: COMPLETE
+  }
+  return searchTask(params)
+}
+
+/**
+ *
+ * @param {String} publisher_id 发布者id
+ */
+const getNewPublish = async (publisher_id) => {
+  let params = {
+    publisher_id,
+    last_id: -1,
+    status: 'all'
+  }
+  return searchTask(params)
+}
+
+/**
+ *
+ * @param {String} publisher_id 发布者id
+ * @param {Date} last_id
+ */
+
+const getOngingPublish = async (publisher_id, last_id = -1) => {
+  let params = {
+    publisher_id,
+    last_id,
+    status: ON_GOING
+  }
+  return searchTask(params)
+}
+
+/**
+ *
+ * @param {String} publisher_id 发布者id
+ * @param {Number} last_id
+ */
+const getFinishedPulish = async (publisher_id, last_id = -1) => {
+  let params = {
+    publisher_id,
+    last_id,
+    status: FINISHED
+  }
+  return searchTask(params)
+}
 
 export {
   login,
   register,
   registerVcode,
   getInfo,
-  editUserInfo
+  editUserInfo,
+  getOnGingTask,
+  getFinishedTask,
+  getCompleteTask,
+  getNewPublish,
+  getOngingPublish,
+  getFinishedPulish
 }
