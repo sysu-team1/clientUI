@@ -155,7 +155,7 @@ const COMPLETE = 'complete'
 /**
  *
  * @param {String} accepter_id 接受者id
- * @param {Date} last_accept_time
+ * @param {Date | String} last_accept_time
  */
 
 const getOnGingTask = async (accepter_id, last_accept_time) => {
@@ -170,7 +170,7 @@ const getOnGingTask = async (accepter_id, last_accept_time) => {
 /**
  *
  * @param {String} accepter_id 接受者id
- * @param {Date} last_accept_time
+ * @param {Date | String} last_accept_time
  */
 const getFinishedTask = async (accepter_id, last_accept_time) => {
   let params = {
@@ -184,7 +184,7 @@ const getFinishedTask = async (accepter_id, last_accept_time) => {
 /**
  *
  * @param {String} accepter_id 接受者id
- * @param {Date} last_accept_time
+ * @param {Date | String} last_accept_time
  */
 const getCompleteTask = async (accepter_id, last_accept_time) => {
   let params = {

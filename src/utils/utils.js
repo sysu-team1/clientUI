@@ -20,6 +20,8 @@ function convertDateToString(date) {
     minute = padZero(minute)
     second = padZero(second)
     return `${year}-${month}-${day} ${hour}:${minute}:${second}`
+  } else if (typeof date === 'string') {
+    return date
   }
 }
 
