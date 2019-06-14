@@ -1,0 +1,14 @@
+<template>
+    
+</template>
+<script>
+  import wepy from 'wepy'
+  export default class CompleteTask extends wepy.page {
+    config = {
+      navigationBarTitleText: '任务详情'
+    }
+  }
+</script>
+<style lang="less">
+
+</style>

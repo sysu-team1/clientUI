@@ -64,20 +64,20 @@
         </view>
       </view>
     </view>
-    <view class="page__ft">
-      <button type="primary" bindtap="createTask">发布任务</button>
+    <view class="page__ft weui-btn-area">
+      <button class="weui-btn" type="primary" bindtap="createTask" size="default">发布任务</button>
     </view>
   </view>
 </template>
 <script>
   import wepy from 'wepy'
   import {BASIC_REQUEST_URL, USER_LOGIN_INFO} from '../utils/constant'
+  import {} from '../api'
   export default class CreateTask extends wepy.page {
     config = {
-      navigationBarTitleText: '任务详情',
+      navigationBarTitleText: '创建任务',
       usingComponents: {
-        'i-input': '../resource/iview/input/index',
-        'i-panel': '../resource/iview/panel/index'
+        'i-input': '../resource/iview/input/index'
       }
     }
     data = {
@@ -90,7 +90,7 @@
       reward: '',
       limit_num: '',
       content: '',
-      image_src: '../images/add-choice.png'
+      tempFilePath: ''
     }
     bindTaskTypeChange(e) {
       this.TaskTypeIndex = e.detail.value
@@ -109,13 +109,13 @@
     }
     bindLimitNumbersInput(e) {
       this.limit_num = e.detail.value
-      console.log(this.limit_num)      
+      console.log(this.limit_num)
     }
     bindInputContent(e) {
       this.content = e.detail.value
       console.log(this.content)
     }
-    selectImg() {
+    async selectImg() {
       var that = this
       wx.chooseImage({
         count: 1,
@@ -123,10 +123,24 @@
         sourceType: ['album', 'camera'],
         success: function(res) {
           var tempFilePaths = res.tempFilePaths
-          that.setData({
-            image_src: tempFilePaths
+          // that.setData({
+          //   image_src: tempFilePaths
+          // })
+          that.tempFilePath = tempFilePaths
+          wx.uploadFile({
+            url: BASIC_REQUEST_URL + '/temp/upload/' + that.openid,
+            filePath: that.tempFilePath[0],
+            name: 'photo',
+            success (res) {
+              console.log(res)
+              var datas = JSON.parse(res.data.replace(/'/g, '"'))
+              console.log(datas)
+              that.setData({
+                image_src: datas.data.url
+              })
+              that.image_src = datas.data.url
+            }
           })
-          that.image_src = tempFilePaths
         }
       })
     }
@@ -135,30 +149,47 @@
       console.log(this.image_src)
       wx.uploadFile({
         url: BASIC_REQUEST_URL + '/tasks/create/',
-        filePath: that.image_src[0],
+        filePath: that.tempFilePath[0],
         name: 'photo',
         formData: {
-          "openid": that.openid,
-          "limit_time": that.endDate + ' ' + that.endTime + '00',
-          "limit_num": parseInt(that.limit_num),
-          "title": that.title,
-          "content": that.content,
-          "tag": that.TaskTypes[that.TaskTypeIndex],
-          "reward": parseInt(that.reward),
-          "problem_content": ''
+          'openid': that.openid,
+          'limit_time': that.endDate + ' ' + that.endTime + ':00',
+          'limit_num': parseInt(that.limit_num),
+          'title': that.taskTitle,
+          'content': that.content,
+          'tag': that.TaskTypes[that.TaskTypeIndex],
+          'reward': parseInt(that.reward),
+          'problem_content': ''
         },
-        success (res){
+        success (res) {
           console.log(res)
           var datas = JSON.parse(res.data.replace(/'/g, '"'))
           console.log(datas)
+          wx.showToast({
+            title: datas.data.msg,
+            icon: 'success',
+            duration: 2000
+          })
+          // 页面跳转
+          that.onLoad()
         }
       })
     }
-    onLoad(prop) {
+    onLoad() {
       var userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
       console.log(userLoginInfo.openid)
       this.openid = userLoginInfo.openid
       console.log(this.openid)
+      this.setData({
+        taskTitle: '',
+        TaskTypeIndex: 0,
+        endDate: '',
+        endTime: '',
+        reward: 0,
+        limit_num: 0,
+        content: '',
+        image_src: '../images/add-choice.png'
+      })
     }
 }
 </script>
@@ -196,8 +227,8 @@
   font-size:14px;
 }
 .add-img-btn{
-  width: 80px;
-  height: 80px;
+  width: 85px;
+  height: 85px;
   padding-left: 15px;
   padding-top: 5px;
 }
@@ -205,6 +236,7 @@
   width: 80px;
   height: 80px;
   border: 1px solid gray;
+  border-radius: 5%;
 }
 </style>
 <style lang="less" scoped>

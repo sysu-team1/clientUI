@@ -192,7 +192,7 @@ const publishTask = async (id='', limit_time='', limit_num='', title='', content
       var tempFilePaths = res.tempFilePaths
       console.log(tempFilePaths)
       wx.uploadFile({
-        url: BASIC_REQUEST_URL + '/tasks/create/', //仅为示例，非真实的接口地址
+        url: BASIC_REQUEST_URL + '/tasks/create/',
         filePath: tempFilePaths[0],
         name: 'photo',
         formData: {
@@ -214,6 +214,59 @@ const publishTask = async (id='', limit_time='', limit_num='', title='', content
   })
 }
 
+/**
+ * 创建任务， 创建除问卷以外任务类型的任务
+ * @param {String} openid
+ * @param {String} tempFilePath
+ * @param {String} limit_time
+ * @param {Int} limit_num
+ * @param {String} title
+ * @param {String} content
+ * @param {String} tag
+ * @param {Int} reward
+ * @param {String} problem_content
+ */
+
+const createOtherTask = async (openid, tempFilePath, limit_time, limit_num, title, content, tag, reward, problem_content='') => {
+  wx.uploadFile({
+    url: BASIC_REQUEST_URL + '/tasks/create/',
+    filePath: tempFilePath, // 传入时已变成String, 而非Array
+    name: 'photo',
+    formData: {
+      "openid": openid,
+      "limit_time": limit_time,
+      "limit_num": limit_num,
+      "title": title,
+      "content": content,
+      "tag": tag,
+      "reward": reward,
+      "problem_content": problem_content
+    },
+    success (res){
+      var datas = JSON.parse(res.data.replace(/'/g, '"'))
+      console.log(datas)
+    }
+  })  
+}
+
+/**
+ * 获取上传图片的url
+ * @param {String} tempFilePath
+ * @param {String} openid
+ */
+const uploadImage = async (tempFilePath, openid) => {
+  wx.uploadFile({
+    url: BASIC_REQUEST_URL + '/temp/upload/' + openid,
+    filePath: tempFilePath,
+    name: 'photo',
+    success (res){
+      console.log(res)
+      var datas = JSON.parse(res.data.replace(/'/g, '"'))
+      console.log(datas)
+    }
+  })
+}
+
 export {
   searchTaskByPulisherId,
   searchTaskByAccepterId,
@@ -223,5 +276,6 @@ export {
   acceptTask,
   publishTask,
   homePageRefresh,
-  searchTask
+  searchTask,
+  uploadImage
 }
