@@ -33,13 +33,15 @@ const homePageRefresh = async (lastId) => {
 /**
  * 查询某个发布者发布的任务
  * @param {String} publisherId 发布者id
- * @param {String} lastId 上次请求的数据最后一条数据的id, 可选
+ * @param {String} Status 状态(all ongoing finished)
+ * @param {String} lastId 上次请求的数据最后一条数据的id,必须
  */
 
-const searchTaskByPulisherId = async (publisherId, lastId) => {
-  let params = { publisher_id: publisherId }
-  if (lastId) {
-    params.last_id = lastId
+const searchTaskByPulisherId = async (publisherId, Status, lastId) => {
+  let params = {
+    publisher_id: publisherId,
+    status: Status,
+    last_id: lastId
   }
   return searchTask(params)
 }
@@ -48,12 +50,16 @@ const searchTaskByPulisherId = async (publisherId, lastId) => {
 /**
  * 查询自己接受的任务
  * @param {String} accepterId 当前用户的id
- * @param {String} lastId 上次请求的数据最后一条数据的id 可选
+ * @param {String} Status 状态(all ongoing finished complete)
+ * @param {String} lastAcceptTime 最后一次接受的时间
+ * @param {String} lastId 上次请求的数据最后一条数据的id
  */
 
-const searchTaskByAccepterId = async (accepterId, lastId) => {
+const searchTaskByAccepterId = async (accepterId, Status, lastAcceptTime, lastId) => {
   let params = {
     accepter_id: accepterId,
+    status: Status,
+    last_accept_time: lastAcceptTime,
     last_id: lastId
   }
   return searchTask(params)
@@ -62,13 +68,13 @@ const searchTaskByAccepterId = async (accepterId, lastId) => {
 /**
  * 根据标签查询任务
  * @param {String} tag 任务标签
- * @param {*} lastId
+ * @param {*} lastId 必须
  */
 
 const searchTaskByTag = async (tag, lastId) => {
-  let params = { tag }
-  if (lastId) {
-    params.last_id = lastId
+  let params = {
+    tag: tag,
+    last_id: lastId
   }
   return searchTask(params)
 }
@@ -76,13 +82,13 @@ const searchTaskByTag = async (tag, lastId) => {
 /**
  * 根据内容搜索任务
  * @param {String} text 内容
- * @param {String} lastId 可选
+ * @param {String} lastId 必须
  */
 
 const searchTaskByText = async (text, lastId) => {
-  let params = { text }
-  if (lastId) {
-    params.last_id = lastId
+  let params = {
+    text: text,
+    last_id: lastId
   }
   return searchTask(params)
 }
