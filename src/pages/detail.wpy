@@ -11,6 +11,10 @@
           <view class="weui-cell__ft">{{loadedData.tag}}</view>
         </view>
         <view class="weui-cell">
+          <view class="weui-cell__bd">发布人</view>
+          <view class="weui-cell__ft">{{loadedData.publisher.name}}</view>
+        </view>
+        <view class="weui-cell">
           <view class="weui-cell__bd">发布时间</view>
           <view class="weui-cell__ft">{{loadedData.publish_time}}</view>
         </view>
