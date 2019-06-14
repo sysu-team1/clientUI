@@ -3,7 +3,14 @@
     <view class="page__bd">
       <view class="weui-cells__title">任务信息</view>
       <view class="weui-cells weui-cells_after-title">
-        <i-input value="{{taskTitle}}" title="任务标题" autofocus placeholder="最大长度20字" maxlength="20"></i-input>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="label-front">任务标题</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" bindinput="bindTaskTitleInput"/>
+          </view>
+        </view>
         <view class="weui-cell weui-cell_select">
           <view class="weui-cell__hd weui-cell__hd_in-select-after">
             <view class="label-front">任务类型</view>
@@ -59,7 +66,7 @@
         <view class="task-content-container">
           <view class="task-content-label-front">图片说明</view>
           <view class="add-img-btn" bindtap="selectImg">
-            <image class="add-img-btn-image" src="{{image_src}}"/>
+            <image class="add-img-btn-image" src="{{image_src}}" mode="scaleToFill"/>
           </view>
         </view>
       </view>
@@ -91,6 +98,10 @@
       limit_num: '',
       content: '',
       tempFilePath: ''
+    }
+    bindTaskTitleInput(e) {
+      this.taskTitle = e.detail.value
+      console.log(this.taskTitle)
     }
     bindTaskTypeChange(e) {
       this.TaskTypeIndex = e.detail.value
@@ -188,7 +199,7 @@
         reward: 0,
         limit_num: 0,
         content: '',
-        image_src: '../images/add-choice.png'
+        image_src: '../images/add-picture.png'
       })
     }
 }

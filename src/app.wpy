@@ -23,12 +23,14 @@ export default class extends wepy.app {
       'pages/detail',
       'pages/points',
       'pages/mytask',
+      'pages/mypublish',
       'pages/setting',
       'pages/question',
       'pages/userinfo',
       'pages/edit-user-info',
       'pages/setpass',
-      'pages/createtask'
+      'pages/createtask',
+      'pages/completetask'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -53,13 +55,13 @@ export default class extends wepy.app {
           selectedIconPath: 'images/message-active.png'
         },
         {
-          pagePath: 'pages/question',
+          pagePath: 'pages/createtask',
           text: '去发布',
           iconPath: 'images/message.png',
           selectedIconPath: 'images/message-active.png'
         },
         {
-          pagePath: 'pages/createtask',
+          pagePath: 'pages/mypublish',
           text: '我的发布',
           iconPath: 'images/message.png',
           selectedIconPath: 'images/message-active.png'
