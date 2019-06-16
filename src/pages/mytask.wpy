@@ -3,7 +3,7 @@
     <topbar :tabs="tabs" :currentTab.sync="currentTab" :parts="parts"/>
     <i-panel>
       <view wx:for="{{TaskList}}" wx:key="key" style="padding: 5px;">
-        <navigator url="/pages/detail?id={{item.id}}" open-type="navigate" hover-class="none">
+        <navigator url="/pages/completetask?id={{item.id}}" open-type="navigate" hover-class="none">
           <i-card title="{{item.title}}" extra="{{item.reward}}" thumb="{{item.image_path}}">
             <view slot="extra-icon"><i class="iconfont">&#xe603;</i></view>
             <view slot="content">{{item.content}}</view>
@@ -160,5 +160,8 @@
     position: relative;
     align-items: center;
   }
+}
+.weui-loadmore__tips_in-line{
+  background-color: transparent;
 }
 </style>

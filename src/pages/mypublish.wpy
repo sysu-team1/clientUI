@@ -152,4 +152,7 @@
     align-items: center;
   }
 }
+.weui-loadmore__tips_in-line{
+  background-color: transparent;
+}
 </style>
