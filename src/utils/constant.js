@@ -30,6 +30,7 @@ export const REGISTER_REQUEST_URL = '/user/register/'
 export const REGISTER_GETVCODE_REQUEST_URL = '/user/get_verification_code/'
 export const LOGIN_REQUEST_URL = '/user/login/'
 export const ACCEPT_TASK_URL = '/tasks/accept/'
+export const FINISH_TASK_URL = '/finish_task/'
 
 
 // Header

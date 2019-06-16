@@ -24,7 +24,8 @@ import {
   acceptTask,
   publishTask,
   homePageRefresh,
-  uploadImage
+  uploadImage,
+  finishTask
 } from './task'
 
 
@@ -306,5 +307,6 @@ export {
   acceptTask,
   publishTask,
   homePageRefresh,
-  uploadImage
+  uploadImage,
+  finishTask
 }

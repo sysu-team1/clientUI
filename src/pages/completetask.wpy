@@ -1,14 +1,132 @@
 <template>
-    
+  <view class="page">
+    <view class="page__bd">
+      <view class="task-content-container">
+        <view class="task-content-label-front">任务描述</view>
+        <view class="textarea-position">
+          <textarea class="textarea-class" placeholder="请输入内容" placeholder-class="placeholder-class" bindinput="bindInputContent" name="content" value="{{content}}" maxlength="-1"/>
+        </view>
+      </view>
+      <view class="task-content-container">
+        <view class="task-content-label-front">图片说明</view>
+        <view class="add-img-btn" bindtap="selectImg">
+          <image class="add-img-btn-image" src="{{image_src}}" mode="scaleToFill"/>
+        </view>
+      </view>
+    </view>
+    <view class="page__ft commit-task-btn">
+      <button class="weui-btn" type="primary" bindtap="commitTask" size="mini">提交任务</button>
+    </view>
+  </view>
 </template>
 <script>
   import wepy from 'wepy'
+  import {finishTask} from '../api'
+  import {BASIC_REQUEST_URL, USER_LOGIN_INFO} from '../utils/constant'
   export default class CompleteTask extends wepy.page {
     config = {
-      navigationBarTitleText: '任务详情'
+      navigationBarTitleText: '提交任务'
+    }
+    data = {
+      tempFilePath: '',
+      openid: '',
+      taskid: ''
+    }
+    async selectImg() {
+      var that = this
+      wx.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success: function(res) {
+          var tempFilePaths = res.tempFilePaths
+          // that.setData({
+          //   image_src: tempFilePaths
+          // })
+          that.tempFilePath = tempFilePaths
+          wx.uploadFile({
+            url: BASIC_REQUEST_URL + '/temp/upload/' + that.openid,
+            filePath: that.tempFilePath[0],
+            name: 'photo',
+            success (res) {
+              console.log(res)
+              var datas = JSON.parse(res.data.replace(/'/g, '"'))
+              console.log(datas)
+              that.setData({
+                image_src: datas.data.url
+              })
+              that.image_src = datas.data.url
+            }
+          })
+        }
+      })
+    }
+    async commitTask() {
+      console.log(this.image_src, this.taskid, this.openid)
+      let res = await finishTask(parseInt(this.taskid), parseInt(this.openid))
+      console.log(res)
+    }
+    onLoad(prop) {
+      console.log(prop, prop.id)
+      this.taskid = prop.id
+      var userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
+      console.log(userLoginInfo.openid)
+      this.openid = userLoginInfo.openid
+      this.setData({
+        image_src: '../images/add-picture.png'
+      })
     }
   }
 </script>
 <style lang="less">
-
+.task-content-container{
+  flex-flow:column nowrap;
+  height: 130px; 
+}
+.task-content-label-front {
+  color:#495060;
+  min-width:65px;
+  font-size:14px;
+  margin-left:15px;
+  margin-top:5px;
+}
+.textarea-position{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  height: 75%;
+}
+.textarea-class{
+  font-size: 14px;
+  height: 100%;
+  border:1px solid gray;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.placehoder-class{
+  font-size:14px;
+}
+.add-img-btn{
+  width: 85px;
+  height: 85px;
+  padding-left: 15px;
+  padding-top: 5px;
+}
+.add-img-btn-image{
+  width: 80px;
+  height: 80px;
+  border: 1px solid gray;
+  border-radius: 5%;
+}
+.commit-task-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 0.5px dotted gray;
+}
 </style>

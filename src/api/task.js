@@ -3,6 +3,7 @@ import 'wepy-async-function'
 import {
   BASIC_REQUEST_URL ,
   ACCEPT_TASK_URL,
+  FINISH_TASK_URL,
   CONTENT_TYPE,
   POST_CONTENT_TYPE
 } from '../utils/constant'
@@ -122,6 +123,28 @@ const acceptTask = async (accepterId, taskID) => {
   if (res.statusCode === 200) {
     return JSON.parse(res.data.replace(/'/g, '"'))
   }
+}
+
+/**
+ * 
+ * @param {Number} task_id 
+ * @param {Number} open_id
+ */
+const finishTask = async (taskID, openid) => {
+  let res = wepy.request({
+    url: BASIC_REQUEST_URL + FINISH_TASK_URL, //开发者服务器接口地址",
+    data: {
+      task_id: taskID,
+      openid: openid
+    }, //请求的参数",
+    method: 'POST',
+    header: {
+      [CONTENT_TYPE]: POST_CONTENT_TYPE
+    },
+  });
+  if (res.statusCode === 200) {
+    return JSON.parse(res.data.replace(/'/g, '"'))
+  } 
 }
 
 /**
@@ -283,5 +306,6 @@ export {
   publishTask,
   homePageRefresh,
   searchTask,
-  uploadImage
+  uploadImage,
+  finishTask
 }
