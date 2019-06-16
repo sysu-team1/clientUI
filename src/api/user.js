@@ -52,9 +52,10 @@ const login = async (email, password, type) => {
  * @param {String} collage 学院
  * @param {Number} grade 年级
  * @param {String} sex 性别
+ * @param {String} eduBg 学历
  */
 
-const register = async (email, vcode, password, name, studentId, collage, grade, sex) => {
+const register = async (email, vcode, password, name, studentId, collage, grade, sex, eduBg) => {
   let res = await  wepy.request({
     url: BASIC_REQUEST_URL + REGISTER_REQUEST_URL,
     data: {
@@ -65,7 +66,8 @@ const register = async (email, vcode, password, name, studentId, collage, grade,
       collage: collage,
       grade: grade,
       name: name,
-      validate_code: vcode
+      validate_code: vcode,
+      edu_bg: eduBg
     },
     method: 'POST',
     header: {
