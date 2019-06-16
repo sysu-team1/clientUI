@@ -60,7 +60,7 @@
         <view class="task-content-container">
           <view class="task-content-label-front">任务描述</view>
           <view class="textarea-position">
-            <textarea class="textarea-class" fixed="true" placeholder="请输入内容" placeholder-class="placeholder-class" bindinput="bindInputContent" name="content" value="{{content}}" maxlength="-1" auto-height="true" />
+            <textarea class="textarea-class" placeholder="请输入内容" placeholder-class="placeholder-class" bindinput="bindInputContent" name="content" value="{{content}}" maxlength="-1"/>
           </view>
         </view>
         <view class="task-content-container">
@@ -216,8 +216,7 @@
 }
 .task-content-container{
     flex-flow:column nowrap;
-    height: 130px;
-    display: flex;  
+    height: 130px; 
 }
 .task-content-label-front {
   color:#495060;
@@ -229,10 +228,11 @@
 .textarea-position{
   padding-left: 15px;
   padding-top: 5px;
-  height: 20%;
+  height: 85%;
 }
 .textarea-class{
   font-size: 14px;
+  height: 100%;
 }
 .placehoder-class{
   font-size:14px;
