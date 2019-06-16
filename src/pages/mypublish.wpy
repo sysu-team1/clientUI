@@ -59,9 +59,9 @@
       lastID: -1,
       status: '',
       TaskList: [],
-      tabs: ['全部', '正在进行', '已完成'],
+      tabs: ['正在进行', '已完成'],
       currentTab: 0,
-      parts: 3
+      parts: 2
     }
     watch = {
       currentTab (newValue, oldValue) {
@@ -77,10 +77,9 @@
     }
     async fetchTaskList(currentLastID, operation, status) {
       switch (status) {
-        case 0: this.status = 'all'; break
-        case 1: this.status = 'ongoing'; break
-        case 2: this.status = 'finished'; break
-        default: this.status = 'all'
+        case 0: this.status = 'ongoing'; break
+        case 1: this.status = 'finished'; break
+        default: this.status = 'ongoing'
       }
       if (operation === 'refresh') {
         console.log('刷新列表')
