@@ -1,40 +1,42 @@
 <template>
   <view class="page">
-      <i-panel>
-        <view wx:for="{{TaskList}}" wx:key="key" style="padding: 5px;">
-          <navigator url="/pages/detail?id={{item.id}}" open-type="navigate" hover-class="none">
-            <i-card title="{{item.title}}" extra="{{item.reward}}" thumb="{{item.image_path}}">
-              <view slot="extra-icon"><i class="iconfont">&#xe603;</i></view>
-              <view slot="content">{{item.content}}</view>
-              <view slot="footer">
-                <view class="card-footer">
-                  <view class="card-footer-tags">
-                    <i-tag type="border" style="margin-right:5px;">{{item.tag}}</i-tag>
-                  </view>
-                  <view class="card-footer-button">
-                    <button class="weui-btn" type="primary" size="mini">任务详情</button>
-                  </view>
+    <topbar :tabs="tabs" :currentTab.sync="currentTab" :parts="parts"/>
+    <i-panel>
+      <view wx:for="{{TaskList}}" wx:key="key" style="padding: 5px;">
+        <navigator url="/pages/detail?id={{item.id}}" open-type="navigate" hover-class="none">
+          <i-card title="{{item.title}}" extra="{{item.reward}}" thumb="{{item.image_path}}">
+            <view slot="extra-icon"><i class="iconfont">&#xe603;</i></view>
+            <view slot="content">{{item.content}}</view>
+            <view slot="footer">
+              <view class="card-footer">
+                <view class="card-footer-tags">
+                  <i-tag type="border" style="margin-right:5px;">{{item.tag}}</i-tag>
+                </view>
+                <view class="card-footer-button">
+                  <button class="weui-btn" type="primary" size="mini">任务详情</button>
                 </view>
               </view>
-            </i-card>
-          </navigator>
-        </view>
-      </i-panel>
-      <view wx:if="{{loading}}">
-        <view class="weui-loadmore">
-          <view class="weui-loading"></view>
-          <view class="weui-loadmore__tips">正在加载</view>
-        </view>
+            </view>
+          </i-card>
+        </navigator>
       </view>
-      <view wx:else>
-        <view class="weui-loadmore weui-loadmore_line">
-          <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多啦</view>
-        </view>
+    </i-panel>
+    <view wx:if="{{loading}}">
+      <view class="weui-loadmore">
+        <view class="weui-loading"></view>
+        <view class="weui-loadmore__tips">正在加载</view>
       </view>
+    </view>
+    <view wx:else>
+      <view class="weui-loadmore weui-loadmore_line">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多啦</view>
+      </view>
+    </view>
   </view>
 </template>
 <script>
   import wepy from 'wepy'
+  import TopBar from '../components/topbar'
   import {searchTaskByPulisherId} from '../api'
   import {USER_LOGIN_INFO} from '../utils/constant'
   export default class MyPublish extends wepy.page {
@@ -48,12 +50,24 @@
         'i-tag': '../resource/iview/tag/index'
       }
     }
+    components = {
+      topbar: TopBar
+    }
     data = {
-      loading: true,
+      loading: false,
       loadedData: [],
       lastID: -1,
       status: '',
-      TaskList: []
+      TaskList: [],
+      tabs: ['全部', '正在进行', '已完成'],
+      currentTab: 0,
+      parts: 3
+    }
+    watch = {
+      currentTab (newValue, oldValue) {
+        console.log(`num value: ${oldValue} -> ${newValue}`)
+        this.fetchTaskList(this.currentLastID, 'refresh', newValue)
+      }
     }
     findLastID(array) {
       if (array.length === 0) {
@@ -61,10 +75,15 @@
       }
       return array[array.length - 1].id
     }
-    async fetchTaskList(currentLastID, operation) {
+    async fetchTaskList(currentLastID, operation, status) {
+      switch (status) {
+        case 0: this.status = 'all'; break
+        case 1: this.status = 'ongoing'; break
+        case 2: this.status = 'finished'; break
+        default: this.status = 'all'
+      }
       if (operation === 'refresh') {
         console.log('刷新列表')
-        this.status = 'all'
         var load = await searchTaskByPulisherId(parseInt(this.openid), this.status, -1)
         this.loadedData = load.data.tasks
         this.TaskList = [...this.loadedData]
@@ -75,7 +94,6 @@
         console.log(load, this.currentLastID)
       } else if (operation === 'loadmore') {
         console.log('加载更多')
-        this.status = 'all'
         var load2 = await searchTaskByPulisherId(parseInt(this.openid), this.status, this.currentLastID)
         this.loadedData = load2.data.tasks
         this.TaskList = [...this.TaskList, ...this.loadedData]
@@ -93,7 +111,7 @@
       this.currentLastID = -1
       this.loading = true
       this.setData({ loading: true })
-      this.fetchTaskList(this.currentLastID, 'refresh')
+      this.fetchTaskList(this.currentLastID, 'refresh', this.currentTab)
       setTimeout(() => {
         wepy.stopPullDownRefresh()
         this.loading = false
@@ -106,7 +124,7 @@
       console.log('上滑加载')
       this.loading = true
       this.setData({ loading: true })
-      this.fetchTaskList(this.currentLastID, 'loadmore')
+      this.fetchTaskList(this.currentLastID, 'loadmore', this.currentTab)
       console.log(this.loading)
       setTimeout(() => {
         this.loading = false
@@ -118,7 +136,7 @@
       let userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
       this.openid = userLoginInfo.openid
       console.log('我的发布页面')
-      this.fetchTaskList(this.currentLastID, 'refresh')
+      this.fetchTaskList(this.currentLastID, 'refresh', this.currentTab)
     }
 }
 </script>
