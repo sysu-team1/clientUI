@@ -1,0 +1,161 @@
+<template>
+  <view class="card card-shadow">
+    <view class="card-head">
+      <view class="card-head-title">{{title}}</view>
+      <view class="card-head-tag">
+        <view class="tag">{{tag}}</view>
+      </view>
+    </view>
+    <view class="card-body">
+      <view class="card-body-image">
+        <image class="image" src="{{imageUrl}}" mode="scaleToFill"/>
+      </view>
+      <view class="card-body-desc">
+        <view class="card-body-desc-hd">任务描述</view>
+        <view class="card-body-desc-bd">{{description}}</view>
+      </view>
+    </view>
+    <view class="card-foot">
+      <view class="card-foot-reward">
+        <view class="card-foot-reward-label">报酬：</view>
+        <view class="card-foot-reward-number">{{reward}}</view>
+        <view class="card-foot-reward-icon"><i class="iconfont">&#xe603;</i></view>
+      </view>
+      <view class="card-foot-button">
+        <button class="card-foot-button-style" size="mini">{{buttonDes}}</button>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  export default class TaskCard extends wepy.component {
+    props ={
+      title: {
+        type: String,
+        default: ''
+      },
+      tag: {
+        type: String,
+        default: ''
+      },
+      imageUrl: {
+        type: String,
+        default: ''
+      },
+      description: {
+        type: String,
+        default: ''
+      },
+      reward: {
+        type: Number,
+        default: 0
+      },
+      buttonDes: {
+        type: String,
+        default: '查看详情'
+      }
+    }
+    onLoad() {
+    }
+  }
+</script>
+<style lang="less">
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 150px;
+  width: 95%;
+  margin: 20rpx auto 0;
+  border: 1rpx solid #dddee1;
+  border-radius: 20rpx;
+}
+.card-shadow{
+  box-shadow: 10rpx 10rpx 20rpx #999;
+}
+.card-head{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  height: 20%;
+}
+.card-head-title{
+  padding-left: 5px;
+  font-size: 14px;
+}
+.card-head-tag{
+  padding-right: 5px;
+  font-size: 14px;
+}
+.tag{
+  display: inline-block;
+  height: 18px;
+  line-height: 18px;
+  padding: 0 4px;
+  border-radius: 2px;
+  background: #fff;
+  font-size: 11px;
+  vertical-align: middle;
+  border: 1rpx solid #dddee1;
+}
+.card-body{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 55%;
+}
+.card-body-image{
+  height: 100%;
+  width: 75%;
+  padding-left: 5px;
+}
+.image{
+  height: 82.5px;
+  width: 82.5px;
+}
+.card-body-desc{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+.card-body-desc-hd{
+  font-size: 16px;
+}
+.card-body-desc-bd{
+  font-size: 12px;
+  line-height: 38rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+.card-foot{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 25%;
+}
+.card-foot-reward{
+  display: flex;
+  flex-direction: row;
+  padding-left: 5px;
+}
+.card-foot-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 5px;
+  height: 100%;
+}
+.card-foot-button-style{
+
+}
+</style>
