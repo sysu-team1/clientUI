@@ -342,6 +342,22 @@
 
     showQ() {
       console.log(this.data.questionnaireArray)
+      var tempArray = this.data.questionnaireArray
+      var len = tempArray.length
+      var QuestionContent = ''
+      for (var i = 0; i < len; i++) {
+        QuestionContent = QuestionContent + tempArray[i].content.description + '$'
+        var SunLen = tempArray[i].content.options.length
+        for (var j = 0; j < SunLen; j++) {
+          QuestionContent = QuestionContent + tempArray[i].content.options[j].name
+          if (j !== SunLen - 1) {
+            QuestionContent = QuestionContent + '#'
+          } else if (j === SunLen - 1 && i !== len - 1) {
+            QuestionContent = QuestionContent + '^'
+          }
+        }
+      }
+      console.log(QuestionContent)
     }
 
     bindblurSCQ(input) {
