@@ -22,7 +22,7 @@
         <view class="card-foot-reward-icon"><i class="iconfont">&#xe603;</i></view>
       </view>
       <view class="card-foot-button">
-        <button class="card-foot-button-style" size="mini" bindtap="navBtn">{{buttonDes}}</button>
+        <button class="card-foot-button-style" size="mini" @tap="navBtn({{taskid}})">{{buttonDes}}</button>
       </view>
     </view>
   </view>
@@ -61,13 +61,11 @@
       }
     }
     methods = {
-      navBtn() {
-        console.log(this.taskid, this.title)
-        this.$emit('navBtn', this.taskid)
+      navBtn(taskid) {
+        this.$emit('navBtn', taskid)
       }
     }
     onLoad() {
-      console.log(this.taskid, this.title)
     }
   }
 </script>

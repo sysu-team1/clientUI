@@ -53,11 +53,11 @@
               </view>
             </view>
           </view>
-        </view>     
+        </view>
       </view>
     </view>
     <view class="page__ft">
-      <button type="primary" bindtap="collectTask">领取任务</button>
+      <button class="btn" type="primary" bindtap="collectTask">领取任务</button>
     </view>
   </view>
 </template>
@@ -133,5 +133,8 @@
 }
 .image__style{
   height: 150px;
+}
+.page__ft .btn {
+  background: #53a8ff;
 }
 </style>

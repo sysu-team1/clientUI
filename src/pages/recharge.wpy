@@ -48,7 +48,6 @@ export default class ReCharge extends wepy.page {
             title: '请输入正确金额',
             icon: 'none'
           })
-          return
         } else {
           this.recharge(this.customValue)
         }
