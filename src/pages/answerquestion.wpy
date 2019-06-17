@@ -205,57 +205,55 @@ export default class Question extends wepy.page {
   }
 
   radioChangeSCQ (input) {
-    var tempFatherIndex = this.data.currentFatherIndex;
-    var tempArray = this.data.questionnaireArray;
-    for (var i in tempArray[tempFatherIndex].content.options){
-      if (tempArray[tempFatherIndex].content.options[i].name == input.detail.value){
-        tempArray[tempFatherIndex].content.options[i].isSelected = true;
-      }
-      else{
-        tempArray[tempFatherIndex].content.options[i].isSelected = false;
+    var tempFatherIndex = this.data.currentFatherIndex
+    var tempArray = this.data.questionnaireArray
+    for (var i in tempArray[tempFatherIndex].content.options) {
+      if (tempArray[tempFatherIndex].content.options[i].name === input.detail.value) {
+        tempArray[tempFatherIndex].content.options[i].isSelected = true
+      } else {
+        tempArray[tempFatherIndex].content.options[i].isSelected = false
       }
     }
     this.setData({
-      questionnaireArray: tempArray,
-    });
+      questionnaireArray: tempArray
+    })
   }
 
   checkboxChangeMCQ (input) {
     // console.log(input.detail.value);
-    var flag = false;
-    var tempFatherIndex = this.data.currentFatherIndex;
-    var tempArray = this.data.questionnaireArray;
+    var flag = false
+    var tempFatherIndex = this.data.currentFatherIndex
+    var tempArray = this.data.questionnaireArray
     for (var i in tempArray[tempFatherIndex].content.options) {
-      flag = false;
-      for(var j in input.detail.value){
-        if (tempArray[tempFatherIndex].content.options[i].name == input.detail.value[j]){
-          flag = true;
+      flag = false
+      for (var j in input.detail.value) {
+        if (tempArray[tempFatherIndex].content.options[i].name === input.detail.value[j]) {
+          flag = true
         }
       }
-      if(flag == true){
-        tempArray[tempFatherIndex].content.options[i].isSelected = true;
-      }
-      else{
-        tempArray[tempFatherIndex].content.options[i].isSelected = false;
+      if (flag === true) {
+        tempArray[tempFatherIndex].content.options[i].isSelected = true
+      } else {
+        tempArray[tempFatherIndex].content.options[i].isSelected = false
       }
     }
     this.setData({
-      questionnaireArray: tempArray,
-    });
+      questionnaireArray: tempArray
+    })
   }
 
   bindblurAnswerOfSAQ (input) {
-    var tempIndex = input.currentTarget.dataset.id;
-    var tempArray = this.data.questionnaireArray;
-    tempArray[tempIndex].content.answer = input.detail.value;
+    var tempIndex = input.currentTarget.dataset.id
+    var tempArray = this.data.questionnaireArray
+    tempArray[tempIndex].content.answer = input.detail.value
     // console.log(tempArray[tempIndex].content);
     this.setData({
-      questionnaireArray: tempArray,
-    });
+      questionnaireArray: tempArray
+    })
   }
 
   complete () {
-    console.log(this.data.questionnaireArray);
+    console.log(this.data.questionnaireArray)
   }
 }
 </script>
@@ -442,4 +440,5 @@ margin-left: 60rpx;
   width: 50%;
   margin-bottom: 20rpx;
 }
+
 </style>
