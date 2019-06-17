@@ -1,0 +1,19 @@
+<template>
+  <view>
+    充值
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+// import { USER_DETAIL_INFO } from '../utils/constant.js'
+export default class ReCharge extends wepy.page {
+  config = {
+    navigationBarTitleText: '充值'
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
