@@ -82,10 +82,7 @@
   import {} from '../api'
   export default class CreateTask extends wepy.page {
     config = {
-      navigationBarTitleText: '创建任务',
-      usingComponents: {
-        'i-input': '../resource/iview/input/index'
-      }
+      navigationBarTitleText: '创建任务'
     }
     data = {
       openid: '',

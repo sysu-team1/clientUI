@@ -96,6 +96,9 @@
         </navigator>
       </view>
     </view>
+    <view class="page__ft">
+      <button type="warn" bindtap="exit">退出登录</button>
+    </view>
 
   </view>
 </template>
@@ -113,6 +116,20 @@
       avatarUrl: '',
       nickName: '',
       userEmail: ''
+    }
+    methods = {
+      exit() {
+        try {
+          wx.removeStorageSync(USER_LOGIN_INFO)
+          wx.removeStorageSync(USER_DETAIL_INFO)
+          console.log('应该都删了出了bug不怪我')
+          wepy.reLaunch({
+            url: 'login'
+          })
+        } catch (e) {
+          console.log('报错了，不是我写的bug')
+        }
+      }
     }
 
     onLoad() {

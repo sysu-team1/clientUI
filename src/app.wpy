@@ -56,7 +56,7 @@ export default class extends wepy.app {
           selectedIconPath: 'images/message-active.png'
         },
         {
-          pagePath: 'pages/createtask',
+          pagePath: 'pages/question',
           text: '去发布',
           iconPath: 'images/message.png',
           selectedIconPath: 'images/message-active.png'

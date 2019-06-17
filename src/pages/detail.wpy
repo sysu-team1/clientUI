@@ -40,7 +40,7 @@
           <view class="weui-panel__bd">
             <view class="weui-media-box weui-media-box_text">
               <view class="weui-media-box__title weui-media-box__title_in-text">任务要求</view>
-              <view class="weui-media-box__desc">{{loadedData.content}}</view>
+              <view class="task-description">{{loadedData.content}}</view>
             </view>
           </view>
         </view>
@@ -136,5 +136,10 @@
 }
 .page__ft .btn {
   background: #53a8ff;
+}
+.task-description{
+  color: #999;
+  font-size: 13px;
+  line-height: 1.2;
 }
 </style>

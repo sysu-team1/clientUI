@@ -9,7 +9,7 @@
         <view class="{{selectIndex === 8 ? 'money-item active' : 'money-item'}}" @tap="customMoney">更多</view>
       </view>
       <view class="custom-money" wx:if="{{isCustom}}">
-        <input class="input" placeholder="请输入金额" type="text" @input="bindInput" >
+        <input class="input" placeholder="请输入金额" type="text" @input="bindInput"/>
       </view>
     </view>
     <button class="submit-btn" @tap="doRecharge">
