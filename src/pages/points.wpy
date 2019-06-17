@@ -6,7 +6,7 @@
     </view>
     <view class="content">
       <view class="weui-cells">
-        <navigator class="weui-cell weui-cell_access">
+        <navigator url="/pages/recharge" class="weui-cell weui-cell_access">
           <view class="weui-cell__bd">
             <i class="iconfont">&#xe638;</i>
             充值
@@ -35,7 +35,7 @@ export default class Point extends wepy.page {
   data = {
     cash: 0.00.toFixed(2)
   }
-  onLoad() {
+  onShow() {
     let userInfo = wepy.getStorageSync(USER_DETAIL_INFO)
     this.cash = Number(userInfo.cash).toFixed(2)
   }

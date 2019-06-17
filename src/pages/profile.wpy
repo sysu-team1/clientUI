@@ -204,6 +204,9 @@
 }
 .user-email {
   color: #606266;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .info_block {

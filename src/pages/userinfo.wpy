@@ -14,10 +14,10 @@
         <view class="weui-cell__ft">{{userinfo.name}}</view>
       </navigator>
       <view class="weui-cell weui-cell_access sex-item" wx:if="{{isStudent}}">
-          <view class="weui-cell__ft">
+          <view class="weui-cell__bd">
             性别
           </view>
-          <view class="weui-cell__bd">
+          <view class="weui-cell__ft">
             <picker @change="onSexChange" range="{{sexArr}}" value="{{sexArrIndex}}">
               <view>{{userinfo.sex}}</view>
             </picker>
@@ -120,7 +120,16 @@ export default class UserInfo extends wepy.page {
 .weui-cell__ft {
   color: #333;
 }
-.sex-item .weui-cell__bd {
-  text-align: right;
+
+.weui-cell__bd {
+  flex: 0 0 50px;
 }
+.weui-cell__ft {
+  flex: 1;
+  text-align: right;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 </style>

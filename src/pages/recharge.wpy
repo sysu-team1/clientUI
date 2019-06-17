@@ -1,19 +1,139 @@
 <template>
-  <view>
-    充值
+  <view class="recharge">
+    <view class="money-select">
+      <view class="title">请选择充值金额</view>
+      <view class="content">
+        <view class="{{selectIndex === index? 'money-item active' : 'money-item'}}" wx:key="{{index}}" wx:for="{{moneys}}" @tap="selectItem({{index}})">
+          {{item}}元
+        </view>
+        <view class="{{selectIndex === 8 ? 'money-item active' : 'money-item'}}" @tap="customMoney">更多</view>
+      </view>
+      <view class="custom-money" wx:if="{{isCustom}}">
+        <input class="input" placeholder="请输入金额" type="text" @input="bindInput" >
+      </view>
+    </view>
+    <button class="submit-btn" @tap="doRecharge">
+      充值
+    </button>
   </view>
 </template>
 
 <script>
 import wepy from 'wepy'
-// import { USER_DETAIL_INFO } from '../utils/constant.js'
+import { USER_LOGIN_INFO, USER_DETAIL_INFO } from '../utils/constant.js'
+import { addCash, getInfo } from '../api'
 export default class ReCharge extends wepy.page {
   config = {
     navigationBarTitleText: '充值'
+  }
+  data = {
+    moneys: [5, 10, 20, 50, 100, 200, 500, 1000],
+    selectIndex: -1,
+    isCustom: false,
+    customValue: 0
+  }
+  methods = {
+    selectItem(index) {
+      this.selectIndex = index
+      this.isCustom = false
+    },
+    customMoney() {
+      this.selectIndex = 8
+      this.isCustom = true
+    },
+    doRecharge() {
+      if (this.isCustom) {
+        if (this.customValue <= 0) {
+          wepy.showToast({
+            title: '请输入正确金额',
+            icon: 'none'
+          })
+          return
+        } else {
+          this.recharge(this.customValue)
+        }
+      } else {
+        this.recharge(this.moneys[this.selectIndex])
+      }
+    }
+
+  }
+  bindInput(e) {
+    let value = e.detail.value
+    if (!Number.isNaN(value)) {
+      this.customValue = Number(value)
+    }
+  }
+  async recharge(value) {
+    let userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
+    let openid = userLoginInfo.openid
+    console.log(openid)
+    let res = await addCash(openid, value)
+    if (res.error === 0) {
+      wx.showToast({
+        title: '充值成功'
+      })
+      res = await getInfo(openid)
+      wepy.setStorageSync(USER_DETAIL_INFO, res)
+    } else {
+      wx.showToast({
+        title: '出了点异常,请稍后重试',
+        icon: 'none'
+      })
+    }
   }
 }
 </script>
 
 <style scoped>
+.money-select {
+  margin: 10px 0 20px;
+  padding: 8px 15px;
+  background: #fff;
+}
+
+.money-select .title {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.money-select .content {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: wrap;
+  margin-bottom: 5px;
+}
+
+.money-select .content .money-item {
+  margin-bottom: 10px;
+  width: 30%;
+  height: 30px;
+  border: 1px solid #DCDFE6;
+  text-align: center;
+  line-height: 30px;
+}
+
+.money-select .content .money-item.active {
+  border: 1px solid #53a8ff
+}
+
+.money-select .custom-money .input {
+  margin: 0 auto;
+  padding: 5px 3px;
+  width: 80%;
+  border: 1px solid #53a8ff;
+  font-size: 14px;
+}
+
+.submit-btn {
+  border-radius: 5px;
+  width: 80%;
+  height: 30px;
+  background: #53a8ff;
+  color: #fff;
+  line-height: 30px;
+  font-size: 15px;
+}
+
 
 </style>

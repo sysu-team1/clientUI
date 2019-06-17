@@ -239,6 +239,27 @@ const getFinishedPulish = async (publisher_id, last_id = -1) => {
   return searchTask(params)
 }
 
+/**
+ * 充值
+ * @param {String} openid 用户id
+ * @param {Number} money 充多少前
+ */
+const addCash = async (openid, money) => {
+  let res = await wepy.request({
+    url: `${BASIC_REQUEST_URL}/add_cash/${openid}`,
+    method: 'POST',
+    data: {
+      money
+    },
+    header: {
+      [CONTENT_TYPE]: POST_CONTENT_TYPE
+    }
+  })
+  if (res.statusCode === 200) {
+    return JSON.parse(res.data.replace(/'/g, '"'))
+  }
+}
+
 export {
   login,
   register,
@@ -250,5 +271,6 @@ export {
   getCompleteTask,
   getNewPublish,
   getOngingPublish,
-  getFinishedPulish
+  getFinishedPulish,
+  addCash
 }

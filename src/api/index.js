@@ -12,7 +12,8 @@ import {
   getCompleteTask,
   getNewPublish,
   getOngingPublish,
-  getFinishedPulish
+  getFinishedPulish,
+  addCash
 } from './user'
 
 import {
@@ -308,5 +309,6 @@ export {
   publishTask,
   homePageRefresh,
   uploadImage,
-  finishTask
+  finishTask,
+  addCash
 }

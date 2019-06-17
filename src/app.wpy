@@ -30,7 +30,8 @@ export default class extends wepy.app {
       'pages/edit-user-info',
       'pages/setpass',
       'pages/createtask',
-      'pages/completetask'
+      'pages/completetask',
+      'pages/recharge'
     ],
     window: {
       backgroundTextStyle: 'light',
