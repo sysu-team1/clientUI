@@ -1,6 +1,15 @@
 <template>
   <view class="page">
-    <taskcard :title="title" :tag="tag" :imageUrl="imageUrl" :description="description" :reward="reward" :buttonDes="buttonDes"></taskcard>
+    <taskcard1 
+    :taskid="taskid" 
+    :title="title" 
+    :tag="tag" 
+    :imageUrl="imageUrl" 
+    :description="description" 
+    :reward="reward" 
+    :buttonDes="buttonDes"
+    @navBtn.user="navigationBtn">
+    </taskcard1>
   </view>
 </template>
 
@@ -12,15 +21,25 @@
       navigationBarTitleText: '消息'
     }
     components = {
-      taskcard: TaskCard
+      taskcard1: TaskCard
     }
     data = {
+      taskid: '11213213',
       title: '标题',
       tag: '取快递',
       imageUrl: '../images/logo.png',
       description: '这应该是一个很长的描述，但是我并不想这么长，只是想测试一下有没有bug，但是经常有Bug我也没办法,不够长就来水字数了，怎么办也是事实是事实是事实是事实是事实是事实',
       reward: '1000',
       buttonDes: '去完成'
+    }
+    methods = {
+      navigationBtn(taskid, event) {
+        console.log(taskid)
+        console.log('前往详情')
+        wepy.navigateTo({
+          url: 'detail?id=' + taskid
+        })
+      }
     }
     onLoad() {
       console.log('消息界面')

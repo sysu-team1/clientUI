@@ -1,26 +1,20 @@
 <template>
   <view class="page">
     <topbar :tabs="tabs" :currentTab.sync="currentTab" :parts="parts"/>
-    <i-panel>
-      <view wx:for="{{TaskList}}" wx:key="key" style="padding: 5px;">
-        <navigator url="/pages/detail?id={{item.id}}" open-type="navigate" hover-class="none">
-          <i-card title="{{item.title}}" extra="{{item.reward}}" thumb="{{item.image_path}}">
-            <view slot="extra-icon"><i class="iconfont">&#xe603;</i></view>
-            <view slot="content">{{item.content}}</view>
-            <view slot="footer">
-              <view class="card-footer">
-                <view class="card-footer-tags">
-                  <i-tag type="border" style="margin-right:5px;">{{item.tag}}</i-tag>
-                </view>
-                <view class="card-footer-button">
-                  <button class="weui-btn" type="primary" size="mini">任务详情</button>
-                </view>
-              </view>
-            </view>
-          </i-card>
-        </navigator>
-      </view>
-    </i-panel>
+    <view>
+      <repeat for="{{TaskList}}" key="key" index="index" item="task">
+        <taskcard 
+          :taskid.sync="task.id" 
+          :title="task.title" 
+          :tag="task.tag" 
+          :imageUrl="task.image_path" 
+          :description="task.content" 
+          :reward="task.reward" 
+          :buttonDes="buttonDes"
+          @navBtn.user="navigationBtn">
+        </taskcard>
+      </repeat>
+    </view>
     <view wx:if="{{loading}}">
       <view class="weui-loadmore">
         <view class="weui-loading"></view>
@@ -37,21 +31,18 @@
 <script>
   import wepy from 'wepy'
   import TopBar from '../components/topbar'
+  import TaskCard from '../components/taskcard'
   import {searchTaskByPulisherId} from '../api'
   import {USER_LOGIN_INFO} from '../utils/constant'
   export default class MyPublish extends wepy.page {
     config = {
       navigationBarTitleText: '我的发布',
       enablePullDownRefresh: true, // 当前页
-      backgroundTextStyle: 'dark', // 顶部显示颜色为深色的三个点
-      usingComponents: {
-        'i-card': '../resource/iview/card/index',
-        'i-panel': '../resource/iview/panel/index',
-        'i-tag': '../resource/iview/tag/index'
-      }
+      backgroundTextStyle: 'dark' // 顶部显示颜色为深色的三个点
     }
     components = {
-      topbar: TopBar
+      topbar: TopBar,
+      taskcard: TaskCard
     }
     data = {
       loading: false,
@@ -61,12 +52,22 @@
       TaskList: [],
       tabs: ['正在进行', '已完成'],
       currentTab: 0,
-      parts: 2
+      parts: 2,
+      buttonDes: '查看详情'
     }
     watch = {
       currentTab (newValue, oldValue) {
         console.log(`num value: ${oldValue} -> ${newValue}`)
         this.fetchTaskList(this.currentLastID, 'refresh', newValue)
+      }
+    }
+    methods = {
+      navigationBtn(taskid, event) {
+        console.log(taskid)
+        console.log('前往详情')
+        wepy.navigateTo({
+          url: 'detail?id=' + taskid
+        })
       }
     }
     findLastID(array) {
