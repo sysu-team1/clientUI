@@ -1,6 +1,6 @@
 <template>
   <view class="page">
-    <taskcard1 
+    <taskcard
     :taskid="taskid" 
     :title="title" 
     :tag="tag" 
@@ -9,19 +9,25 @@
     :reward="reward" 
     :buttonDes="buttonDes"
     @navBtn.user="navigationBtn">
-    </taskcard1>
+    </taskcard>
+    <repeat for="{{array}}" index="index" key="key" item="item">
+      <questionitem :isPublishQuestion="true" :fatherIndex="index" :question="item.question" :itemList="item.itemList"></questionitem>       
+    </repeat>
+
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
   import TaskCard from '../components/taskcard'
+  import QuestionItem from '../components/questionitem'
   export default class Message extends wepy.page {
     config = {
       navigationBarTitleText: '消息'
     }
     components = {
-      taskcard1: TaskCard
+      taskcard: TaskCard,
+      questionitem: QuestionItem
     }
     data = {
       taskid: '11213213',
@@ -30,7 +36,52 @@
       imageUrl: '../images/logo.png',
       description: '这应该是一个很长的描述，但是我并不想这么长，只是想测试一下有没有bug，但是经常有Bug我也没办法,不够长就来水字数了，怎么办也是事实是事实是事实是事实是事实是事实',
       reward: '1000',
-      buttonDes: '去完成'
+      buttonDes: '去完成',
+      // question
+      array: [
+        {
+          question: '您的职业是?',
+          itemList: [
+            {
+              label: 'A',
+              content: '医生'
+            },
+            {
+              label: 'B',
+              content: '医生'
+            },
+            {
+              label: 'C',
+              content: '医生'
+            },
+            {
+              label: 'D',
+              content: '医生'
+            }
+          ]
+        },
+        {
+          question: '您的职业是?',
+          itemList: [
+            {
+              label: 'A',
+              content: '医生'
+            },
+            {
+              label: 'B',
+              content: '医生'
+            },
+            {
+              label: 'C',
+              content: '医生'
+            },
+            {
+              label: 'D',
+              content: '医生'
+            }
+          ]
+        }
+      ]
     }
     methods = {
       navigationBtn(taskid, event) {

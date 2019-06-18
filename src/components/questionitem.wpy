@@ -1,0 +1,106 @@
+<template>
+  <view class="question-item-area question-item-shadow">
+    <view class="question-item-hd">
+      <view class="question-item-ques">
+        <view class="question-item-label">问题{{fatherIndex}}:</view>
+        <view class="question-item-desc">{{question}}</view>
+      </view>
+      <view class="question-item-edit-icon">
+        <i class="iconfont">&#xe603;</i>
+      </view>
+    </view>
+    <view class="question-item-bd">
+      <radio-group class="question-items" bindchange="radioChange" wx:for="{{itemList}}" wx:for-item="item" wx:key="key" wx:index="index">
+        <view class="item-radio">
+          <radio value="{{item.label}}"></radio>
+        </view>
+        <view class="item-main">
+          <view class="item-label">{{item.label}}</view>
+          <view class="item-content">{{item.content}}</view>
+        </view>
+      </radio-group>
+    </view>
+  </view>    
+</template>
+<script>
+  import wepy from 'wepy'
+  export default class QuestionItem extends wepy.component {
+    props = {
+      fatherIndex: {
+        type: Number
+      },
+      question: {
+        type: String
+      },
+      itemList: {
+        type: Object
+      }
+    }
+    methods = {
+      radioChange(e) {
+        var index = e.currentTarget.dataset.comIndex
+        console.log(index)
+      }
+    }
+    onLoad() {
+    }
+  }
+</script>
+<style lang="less">
+.question-item-area{
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 20rpx auto 0;
+  border: 1rpx solid #dddee1;
+  border-radius: 20rpx;
+}
+.question-item-shadow{
+  box-shadow: 10rpx 10rpx 20rpx #999; 
+}
+.question-item-hd{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.question-item-ques{
+  display: flex;
+  flex-direction: row;
+}
+.question-item-label{
+  padding-left: 5px;
+  font-weight: bold;
+}
+.question-item-desc{
+  padding-left: 5px;
+}
+.question-item-edit-icon{
+  padding-right: 5px;
+}
+.question-item-bd{
+  display: flex;
+  flex-direction: column;
+}
+.question-items{
+  display: flex;
+  flex-direction: row;
+  padding-left: 5px;
+}
+.item-radio{
+  transform: scale(0.7);
+  vertical-align: middle;
+}
+.item-main{
+  display: flex;
+  flex-direction: row;
+  vertical-align: middle;
+}
+.item-label{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.item-content{
+  font-size: 14px;
+}
+</style>
