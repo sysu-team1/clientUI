@@ -31,12 +31,20 @@
         ├── components              //自定义组件
         ├── images                  //图片文件夹
         ├── pages                   //页面
+        │   ├── answerquestion.wpy       //问卷回答
         │   ├── authorize.wpy       //授权页面
-        |   ├── detail.wpy          //任务详情页面()
+        │   ├── completetask.wpy       //完成任务
+        │   ├── createtask.wpy       //创建任务
+        |   ├── detail.wpy          //任务详情页面
+        |   ├── edit-user-info.wpy    //用户信息界面
+        |   ├── favorite.wpy            
         |   ├── home.wpy            //首页，主界面
         |   ├── login.wpy           //登录页面
         |   ├── message.wpy         //消息页面 (未写)
+        |   ├── mypublish.wpy        //我发布的页面
+        |   ├── mytask.wpy        //我的任务
         |   ├── profile.wpy         //我页面
+        |   ├── question.wpy         //问卷发布页面
         |   ├── register.wpy        //注册页面
         |   ├── search.wpy          //搜索页面
         ├── resource                //资源文件
