@@ -55,6 +55,11 @@
           </view>
         </view>
       </view>
+      <view wx:if="{{loadedData.tag === '问卷'}}">
+        <repeat for="{{ questionList }}" key="index" index="index" item="item">
+          <questionitem :isPublishQuestion="true" :fatherIndex="index" :question="item.question" :itemList="item.itemList" @ansChange.user="ansChange"></questionitem>           
+        </repeat>
+      </view>
     </view>
     <view class="page__ft">
       <button class="btn" type="primary" bindtap="collectTask">领取任务</button>
@@ -63,15 +68,20 @@
 </template>
 <script>
   import wepy from 'wepy'
-  import {searchTaskByTaskID, acceptTask} from '../api'
+  import {searchTaskByTaskID, acceptTask, getProblem} from '../api'
+  import QuestionItem from '../components/questionitem'
   import {USER_LOGIN_INFO} from '../utils/constant'
   export default class Detail extends wepy.page {
     config = {
       navigationBarTitleText: '任务详情'
     }
+    components = {
+      questionitem: QuestionItem
+    }
     data = {
       taskid: '',
-      loadedData: []
+      loadedData: [],
+      questionList: []
     }
     methods = {
       collectTask() {
@@ -80,6 +90,42 @@
         console.log(userLoginInfo.openid)
         this.collectTheTask(userLoginInfo.openid, this.data.taskid)
       }
+    }
+    transformToObeject(str) {
+      var questionlist = []
+      var questions = str.split('^')
+      for (var i = 0; i < questions.length; i++) {
+        var item = questions[i].split('$')
+        var chooseitem = item[1].split('#')
+        var temp = {
+          question: item[0],
+          itemList: [
+            {
+              label: 'A',
+              content: chooseitem[0]
+            },
+            {
+              label: 'B',
+              content: chooseitem[1]
+            },
+            {
+              label: 'C',
+              content: chooseitem[2]
+            },
+            {
+              label: 'D',
+              content: chooseitem[3]
+            }
+          ]
+        }
+        console.log(temp)
+        questionlist.push(temp)
+      }
+      console.log(questionlist)
+      this.setData({
+        questionList: questionlist
+      })
+      this.questionList = questionlist
     }
     async collectTheTask(accepterID, taskID) {
       console.log(accepterID, taskID)
@@ -115,6 +161,11 @@
       })
       wepy.hideLoading()
       console.log(this.loadedData)
+      if (this.loadedData.tag === '问卷') {
+        var loadProblem = await getProblem(parseInt(taskid))
+        console.log(loadProblem.data.problem_content)
+        this.transformToObeject(loadProblem.data.problem_content)
+      }
     }
 
     onLoad(prop) {

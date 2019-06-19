@@ -40,6 +40,7 @@
       radioChange(e) {
         var index = e.detail.value
         console.log(index)
+        this.$emit('ansChange', index, this.fatherIndex)
       }
     }
     onLoad() {
