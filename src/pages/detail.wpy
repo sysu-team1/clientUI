@@ -104,9 +104,16 @@
     }
     async getTaskDetail(taskid) {
       console.log(taskid)
+      wepy.showLoading({
+        title: '正在加载数据'
+      })
       var load = await searchTaskByTaskID(parseInt(taskid))
       console.log(load)
       this.loadedData = load.data.tasks[0]
+      this.setData({
+        loadedData: load.data.tasks[0]
+      })
+      wepy.hideLoading()
       console.log(this.loadedData)
     }
 

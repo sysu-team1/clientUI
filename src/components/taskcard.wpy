@@ -164,7 +164,8 @@
   padding-right: 5px;
   height: 100%;
 }
-.card-foot-button-style{
-
+.card-foot-button-style {
+  background-color: #66b1ff;
+  color: #fff;
 }
 </style>

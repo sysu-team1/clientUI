@@ -10,17 +10,17 @@
       </view>
     </view>
     <view class="question-item-bd">
-      <radio-group class="question-items" bindchange="radioChange" wx:for="{{itemList}}" wx:for-item="item" wx:key="key" wx:index="index">
-        <view class="item-radio">
-          <radio value="{{item.label}}"></radio>
-        </view>
-        <view class="item-main">
-          <view class="item-label">{{item.label}}</view>
-          <view class="item-content">{{item.content}}</view>
-        </view>
+      <radio-group class="question-items" bindchange="radioChange" >
+        <label class="question-item" wx:for="{{itemList}}" wx:for-item="item" wx:key="key" wx:index="index">
+            <radio class="item-radio" value="{{item.label}}"></radio>
+            <view>
+              <text class="item-label">{{item.label}}</text>
+              <text class="item-content">{{item.content}}</text>
+            </view>
+        </label>
       </radio-group>
     </view>
-  </view>    
+  </view>
 </template>
 <script>
   import wepy from 'wepy'
@@ -33,12 +33,12 @@
         type: String
       },
       itemList: {
-        type: Object
+        type: Array
       }
     }
     methods = {
       radioChange(e) {
-        var index = e.currentTarget.dataset.comIndex
+        var index = e.detail.value
         console.log(index)
       }
     }
@@ -56,7 +56,7 @@
   border-radius: 20rpx;
 }
 .question-item-shadow{
-  box-shadow: 10rpx 10rpx 20rpx #999; 
+  box-shadow: 10rpx 10rpx 20rpx #999;
 }
 .question-item-hd{
   display: flex;
@@ -82,18 +82,17 @@
   display: flex;
   flex-direction: column;
 }
-.question-items{
+.question-items {
   display: flex;
-  flex-direction: row;
-  padding-left: 5px;
+  flex-direction: column;
 }
+.question-item {
+  display: flex;
+  align-items: center;
+}
+
 .item-radio{
   transform: scale(0.7);
-  vertical-align: middle;
-}
-.item-main{
-  display: flex;
-  flex-direction: row;
   vertical-align: middle;
 }
 .item-label{
