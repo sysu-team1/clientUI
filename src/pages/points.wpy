@@ -26,7 +26,8 @@
 </template>
 <script>
 import wepy from 'wepy'
-import { USER_DETAIL_INFO } from '../utils/constant.js'
+import { USER_LOGIN_INFO } from '../utils/constant.js'
+import { getPoint } from '../api'
 export default class Point extends wepy.page {
   config = {
     navigationBarTitleText: '积分',
@@ -36,8 +37,15 @@ export default class Point extends wepy.page {
     cash: 0.00.toFixed(2)
   }
   onShow() {
-    let userInfo = wepy.getStorageSync(USER_DETAIL_INFO)
-    this.cash = Number(userInfo.cash).toFixed(2)
+    this.__getPoint()
+  }
+
+  async __getPoint() {
+    let userInfo = await wepy.getStorageSync(USER_LOGIN_INFO)
+    let openid = userInfo.openid
+    let data = await getPoint(openid)
+    console.log(data)
+    this.cash = Number(data).toFixed(2)
   }
 }
 </script>

@@ -1,0 +1,61 @@
+<template>
+  <view class="nav-bar">
+    <navigator to="/pages/home" class="{{currentPage === 'home' ? 'item active': 'item'}}">
+      <i class="iconfont">&#xe647;</i>
+      <view class="text">任务大厅</view>
+    </navigator>
+    <view class="add-button">
+      <i class="iconfont">&#xe646;</i>
+    </view>
+    <navigator url="/pages/profile" class="{{currentPage === 'profile' ? 'item active': 'item'}}">
+      <i class="iconfont">&#xe644;</i>
+      <view class="text">个人中心</view>
+    </navigator>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class NavBar extends wepy.component {
+  props = {
+    currentPage: {
+      type: String,
+      default: 'home'
+    }
+  }
+}
+</script>
+
+<style scoped>
+.nav-bar {
+  /* position: fixed; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  height: 50px;
+  background: #fff;
+}
+
+.nav-bar .item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #606266;
+}
+
+.nav-bar .active {
+  color: #53a8ff;
+}
+.nav-bar .item .text {
+  font-size: 12px;
+}
+.nav-bar .add-button {
+  margin-top: -28px;
+}
+
+.nav-bar .add-button .iconfont {
+  color: #53a8ff;
+  font-size: 45px;
+}
+</style>

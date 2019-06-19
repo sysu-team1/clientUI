@@ -11,7 +11,7 @@
               <view class="weui-media-box__title nick-name">{{nickName}}</view>
               <view class="weui-media-box__desc user-email">邮箱：{{userEmail}}</view>
             </view>
-            <view>&gt;</view>
+            <view><i class="iconfont">&#xe604;</i></view>
           </navigator>
         </view>
       </view>

@@ -1,19 +1,19 @@
 <template>
   <view class="page">
     <taskcard
-    :taskid="taskid" 
-    :title="title" 
-    :tag="tag" 
-    :imageUrl="imageUrl" 
-    :description="description" 
-    :reward="reward" 
+    :taskid="taskid"
+    :title="title"
+    :tag="tag"
+    :imageUrl="imageUrl"
+    :description="description"
+    :reward="reward"
     :buttonDes="buttonDes"
     @navBtn.user="navigationBtn">
     </taskcard>
     <repeat for="{{array}}" index="index" key="key" item="item">
-      <questionitem :isPublishQuestion="true" :fatherIndex="index" :question="item.question" :itemList="item.itemList"></questionitem>       
+      <questionitem :isPublishQuestion="true" :fatherIndex="index" :question="item.question" :itemList="item.itemList"></questionitem>
     </repeat>
-
+    <navbar currentPage="home"></navbar>
   </view>
 </template>
 
@@ -21,13 +21,15 @@
   import wepy from 'wepy'
   import TaskCard from '../components/taskcard'
   import QuestionItem from '../components/questionitem'
+  import NavBar from '../components/nav-bar'
   export default class Message extends wepy.page {
     config = {
       navigationBarTitleText: '消息'
     }
     components = {
       taskcard: TaskCard,
-      questionitem: QuestionItem
+      questionitem: QuestionItem,
+      navbar: NavBar
     }
     data = {
       taskid: '11213213',

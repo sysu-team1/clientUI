@@ -11,7 +11,7 @@
         <view class="weui-cell__bd">
           昵称
         </view>
-        <view class="weui-cell__ft">{{userinfo.name}}</view>
+        <view class="weui-cell__ft">{{userinfo.name}}<i class="iconfont">&#xe604;</i></view>
       </navigator>
       <view class="weui-cell weui-cell_access sex-item" wx:if="{{isStudent}}">
           <view class="weui-cell__bd">
@@ -19,7 +19,7 @@
           </view>
           <view class="weui-cell__ft">
             <picker @change="onSexChange" range="{{sexArr}}" value="{{sexArrIndex}}">
-              <view>{{userinfo.sex}}</view>
+              <view>{{userinfo.sex}} <i class="iconfont">&#xe604;</i></view>
             </picker>
           </view>
       </view>
@@ -27,25 +27,25 @@
         <view class="weui-cell__bd">
           学号
         </view>
-        <view class="weui-cell__ft">{{userinfo.student_id}}</view>
+        <view class="weui-cell__ft">{{userinfo.student_id}}<i class="iconfont">&#xe604;</i></view>
       </navigator>
       <navigator url="/pages/edit-user-info?param=collage&value={{userinfo.collage}}" class="weui-cell weui-cell_access"  wx:if="{{isStudent}}">
         <view class="weui-cell__bd">
           学院
         </view>
-        <view class="weui-cell__ft">{{userinfo.collage}}</view>
+        <view class="weui-cell__ft">{{userinfo.collage}}<i class="iconfont">&#xe604;</i></view>
       </navigator>
       <navigator url="/pages/edit-user-info?param=edu_bg&value={{userinfo.edu_bg}}" class="weui-cell weui-cell_access"  wx:if="{{isStudent}}">
         <view class="weui-cell__bd">
           学位
         </view>
-        <view class="weui-cell__ft">{{userinfo.edu_bg}}</view>
+        <view class="weui-cell__ft">{{userinfo.edu_bg}}<i class="iconfont">&#xe604;</i></view>
       </navigator>
       <navigator url="/pages/edit-user-info?param=grade&value={{userinfo.grade}}" class="weui-cell weui-cell_access"  wx:if="{{isStudent}}">
         <view class="weui-cell__bd">
           年级
         </view>
-        <view class="weui-cell__ft">{{userinfo.grade}}</view>
+        <view class="weui-cell__ft">{{userinfo.grade}}<i class="iconfont">&#xe604;</i></view>
       </navigator>
     </view>
   </view>
