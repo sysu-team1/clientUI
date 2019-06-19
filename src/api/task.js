@@ -295,6 +295,23 @@ const uploadImage = async (tempFilePath, openid) => {
     }
   })
 }
+/**获取问卷
+ * @param taskid
+ */
+const getProblem = async (taskid) => {
+  let res = await wepy.request({
+    url: BASIC_REQUEST_URL + '/get_problem/' + taskid, //开发者服务器接口地址",
+    data: {taskid},
+    method: 'GET',
+    header: {
+      [CONTENT_TYPE]: POST_CONTENT_TYPE
+    }
+  });
+  if (res.statusCode === 200) {
+    console.log(res.data)
+    return JSON.parse(res.data.replace(/'/g, '"'))
+  } 
+}
 
 export {
   searchTaskByPulisherId,
@@ -307,5 +324,6 @@ export {
   homePageRefresh,
   searchTask,
   uploadImage,
-  finishTask
+  finishTask,
+  getProblem
 }

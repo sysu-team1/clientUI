@@ -11,9 +11,8 @@
     @navBtn.user="navigationBtn">
     </taskcard>
     <repeat for="{{array}}" index="index" key="key" item="item">
-      <questionitem :isPublishQuestion="true" :fatherIndex="index" :question="item.question" :itemList="item.itemList"></questionitem>       
+      <questionitem :isPublishQuestion="true" :fatherIndex="index" :question="item.question" :itemList="item.itemList" @ansChange.user="ansChange"></questionitem>       
     </repeat>
-
   </view>
 </template>
 
@@ -37,6 +36,9 @@
       description: '这应该是一个很长的描述，但是我并不想这么长，只是想测试一下有没有bug，但是经常有Bug我也没办法,不够长就来水字数了，怎么办也是事实是事实是事实是事实是事实是事实',
       reward: '1000',
       buttonDes: '去完成',
+      // editquestion
+      question: '',
+      questionList: [],
       // question
       array: [
         {
@@ -90,6 +92,9 @@
         wepy.navigateTo({
           url: 'detail?id=' + taskid
         })
+      },
+      ansChange(index, fatherIndex, event) {
+        console.log(index, fatherIndex)
       }
     }
     onLoad() {

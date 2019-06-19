@@ -26,7 +26,8 @@ import {
   publishTask,
   homePageRefresh,
   uploadImage,
-  finishTask
+  finishTask,
+  getProblem
 } from './task'
 
 
@@ -310,5 +311,6 @@ export {
   homePageRefresh,
   uploadImage,
   finishTask,
-  addCash
+  addCash,
+  getProblem
 }
