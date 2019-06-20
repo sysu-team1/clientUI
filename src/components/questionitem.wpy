@@ -2,7 +2,7 @@
   <view class="question-item-area question-item-shadow">
     <view class="question-item-hd">
       <view class="question-item-ques">
-        <view class="question-item-label">问题{{fatherIndex}}:</view>
+        <view class="question-item-label">问题{{fatherIndex + 1}}:</view>
         <view class="question-item-desc">{{question}}</view>
       </view>
       <view class="question-item-edit-icon">
@@ -12,13 +12,17 @@
     <view class="question-item-bd">
       <radio-group class="question-items" bindchange="radioChange" >
         <label class="question-item" wx:for="{{itemList}}" wx:for-item="item" wx:key="key" wx:index="index">
-            <radio class="item-radio" value="{{item.label}}"></radio>
+            <radio class="item-radio" value="{{index}}" disabled="{{disabledCom}}"></radio>
             <view>
               <text class="item-label">{{item.label}}</text>
               <text class="item-content">{{item.content}}</text>
             </view>
         </label>
       </radio-group>
+    </view>
+    <view class="question-item-ft" wx:if="{{disabledCom}}">
+      <view wx:if="{{staticLabel === '答案'}}">{{staticLabel}}：【{{answer}}】</view>
+      <view wx:else>{{staticLabel}}:{{answer}}</view>
     </view>
   </view>
 </template>
@@ -34,6 +38,15 @@
       },
       itemList: {
         type: Array
+      },
+      disabledCom: {
+        type: Boolean
+      },
+      answer: {
+        type: String
+      },
+      staticLabel: {
+        type: String
       }
     }
     methods = {
@@ -91,7 +104,6 @@
   display: flex;
   align-items: center;
 }
-
 .item-radio{
   transform: scale(0.7);
   vertical-align: middle;
@@ -101,6 +113,9 @@
   padding-right: 5px;
 }
 .item-content{
+  font-size: 14px;
+}
+.question-item-ft{
   font-size: 14px;
 }
 </style>

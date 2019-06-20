@@ -109,8 +109,9 @@
       },
       navigationBtn(taskid, event) {
         console.log('前往详情')
+        var scene = 1
         wepy.navigateTo({
-          url: 'detail?id=' + taskid
+          url: 'detail?id=' + taskid + '&scene=' + scene
         })
       }
     }
