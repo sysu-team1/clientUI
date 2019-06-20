@@ -150,14 +150,21 @@
     }
     async __getInfo() {
       let userLogininfo = wepy.getStorageSync(USER_LOGIN_INFO)
-      let data = await getInfo(userLogininfo.openid)
-      this.setData({
-        userEmail: data.email,
-        nickName: data.name
-      })
-      this.userEmail = data.email
-      this.nickName = data.name
-      wepy.setStorageSync(USER_DETAIL_INFO, data)
+      let res = await getInfo(userLogininfo.openid)
+      if (res.error === 0) {
+        let data = res.data
+        this.setData({
+          userEmail: data.email,
+          nickName: data.name
+        })
+        this.userEmail = data.email
+        this.nickName = data.name
+        wepy.setStorageSync(USER_DETAIL_INFO, data)
+      } else {
+        wepy.showToast({
+          title: '出现问题了, 请稍后重'
+        })
+      }
     }
   }
 </script>

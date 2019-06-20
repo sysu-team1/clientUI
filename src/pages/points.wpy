@@ -43,9 +43,17 @@ export default class Point extends wepy.page {
   async __getPoint() {
     let userInfo = await wepy.getStorageSync(USER_LOGIN_INFO)
     let openid = userInfo.openid
-    let data = await getPoint(openid)
-    console.log(data)
-    this.cash = Number(data).toFixed(2)
+    let res = await getPoint(openid)
+    if (res.error === 0) {
+      let data = res.data
+      this.setData({
+        cash: Number(data.cash).toFixed(2)
+      })
+    } else {
+      wepy.showToast({
+        title: '出现问题了, 请稍后重试'
+      })
+    }
   }
 }
 </script>

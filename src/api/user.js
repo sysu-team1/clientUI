@@ -121,13 +121,17 @@ const registerVcode = async(email) => {
 
 const getInfo = async (openid) => {
   let res = await wepy.request({
-    url: BASIC_REQUEST_URL + '/my/' + String(openid), // 获取验证码开发者服务器接口地址
-    method: 'GET'
+    url: BASIC_REQUEST_URL + '/my/', // 获取验证码开发者服务器接口地址
+    method: 'GET',
+    data: {
+      openid,
+      cash: 0
+    }
   })
   // 学生：返回['email', 'student_id', 'name', 'sex', 'collage', 'grade', 'edu_bg', 'cash']
   // 组织：返回['email', 'name', 'cash']
   if (res.statusCode === 200) {
-    return res.data
+    return JSON.parse(res.data.replace(/'/g, '"'))
   }
 }
 
@@ -137,14 +141,16 @@ const getInfo = async (openid) => {
  */
 export const getPoint = async (openid) => {
   let res = await wepy.request({
-    url: BASIC_REQUEST_URL + '/my/' + String(openid),
+    url: BASIC_REQUEST_URL + '/my/',
     method: 'GET',
     data: {
+      openid,
       cash: 1
     }
   })
   if (res.statusCode === 200) {
-    return res.data
+
+    return JSON.parse(res.data.replace(/'/g, '"'))
   }
 }
 

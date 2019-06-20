@@ -28,12 +28,12 @@
           <view class="login-type-radio">
             <radio-group bindchange="radioChange">
               <label wx:for="{{LoginTypes}}" wx:key="key">
-                <radio value="{{item.type}}">{{item.desc}}</radio>
+                <radio class="radio-item" color="#53a8ff" value="{{item.type}}" checked="{{item.type === 'student'? 'checked':''}}">{{item.desc}}</radio>
               </label>
             </radio-group>
           </view>
           <view class="weui-footer weui-btn-area">
-            <button class="weui-button" type="primary" bindtap="loginBtnClick">登录</button>
+            <button class="weui-button btn" type="primary" bindtap="loginBtnClick">登录</button>
             <view class=" weui-footer weui-footer__link" @tap="registerTap">还没注册？点这里</view>
           </view>
         </view>
@@ -55,7 +55,7 @@
       userPassword: null,
       MailTypeIndex: 0,
       MailTypes: ['@mail2.sysu.edu.cn', '@mail.sysu.edu.cn', '@qq.com'],
-      loginType: null,
+      loginType: 'student',
       LoginTypes: [
         {
           type: 'student',
@@ -66,6 +66,10 @@
           desc: '我是组织'
         }
       ]
+    }
+    isChecked(type) {
+      console.log(type)
+      return type === this.loginType ? type : ''
     }
     async loginBtnClick() {
       console.log('login in button')
@@ -167,5 +171,11 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+}
+.weui-footer .btn {
+  background: #53a8ff;
+}
+.radio-item {
+  transform: scale(0.8)
 }
 </style>
