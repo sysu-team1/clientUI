@@ -317,12 +317,15 @@
       if (scene === '4') {
         this.buttonLabel = '已过期'
         this.buttonDisable = true
+        this.disabledCom = true
       }
       // scene === 5/6 场景5： 由我的发布页面正在进行/已完成处点击查看详情，按钮显示统计信息，点击按钮跳转到任务统计页面（新页面）
       if (scene === '5') {
+        this.buttonLabel = '查看详情'
         this.disabledCom = true
       }
       if (scene === '6') {
+        this.buttonLabel = '查看详情'
         this.disabledCom = true
       }
     }

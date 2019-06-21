@@ -65,8 +65,8 @@
         </view>
         <view class="task-content-container">
           <view class="task-content-label-front">图片说明</view>
-          <view class="add-img-btn" bindtap="selectImg">
-            <image class="add-img-btn-image" src="{{image_src}}" mode="scaleToFill"/>
+          <view class="add-img-btn">
+            <image class="add-img-btn-image" src="{{image_src}}" mode="scaleToFill"  bindtap="selectImg"/>
           </view>
         </view>
       </view>
@@ -319,6 +319,9 @@
 }
 .i-input-position{
   padding-top: 0px;
+}
+.weui-input{
+  font-size: 14px;
 }
 .task-content-container{
     flex-flow:column nowrap;

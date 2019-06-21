@@ -1,7 +1,10 @@
 <template>
   <view class="card card-shadow">
     <view class="card-head">
-      <view class="card-head-title">{{title}}</view>
+      <view class="card-head-title">
+        <view class="card-head-icon"><i class="iconfont icon-style">&#xe650;</i></view>
+        <view class="card-head-title-label">{{title}}</view>
+      </view>
       <view class="card-head-tag">
         <view class="tag">{{tag}}</view>
       </view>
@@ -93,6 +96,18 @@
 .card-head-title{
   padding-left: 5px;
   font-size: 14px;
+  display: flex;
+  flex-direction: row;
+}
+.card-head-icon{
+  font-size: 14px;
+}
+.icon-style{
+  color: #66b1ff;
+  font-size: 10px;
+}
+.card-head-title-label{
+  padding-left: 5px;
 }
 .card-head-tag{
   padding-right: 5px;
@@ -108,6 +123,8 @@
   font-size: 11px;
   vertical-align: middle;
   border: 1rpx solid #dddee1;
+  border-radius: 5%;
+  box-shadow: 2px 2px 4px #999;
 }
 .card-body{
   display: flex;
