@@ -3,13 +3,13 @@
     <topbar :tabs="tabs" :currentTab.sync="currentTab" :parts="parts"/>
     <view>
       <repeat for="{{TaskList}}" key="key" index="index" item="task">
-        <taskcard 
-          :taskid.sync="task.id" 
-          :title="task.title" 
-          :tag="task.tag" 
-          :imageUrl="task.image_path" 
-          :description="task.content" 
-          :reward="task.reward" 
+        <taskcard
+          :taskid.sync="task.id"
+          :title="task.title"
+          :tag="task.tag"
+          :imageUrl="task.image_path"
+          :description="task.content"
+          :reward="task.reward"
           :buttonDes="buttonDes"
           @navBtn.user="navigationBtn">
         </taskcard>
@@ -138,11 +138,13 @@
         console.log(this.loading)
       }, 3000)
     }
-    onLoad() {
+    onLoad(options) {
+      let currentTab = Number(options.currentTab)
+      this.currentTab = currentTab
       let userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
       this.openid = userLoginInfo.openid
       console.log('我的发布页面')
-      this.fetchTaskList(this.currentLastID, 'refresh', this.currentTab)
+      this.fetchTaskList(this.currentLastID, 'refresh', currentTab)
     }
 }
 </script>

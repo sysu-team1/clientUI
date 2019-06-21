@@ -38,42 +38,6 @@ export default class extends wepy.app {
       navigationBarBackgroundColor: '#53a8ff',
       navigationBarTitleText: 'XYFS',
       navigationBarTextStyle: 'black'
-    },
-    tabBar: {
-      color: '#353535',
-      selectedColor: '#47CFF5',
-      list: [
-        {
-          pagePath: 'pages/home',
-          text: '首页',
-          iconPath: 'images/home.png',
-          selectedIconPath: 'images/home-active.png'
-        },
-        {
-          pagePath: 'pages/mytask',
-          text: '我的任务',
-          iconPath: 'images/message.png',
-          selectedIconPath: 'images/message-active.png'
-        },
-        {
-          pagePath: 'pages/createtask',
-          text: '去发布',
-          iconPath: 'images/message.png',
-          selectedIconPath: 'images/message-active.png'
-        },
-        {
-          pagePath: 'pages/mypublish',
-          text: '我的发布',
-          iconPath: 'images/message.png',
-          selectedIconPath: 'images/message-active.png'
-        },
-        {
-          pagePath: 'pages/profile',
-          text: '我',
-          iconPath: 'images/profile.png',
-          selectedIconPath: 'images/profile-active.png'
-        }
-      ]
     }
   }
   globalData = {

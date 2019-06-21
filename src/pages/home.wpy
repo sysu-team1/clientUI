@@ -1,51 +1,54 @@
 <template>
   <view class="page">
-    <view class="page__hd">
-      <view class="swiper-wrapper">
-        <swiper indicator-dots autoplay circular>
-          <block wx:for="{{PicList}}" wx:key="key">
-            <swiper-item>
-              <image mode="aspectFill" src="{{item}}"/>
-            </swiper-item>
-          </block>
-        </swiper>
+    <view class="section">
+      <view class="page__hd">
+        <view class="swiper-wrapper">
+          <swiper indicator-dots autoplay circular>
+            <block wx:for="{{PicList}}" wx:key="key">
+              <swiper-item>
+                <image mode="aspectFill" src="{{item}}"/>
+              </swiper-item>
+            </block>
+          </swiper>
+        </view>
+        <view class="search-wrapper">
+          <navigator url="/pages/search" open-type="navigate" hover-class="none">
+            <view class="input-wrapper weui-search-bar__box">
+              <icon class="search-icon weui-icon-search_in-box" type="search" size="14" color="#fff"/>
+              <input type="text" class="search-input weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" disabled/>
+            </view>
+          </navigator>
+        </view>
       </view>
-      <view class="search-wrapper">
-        <navigator url="/pages/search" open-type="navigate" hover-class="none">
-          <view class="input-wrapper weui-search-bar__box">
-            <icon class="search-icon weui-icon-search_in-box" type="search" size="14" color="#fff"/>
-            <input type="text" class="search-input weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" disabled/>
+      <view class="page__bd">
+        <view>
+          <repeat for="{{TaskList}}" key="key" index="index" item="task">
+            <taskcard
+              :taskid.sync="task.id"
+              :title="task.title"
+              :tag="task.tag"
+              :imageUrl="task.image_path"
+              :description="task.content"
+              :reward="task.reward"
+              :buttonDes="buttonDes"
+              @navBtn.user="navigationBtn">
+            </taskcard>
+          </repeat>
+        </view>
+        <view wx:if="{{loading}}">
+          <view class="weui-loadmore">
+            <view class="weui-loading"></view>
+            <view class="weui-loadmore__tips">正在加载</view>
           </view>
-        </navigator>
-      </view>
-    </view>
-    <view class="page__bd">
-      <view>
-        <repeat for="{{TaskList}}" key="key" index="index" item="task">
-          <taskcard 
-            :taskid.sync="task.id" 
-            :title="task.title" 
-            :tag="task.tag" 
-            :imageUrl="task.image_path" 
-            :description="task.content" 
-            :reward="task.reward" 
-            :buttonDes="buttonDes"
-            @navBtn.user="navigationBtn">
-          </taskcard>
-        </repeat>
-      </view>
-      <view wx:if="{{loading}}">
-        <view class="weui-loadmore">
-          <view class="weui-loading"></view>
-          <view class="weui-loadmore__tips">正在加载</view>
         </view>
-      </view>
-      <view wx:else>
-        <view class="weui-loadmore weui-loadmore_line">
-          <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多啦</view>
+        <view wx:else>
+          <view class="weui-loadmore weui-loadmore_line">
+            <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多啦</view>
+          </view>
         </view>
       </view>
     </view>
+    <navbar class="navbar" currentPage="home"></navbar>
   </view>
 </template>
 
@@ -53,6 +56,7 @@
   import wepy from 'wepy'
   import 'wepy-async-function'
   import TaskCard from '../components/taskcard'
+  import NavBar from '../components/nav-bar'
   import {homePageRefresh} from '../api'
   import {USER_WEIXIN_INFO, USER_LOGIN_INFO} from '../utils/constant'
   export default class Index extends wepy.page {
@@ -62,7 +66,8 @@
       backgroundTextStyle: 'dark' // 顶部显示颜色为深色的三个点
     };
     components = {
-      taskcard: TaskCard
+      taskcard: TaskCard,
+      navbar: NavBar
     }
     data = {
       inputVal: null,

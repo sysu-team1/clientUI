@@ -372,4 +372,7 @@
 .weui-vcode-btn {
   font-size: 14px;
 }
+.weui-btn-area .weui-btn {
+  background: #53a8ff;
+}
 </style>

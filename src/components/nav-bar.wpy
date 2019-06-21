@@ -1,13 +1,13 @@
 <template>
   <view class="nav-bar">
-    <navigator to="/pages/home" class="{{currentPage === 'home' ? 'item active': 'item'}}">
+    <navigator url="/pages/home" open-type="redirect" class="{{currentPage === 'home' ? 'item active': 'item'}}">
       <i class="iconfont">&#xe647;</i>
       <view class="text">任务大厅</view>
     </navigator>
-    <view class="add-button">
+    <navigator url="/pages/createtask" class="add-button">
       <i class="iconfont">&#xe646;</i>
-    </view>
-    <navigator url="/pages/profile" class="{{currentPage === 'profile' ? 'item active': 'item'}}">
+    </navigator>
+    <navigator url="/pages/profile" open-type="redirect" class="{{currentPage === 'profile' ? 'item active': 'item'}}">
       <i class="iconfont">&#xe644;</i>
       <view class="text">个人中心</view>
     </navigator>
@@ -28,9 +28,11 @@ export default class NavBar extends wepy.component {
 
 <style scoped>
 .nav-bar {
-  /* position: fixed; */
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   padding: 5px 10px;
   height: 50px;

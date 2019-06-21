@@ -100,7 +100,7 @@
                 <input class="item-content" bindinput="DItemInput" data-id="{{index}}"></input>
               </view>
             </view>
-          </view>        
+          </view>
         </view>
         <view class="question-list-add-btn">
           <button bindtap="addQuestionList">添加问题</button>
@@ -325,7 +325,7 @@
 }
 .task-content-container{
     flex-flow:column nowrap;
-    height: 130px; 
+    height: 130px;
 }
 .task-content-label-front {
   color:#495060;
@@ -367,7 +367,7 @@
   border-radius: 20rpx;
 }
 .question-item-shadow{
-  box-shadow: 10rpx 10rpx 20rpx #999; 
+  box-shadow: 10rpx 10rpx 20rpx #999;
 }
 .question-item-hd{
   display: flex;
@@ -421,5 +421,8 @@
 <style lang="less" scoped>
 .weui-select {
   font-size: 14px;
+}
+.page .weui-btn {
+  background: #53a8ff;
 }
 </style>

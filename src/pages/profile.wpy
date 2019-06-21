@@ -1,105 +1,95 @@
 <template>
   <view class="page">
-    <view class="page__hd profile-header">
-      <view class="weui-panel weui-panel_access">
-        <view class="weui-panel__bd">
-          <navigator url="/pages/userinfo" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-              <image class="weui-media-box__thumb avatar-url" src="{{avatarUrl}}" />
+    <view class="section">
+      <view class="page__hd profile-header">
+        <view class="weui-panel weui-panel_access">
+          <view class="weui-panel__bd">
+            <navigator url="/pages/userinfo" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+              <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                <image class="weui-media-box__thumb avatar-url" src="{{avatarUrl}}" />
+              </view>
+              <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                <view class="weui-media-box__title nick-name">{{nickName}}</view>
+                <view class="weui-media-box__desc user-email">邮箱：{{userEmail}}</view>
+              </view>
+              <view><i class="iconfont">&#xe604;</i></view>
+            </navigator>
+          </view>
+        </view>
+      </view>
+      <view class="page__bd profile-content">
+        <view class="my-item">
+          <view class="title">我的任务</view>
+          <view class="content">
+            <view class="status-list">
+              <navigator url="/pages/mytask?currentTab=0">
+                <view class="item">
+                  <view class="iconfont">&#xe630;</view>
+                  <view class="text">进行中</view>
+                </view>
+              </navigator>
+              <navigator url="/pages/mytask?currentTab=1">
+                <view class="item">
+                  <view class="iconfont">&#xe631;</view>
+                  <view class="text">已完成</view>
+                </view>
+              </navigator>
+              <navigator url="/pages/mytask?currentTab=2">
+                <view class="item">
+                  <view class="iconfont">&#xe62f;</view>
+                  <view class="text">已结束</view>
+                </view>
+              </navigator>
             </view>
-            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-              <view class="weui-media-box__title nick-name">{{nickName}}</view>
-              <view class="weui-media-box__desc user-email">邮箱：{{userEmail}}</view>
+          </view>
+        </view>
+        <view class="my-item">
+          <view class="title">我的发布</view>
+          <view class="content">
+            <view class="status-list">
+              <navigator url="/pages/mypublish?currentTab=0">
+                <view class="item">
+                  <view class="iconfont">&#xe630;</view>
+                  <view class="text">进行中</view>
+                </view>
+              </navigator>
+              <navigator url="/pages/mypublish?currentTab=1">
+                <view class="item">
+                  <view class="iconfont">&#xe631;</view>
+                  <view class="text">已完成</view>
+                </view>
+              </navigator>
             </view>
-            <view><i class="iconfont">&#xe604;</i></view>
+          </view>
+        </view>
+        <view class="info_block">
+          <navigator class="item" url="/pages/points" open-type="navigate">
+            <view class="item_content">
+              <i class="iconfont">&#xe603;</i>
+              <view class="text">我的积分</view>
+            </view>
+          </navigator>
+          <view class="item" url="/pages/message" open-type="navigate">
+            <view class="item_content">
+              <i class="iconfont">&#xec3b;</i>
+              <view class="text">我的消息</view>
+            </view>
+          </view>
+        </view>
+        <view class="info_block">
+          <navigator class="item" url="/pages/setting" open-type="navigate">
+            <view class="item_content">
+              <i class="iconfont">&#xeb67;</i>
+              <view class="text">我的设置</view>
+            </view>
           </navigator>
         </view>
       </view>
-    </view>
-    <view class="page__bd profile-content">
-      <view class="my-item">
-        <view class="title">我的任务</view>
-        <view class="content">
-          <view class="status-list">
-            <navigator>
-              <view class="item">
-                <view class="iconfont">&#xe630;</view>
-                <view class="text">进行中</view>
-              </view>
-            </navigator>
-            <navigator>
-              <view class="item">
-                <view class="iconfont">&#xe631;</view>
-                <view class="text">已完成</view>
-              </view>
-            </navigator>
-            <navigator>
-              <view class="item">
-                <view class="iconfont">&#xe62f;</view>
-                <view class="text">已结束</view>
-              </view>
-            </navigator>
-          </view>
-        </view>
-      </view>
-      <view class="my-item">
-        <view class="title">我的发布</view>
-        <view class="content">
-          <view class="status-list">
-            <navigator>
-              <view class="item">
-                <view class="iconfont">&#xe633;</view>
-                <view class="text">新发布</view>
-              </view>
-            </navigator>
-            <navtigator>
-              <view class="item">
-                <view class="iconfont">&#xe630;</view>
-                <view class="text">进行中</view>
-              </view>
-            </navtigator>
-            <navigator>
-              <view class="item">
-                <view class="iconfont">&#xe631;</view>
-                <view class="text">已完成</view>
-              </view>
-            </navigator>
-          </view>
-        </view>
-      </view>
-      <view class="info_block">
-        <navigator class="item" url="/pages/points" open-type="navigate">
-          <view class="item_content">
-            <i class="iconfont">&#xe603;</i>
-            <view class="text">我的积分</view>
-          </view>
-        </navigator>
-        <navigator class="item" url="/pages/favorite" open-type="navigate">
-          <view class="item_content">
-            <i class="iconfont item-icon">&#xe624;</i>
-            <view class="text">我的收藏</view>
-          </view>
-        </navigator>
-      </view>
-      <view class="info_block">
-        <navigator class="item" url="/pages/message" open-type="navigate">
-          <view class="item_content">
-            <i class="iconfont">&#xec3b;</i>
-            <view class="text">我的消息</view>
-          </view>
-        </navigator>
-        <navigator class="item" url="/pages/setting" open-type="navigate">
-          <view class="item_content">
-            <i class="iconfont">&#xeb67;</i>
-            <view class="text">我的设置</view>
-          </view>
-        </navigator>
+      <view class="page__ft">
+        <button type="warn" bindtap="exit">退出登录</button>
       </view>
     </view>
-    <view class="page__ft">
-      <button type="warn" bindtap="exit">退出登录</button>
-    </view>
-
+    <navbar currentPage="profile"></navbar>
   </view>
 </template>
 
@@ -107,10 +97,14 @@
   import wepy from 'wepy'
   import { USER_WEIXIN_INFO, USER_LOGIN_INFO, USER_DETAIL_INFO } from '../utils/constant'
   import { getInfo } from '../api'
+  import NavBar from '../components/nav-bar'
   export default class Profile extends wepy.page {
     config = {
       navigationBarTitleText: '我',
       navigationBarBackgroundColor: '#53a8ff'
+    }
+    components = {
+      navbar: NavBar
     }
     data = {
       avatarUrl: '',
@@ -170,6 +164,9 @@
 </script>
 
 <style lang="less">
+.section {
+  margin-bottom: 60px;
+}
 .pd-16 {
   padding-left: 16px;
   padding-right: 16px;
@@ -190,6 +187,10 @@
 
 .profile-header .weui-panel {
   background-color: inherit;
+}
+
+.profile-content {
+  margin-bottom: 10px;
 }
 
 .profile-content .my-item {

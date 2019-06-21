@@ -4,7 +4,7 @@
       <view class="task-content-container">
         <view class="task-content-label-front">任务描述</view>
         <view class="textarea-position">
-          <textarea class="textarea-class" placeholder="请输入内容" placeholder-class="placeholder-class" bindinput="bindInputContent" name="content" value="{{content}}" maxlength="-1"/>
+          <textarea class="textarea-class" placeholder="请输入内容" placeholder-class="placeholder-class" name="content" value="{{content}}" maxlength="-1"/>
         </view>
       </view>
       <view class="task-content-container">
@@ -81,7 +81,7 @@
 <style lang="less">
 .task-content-container{
   flex-flow:column nowrap;
-  height: 130px; 
+  height: 130px;
 }
 .task-content-label-front {
   color:#495060;
@@ -128,5 +128,8 @@
   align-items: center;
   padding-top: 10px;
   border-top: 0.5px dotted gray;
+}
+.page__ft .weui-btn {
+  background: #53a8ff;
 }
 </style>
