@@ -61,15 +61,11 @@
     }
     watch = {
       currentTab (newValue, oldValue) {
-        console.log(`num value: ${oldValue} -> ${newValue}`)
         this.fetchTaskList(this.currentLastID, 'refresh', newValue)
       }
     }
     methods = {
       navigationBtn(taskid, event) {
-        console.log(taskid)
-        console.log('前往详情')
-        console.log(this.currentTab)
         var scene = 2
         switch (this.currentTab) {
           case 0: scene = 2; break
@@ -96,7 +92,6 @@
         default: this.status = 'ongoing'
       }
       if (operation === 'refresh') {
-        console.log('刷新列表')
         this.lastAcceptTime = ''
         var load = await searchTaskByAccepterId(parseInt(this.openid), this.status, this.lastAcceptTime, -1)
         this.lastAcceptTime = load.data.msg
@@ -106,9 +101,7 @@
           TaskList: this.loadedData
         })
         this.currentLastID = this.findLastID(load.data.tasks)
-        console.log(this.lastAcceptTime, load, this.currentLastID)
       } else if (operation === 'loadmore') {
-        console.log('加载更多')
         this.lastAcceptTime = ''
         var load2 = await searchTaskByAccepterId(parseInt(this.openid), this.status, this.lastAcceptTime, this.currentLastID)
         this.lastAcceptTime = load2.data.msg
@@ -118,13 +111,10 @@
           TaskList: this.loadedData
         })
         this.currentLastID = this.findLastID(load2.data.tasks)
-        console.log(this.lastAcceptTime, load2, this.currentLastID)
       } else {
-        console.log('操作错误')
       }
     }
     onPullDownRefresh() {
-      console.log('下拉刷新')
       this.currentLastID = -1
       this.loading = true
       this.setData({ loading: true })
@@ -133,20 +123,15 @@
         wepy.stopPullDownRefresh()
         this.loading = false
         this.$apply()
-        console.log(this.loading)
       }, 3000)
-      console.log(this.loading)
     }
     onReachBottom() {
-      console.log('上滑加载')
       this.loading = true
       this.setData({ loading: true })
       this.fetchTaskList(this.currentLastID, 'loadmore', this.currentTab)
-      console.log(this.loading)
       setTimeout(() => {
         this.loading = false
         this.$apply()
-        console.log(this.loading)
       }, 3000)
     }
     onLoad(options) {
@@ -154,7 +139,6 @@
       this.currentTab = currentTab
       let userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
       this.openid = userLoginInfo.openid
-      console.log('我的任务页面')
       this.fetchTaskList(this.currentLastID, 'refresh', currentTab)
     }
 }

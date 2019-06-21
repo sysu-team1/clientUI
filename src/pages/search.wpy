@@ -73,10 +73,8 @@ export default class Search extends wepy.page {
       for (var i = 0; i < this.keywordhisList.length; i++) {
         this.keywordhisList[i].sel = 0 // sel都置0，确保下次页面加载时所有标签都为sel=0
         if (keyw === this.keywordhisList[i].keyword) {
-          console.log('存在有重复')
           isKeySame = true
         } else {
-          console.log('没有重复，可以添加')
         }
       }
       if (!isKeySame) {
@@ -84,7 +82,6 @@ export default class Search extends wepy.page {
         this.keywordhisList.push({id: len + 1, sel: 0, keyword: keyw})
         // 添加之后存储至缓存
         await wepy.setStorageSync(USER_SEARCH_HISTORY, this.keywordhisList)
-        console.log(this.keywordhisList)
       }
     },
     // 删除输入词条
@@ -98,7 +95,6 @@ export default class Search extends wepy.page {
     },
     // 选择历史记录中的词条，选择之后直接搜索改词条
     selHisKeyWord(e) {
-      console.log(e)
       var id = e.currentTarget.dataset.id
       var hisKeyword = ''
       for (var i = 0; i < this.keywordhisList.length; i++) {
@@ -132,14 +128,11 @@ export default class Search extends wepy.page {
     // 读取缓存，并判断是否需要建立缓存
     let userSearchHistory = wepy.getStorageSync(USER_SEARCH_HISTORY) || null
     if (userSearchHistory === null) {
-      console.log('用户不存在搜索历史')
     } else {
       // 存在有用户搜索历史缓存
       // 读取缓存并渲染
-      console.log('用户存在有搜索历史')
       this.keywordhisList = userSearchHistory
     }
-    console.log(userSearchHistory)
   }
 }
 </script>
