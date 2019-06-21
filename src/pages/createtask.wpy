@@ -292,19 +292,15 @@
         }
       })
     }
+    onShow() {
+      this.image_src = '../images/add-picture.png'
+    }
     onLoad() {
       var userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
       console.log(userLoginInfo.openid)
       this.openid = userLoginInfo.openid
       console.log(this.openid)
       this.setData({
-        taskTitle: '',
-        TaskTypeIndex: 0,
-        endDate: '',
-        endTime: '',
-        reward: 0,
-        limit_num: 0,
-        content: '',
         image_src: '../images/add-picture.png'
       })
     }

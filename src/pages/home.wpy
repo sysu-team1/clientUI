@@ -3,10 +3,10 @@
     <view class="section">
       <view class="page__hd">
         <view class="swiper-wrapper">
-          <swiper indicator-dots autoplay circular>
+          <swiper class="swiper" indicator-dots autoplay circular>
             <block wx:for="{{PicList}}" wx:key="key">
               <swiper-item>
-                <image mode="aspectFill" src="{{item}}"/>
+                <image mode="widthFix" width="375.2" src="{{item}}"/>
               </swiper-item>
             </block>
           </swiper>
@@ -73,8 +73,8 @@
       inputVal: null,
       inputShowed: false,
       PicList: [
-        '/images/home.png',
-        '/images/home-active.png'
+        '/images/1.jpg',
+        '/images/2.jpg'
       ],
       /*  TaskList {
           [
@@ -232,7 +232,6 @@
   background: rgba(0, 0, 0, 0.3);
   transform: translate(-50%, 0);
 }
-
 .input-wrapper .input-placeholder {
   color: #efefee;
 }
