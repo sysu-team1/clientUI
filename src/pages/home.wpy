@@ -6,7 +6,7 @@
           <swiper class="swiper" indicator-dots autoplay circular>
             <block wx:for="{{PicList}}" wx:key="key">
               <swiper-item>
-                <image mode="widthFix" width="375.2" src="{{item}}"/>
+                <image class="swipe-img" mode="widthFix" src="{{item}}"/>
               </swiper-item>
             </block>
           </swiper>
@@ -232,6 +232,11 @@
   background: rgba(0, 0, 0, 0.3);
   transform: translate(-50%, 0);
 }
+
+.swipe-img {
+  width: 100%;
+}
+
 .input-wrapper .input-placeholder {
   color: #efefee;
 }
