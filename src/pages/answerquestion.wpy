@@ -1,6 +1,6 @@
 <template>
 <view>
-<view id="title">
+<view id="title"> <!-- 问卷头 -->
   <view class='titleContent'>问卷</view>
   <image class='titlePriceIcon' src='{{priceIcon}}' mode='widthFix'/>
   <view class='priceContent'>25</view>
