@@ -313,6 +313,46 @@ const getProblem = async (taskid) => {
   } 
 }
 
+const postAnswer = async (taskID, openid, answer) => {
+  console.log(answer)
+  let res = await wepy.request({
+    url: BASIC_REQUEST_URL + '/post_answer/', //开发者服务器接口地址",
+    data: {
+      task_id: taskID,
+      openid: openid,
+      answer: answer
+    }, //请求的参数",
+    method: 'POST',
+    header: {
+      [CONTENT_TYPE]: POST_CONTENT_TYPE
+    }
+  });
+  if (res.statusCode === 200) {
+    console.log(res.data)
+    return JSON.parse(res.data.replace(/'/g,'"'))
+  }
+}
+
+const getAnswer = async (all, taskID, openid) => {
+  console.log(all, taskID, openid)
+  let res = await wepy.request({
+    url: BASIC_REQUEST_URL + '/get_answer/', //开发者服务器接口地址",
+    data: {
+      all: all,
+      task_id: taskID,
+      openid: openid
+    }, //请求的参数",
+    method: 'GET',
+    header: {
+      [CONTENT_TYPE]: POST_CONTENT_TYPE
+    }
+  });
+  if (res.statusCode === 200) {
+    console.log(res.data)
+    return JSON.parse(res.data.replace(/'/g,'"'))
+  }  
+}
+
 export {
   searchTaskByPulisherId,
   searchTaskByAccepterId,
@@ -325,5 +365,7 @@ export {
   searchTask,
   uploadImage,
   finishTask,
-  getProblem
+  getProblem,
+  postAnswer,
+  getAnswer
 }

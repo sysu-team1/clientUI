@@ -28,7 +28,9 @@ import {
   homePageRefresh,
   uploadImage,
   finishTask,
-  getProblem
+  getProblem,
+  postAnswer,
+  getAnswer
 } from './task'
 
 
@@ -314,5 +316,7 @@ export {
   finishTask,
   addCash,
   getProblem,
-  getPoint
+  getPoint,
+  postAnswer,
+  getAnswer
 }

@@ -65,8 +65,14 @@
       navigationBtn(taskid, event) {
         console.log(taskid)
         console.log('前往详情')
+        var scene = 5
+        switch (this.currentTab) {
+          case 0: scene = 5; break
+          case 1: scene = 6; break
+          default: scene = 5
+        }
         wepy.navigateTo({
-          url: 'detail?id=' + taskid
+          url: 'detail?id=' + taskid + '&scene=' + scene
         })
       }
     }

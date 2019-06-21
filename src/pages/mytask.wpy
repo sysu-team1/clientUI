@@ -69,8 +69,16 @@
       navigationBtn(taskid, event) {
         console.log(taskid)
         console.log('前往详情')
+        console.log(this.currentTab)
+        var scene = 2
+        switch (this.currentTab) {
+          case 0: scene = 2; break
+          case 1: scene = 3; break
+          case 2: scene = 4; break
+          default: scene = 2
+        }
         wepy.navigateTo({
-          url: 'detail?id=' + taskid
+          url: 'detail?id=' + taskid + '&scene=' + scene
         })
       }
     }
@@ -83,8 +91,8 @@
     async fetchTaskList(currentLastID, operation, status) {
       switch (status) {
         case 0: this.status = 'ongoing'; break
-        case 1: this.status = 'finished'; break
-        case 2: this.status = 'complete'; break
+        case 1: this.status = 'finished'; this.buttonDes = '查看详情'; break
+        case 2: this.status = 'complete'; this.buttonDes = '查看详情'; break
         default: this.status = 'ongoing'
       }
       if (operation === 'refresh') {

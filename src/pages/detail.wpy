@@ -55,20 +55,29 @@
           </view>
         </view>
       </view>
-      <view wx:if="{{loadedData.tag === '问卷'}}">
+      <view class="question-list-area" wx:if="{{loadedData.tag == '问卷'}}">
         <repeat for="{{ questionList }}" key="index" index="index" item="item">
-          <questionitem :isPublishQuestion="true" :fatherIndex="index" :question="item.question" :itemList="item.itemList" @ansChange.user="ansChange"></questionitem>           
+          <questionitem
+          :isPublishQuestion="true"
+          :fatherIndex="index"
+          :question="item.question"
+          :itemList="item.itemList"
+          @ansChange.user="ansChange"
+          :disabledCom="disabledCom"
+          :answer="item.answer"
+          :staticLabel="staticLabel">
+          </questionitem>           
         </repeat>
       </view>
     </view>
     <view class="page__ft">
-      <button class="btn" type="primary" bindtap="collectTask">领取任务</button>
+      <button class="btn" type="primary" bindtap="collectTask" disabled="{{buttonDisable}}">{{buttonLabel}}</button>
     </view>
   </view>
 </template>
 <script>
   import wepy from 'wepy'
-  import {searchTaskByTaskID, acceptTask, getProblem} from '../api'
+  import {searchTaskByTaskID, acceptTask, getProblem, postAnswer, getAnswer} from '../api'
   import QuestionItem from '../components/questionitem'
   import {USER_LOGIN_INFO} from '../utils/constant'
   export default class Detail extends wepy.page {
@@ -81,14 +90,88 @@
     data = {
       taskid: '',
       loadedData: [],
-      questionList: []
+      questionList: [],
+      buttonLabel: '领取任务',
+      buttonDisable: false,
+      disabledCom: false,
+      questionAnswers: [],
+      staticLabel: ''
     }
     methods = {
       collectTask() {
         console.log('领取任务')
+        console.log(this.buttonLabel)
         var userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
         console.log(userLoginInfo.openid)
-        this.collectTheTask(userLoginInfo.openid, this.data.taskid)
+        if (this.buttonLabel === '领取任务') {
+          this.collectTheTask(userLoginInfo.openid, this.data.taskid)
+        }
+        if (this.buttonLabel === '接受并提交问卷') {
+          var ansStr = this.transformAnswerToString(this.questionAnswers)
+          console.log(ansStr)
+          if (ansStr !== '') {
+            this.collectTheQuestionAndFinish(userLoginInfo.openid, this.data.taskid, ansStr)
+          }
+        }
+        if (this.buttonLabel === '提交任务') {
+          wepy.navigateTo({ url: 'completetask?id=' + this.data.taskid })
+        }
+      },
+      ansChange(index, fatherIndex) {
+        console.log(index + '=>' + fatherIndex)
+        this.questionAnswers[fatherIndex] = index
+      }
+    }
+    transformGetAnswerToList(getAnswerObj) {
+      var answers = getAnswerObj.data.answers
+      var questionlist = []
+      for (var i = 0; i < answers.length; i++) {
+        var temp = {
+          question: answers[i].question,
+          itemList: [
+            {
+              label: 'A',
+              content: answers[i].A
+            },
+            {
+              label: 'B',
+              content: answers[i].B
+            },
+            {
+              label: 'C',
+              content: answers[i].C
+            },
+            {
+              label: 'D',
+              content: answers[i].D
+            }
+          ],
+          answer: answers[i].choice
+        }
+        questionlist.push(temp)
+      }
+      console.log(questionlist)
+      this.setData({
+        questionList: questionlist
+      })
+      this.questionList = questionlist
+    }
+    transformAnswerToString(questionAnswers) {
+      let someempty = false
+      for (var i = 0; i < questionAnswers.length; i++) {
+        if (questionAnswers[i] === ' ') {
+          someempty = true
+        }
+      }
+      if (someempty === false) {
+        return questionAnswers.join('#')
+      } else {
+        wx.showToast({
+          title: '请完成所有问卷问题',
+          icon: 'success',
+          duration: 2000
+        })
+        return ''
       }
     }
     transformToObeject(str) {
@@ -148,7 +231,29 @@
         })
       }
     }
-    async getTaskDetail(taskid) {
+    async collectTheQuestionAndFinish(accepterID, taskID, questionAnswers) {
+      console.log(accepterID, taskID, questionAnswers)
+      var result = await acceptTask(accepterID, taskID)
+      if (result.error === 0) {
+        console.log('领取成功')
+        var result2 = await postAnswer(taskID, accepterID, questionAnswers)
+        if (result2.error === 0) {
+          await wx.showToast({
+            title: '完成问卷',
+            icon: 'success',
+            duration: 2000
+          })
+        }
+      } else {
+        console.log('领取失败')
+        await wx.showToast({
+          title: result.data.msg,
+          icon: 'success',
+          duration: 2000
+        })
+      }
+    }
+    async getTaskDetail(taskid, scene) {
       console.log(taskid)
       wepy.showLoading({
         title: '正在加载数据'
@@ -162,17 +267,70 @@
       wepy.hideLoading()
       console.log(this.loadedData)
       if (this.loadedData.tag === '问卷') {
-        var loadProblem = await getProblem(parseInt(taskid))
-        console.log(loadProblem.data.problem_content)
-        this.transformToObeject(loadProblem.data.problem_content)
+        this.buttonLabel = '接受并提交问卷'
+        if (scene === '3' | scene === '4') {
+          console.log('3')
+          this.staticLabel = '答案'
+          var userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
+          console.log(userLoginInfo.openid)
+          var loadPro = await getAnswer(0, parseInt(taskid), userLoginInfo.openid)
+          console.log(loadPro)
+          this.transformGetAnswerToList(loadPro)
+        } else if (scene === '5' | scene === '6') {
+          this.buttonLabel = '查看统计'
+          this.staticLabel = '统计'
+          console.log('5')
+          var userLoginInfo2 = wepy.getStorageSync(USER_LOGIN_INFO)
+          var loadPro2 = await getAnswer(1, parseInt(taskid), userLoginInfo2.openid)
+          console.log(loadPro2)
+          this.transformGetAnswerToList(loadPro2)
+        } else {
+          var loadProblem = await getProblem(parseInt(taskid))
+          console.log(loadProblem.data.problem_content)
+          this.transformToObeject(loadProblem.data.problem_content)
+          // 初始化问卷答案列表
+          console.log(this.questionList.length)
+          for (var i = 0; i < this.questionList.length; i++) {
+            this.questionAnswers.push(' ')
+          }
+        }
+      }
+      this.initScene(scene)
+    }
+    // 依据传入的参数显示对应的任务详情
+    initScene(scene) {
+      console.log('场景' + scene)
+      // scene === 1 场景1：由home界面点击任务查看详情，问卷类型的问卷显示,领取的同时提交问卷，其余正常，若为问卷类型，按钮点击后跳转到问卷填写界面
+      if (scene === '1') {
+        console.log('场景1')
+      }
+      // scene === 2 场景2：由我的任务页面正在进行处点击任务查看详情，任务为去完成，点击按钮需要跳转到任务提交页面
+      if (scene === '2') {
+        this.buttonLabel = '提交任务'
+      }
+      // scene === 3/4 场景3/4：由我的任务页面已完成/已过期处点击任务查看详情，按钮分别显示已完成/已过期，并且不可点击
+      if (scene === '3') {
+        this.buttonLabel = '已完成'
+        this.buttonDisable = true
+        this.disabledCom = true
+      }
+      if (scene === '4') {
+        this.buttonLabel = '已过期'
+        this.buttonDisable = true
+      }
+      // scene === 5/6 场景5： 由我的发布页面正在进行/已完成处点击查看详情，按钮显示统计信息，点击按钮跳转到任务统计页面（新页面）
+      if (scene === '5') {
+        this.disabledCom = true
+      }
+      if (scene === '6') {
+        this.disabledCom = true
       }
     }
-
     onLoad(prop) {
-      console.log(prop, prop.id)
+      console.log(prop, prop.id, prop.scene)
       this.data.taskid = prop.id
       console.log(this.data.taskid)
-      this.getTaskDetail(this.data.taskid)
+      this.getTaskDetail(this.data.taskid, prop.scene)
       console.log('onload')
     }
 }
@@ -199,5 +357,8 @@
   color: #999;
   font-size: 13px;
   line-height: 1.2;
+}
+.question-list-area{
+  padding-bottom: 5px;
 }
 </style>
