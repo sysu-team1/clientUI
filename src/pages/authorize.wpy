@@ -31,8 +31,8 @@ export default class Authorize extends wepy.page {
     if (e.detail.userInfo) {
       console.log('==授权成功==')
       await wepy.setStorageSync(USER_WEIXIN_INFO, e.detail.userInfo)
-      wepy.switchTab({
-        url: 'home'
+      wepy.redirectTo({
+        url: '/pages/home'
       })
     } else {
       wx.showModel({
