@@ -53,8 +53,8 @@
 
 5、 微信开发者工具-->项目-->详情-->本地设置-->不校验合法域名、web-view(业务域名)、TLS版本以及HTTPS证书，开启此选项，否则连接不到服务器端。
 
-### **wepy开发文档地址**
-	https://tencent.github.io/wepy/
+### **[wepy开发文档地址](https://tencent.github.io/wepy/)**
+
 ### **目录结构**
 
     ├── src
