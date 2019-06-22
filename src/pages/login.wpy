@@ -131,7 +131,7 @@
       this.data.loginType = e.detail.value
     }
     navigationToHome() {
-      wepy.redirectTo({url: '/pages/home'})
+      wepy.reLaunch({url: '/pages/home'})
     }
     onLoad() {
       console.log('login页面')

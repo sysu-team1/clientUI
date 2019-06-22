@@ -140,7 +140,7 @@
       MailTypeIndex: 0,                                       // 邮箱类型下标
       MailTypes: ['@mail2.sysu.edu.cn', '@mail.sysu.edu.cn', '@qq.com'], // 邮箱类型
       CountTime: '获取验证码',                                 // 获取验证码按钮显示变量
-      second: 6,                                              // 获取验证码等待时间 ，单位 s（秒）,测试6秒，正式为60秒
+      second: 60,                                              // 获取验证码等待时间 ，单位 s（秒）,测试6秒，正式为60秒
       getvcodeBtnDisabled: false                              // 获取验证码按钮是否可点击
     }
     // 邮箱
@@ -200,7 +200,7 @@
       this.MailTypeIndex = e.detail.value
     }
     navigationToHome() {
-      wepy.switchTab({url: 'home'})
+      wepy.reLaunch({url: '/pages/home'})
     }
     // 倒计时
     countdown(secondNum) {
@@ -268,14 +268,15 @@
         if (result != null) {
           // 注册成功
           console.log(result.error)
-          if (result.error === 0) {
+          if (result.error === '0') {
             // TODO
             // open_id 请求数据 openid = result.data.openid
             console.log('注册成功')
             this.$parent.globalData.userLoginInfo = {
               userEmail: this.data.register_email,
               userPassword: this.data.register_password,
-              loginType: 'student'
+              loginType: 'student',
+              openid: result.data.openid
             }
             await wepy.setStorageSync(USER_LOGIN_INFO, this.$parent.globalData.userLoginInfo)
             await wx.showToast({
@@ -287,10 +288,12 @@
             this.$parent.globalData.userLoginInfo = {
               userEmail: this.data.register_email + this.data.MailTypes[this.data.MailTypeIndex],
               userPassword: this.data.register_password,
-              loginType: 'student'
+              loginType: 'student',
+              openid: result.data.openid
             }
           } else {
             // 注册失败，反馈信息
+            console.log('注册失败')
             console.log(result.error_message)
           }
         }
