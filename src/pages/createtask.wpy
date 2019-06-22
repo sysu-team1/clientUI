@@ -60,7 +60,7 @@
         <view class="task-content-container">
           <view class="task-content-label-front">任务描述</view>
           <view class="textarea-position">
-            <textarea class="textarea-class" placeholder="请输入内容" placeholder-class="placeholder-class" bindinput="bindInputContent" name="content" value="{{content}}" rows="3" maxlength="-1"/>
+            <textarea class="textarea-class" autofocus placeholder="请输入内容" placeholder-class="placeholder-class" bindinput="bindInputContent" name="content" value="{{content}}" rows="3" maxlength="-1"/>
           </view>
         </view>
         <view class="task-content-container">
@@ -75,8 +75,8 @@
           <view class="question-item-area question-item-shadow">
             <view class="question-item-hd">
               <view class="question-item-ques">
-                <view class="question-item-label">问题 {{index + 1}}:</view>
-                <input class="question-item-desc" bindinput="questionInput" data-id="{{index}}"></input>
+                <view class="question-item-label">问题{{index + 1}}:</view>
+                <input class="question-item-desc" cursor-spacing="100" bindinput="questionInput" data-id="{{index}}"></input>
               </view>
               <view class="question-item-edit-icon" bindtap="deleteQuesIcon" data-id="{{index}}">
                 <i class="iconfont">&#xe603;</i>
@@ -85,19 +85,19 @@
             <view class="question-item-bd">
               <view class="question-items">
                 <view class="item-label">A</view>
-                <input class="item-content" bindinput="AItemInput" data-id="{{index}}"></input>
+                <input class="item-content" cursor-spacing="80" bindinput="AItemInput" data-id="{{index}}"></input>
               </view>
               <view class="question-items">
                 <view class="item-label">B</view>
-                <input class="item-content" bindinput="BItemInput" data-id="{{index}}"></input>
+                <input class="item-content" cursor-spacing="60" bindinput="BItemInput" data-id="{{index}}"></input>
               </view>
               <view class="question-items">
                 <view class="item-label">C</view>
-                <input class="item-content" bindinput="CItemInput" data-id="{{index}}"></input>
+                <input class="item-content" cursor-spacing="40" bindinput="CItemInput" data-id="{{index}}"></input>
               </view>
               <view class="question-items">
                 <view class="item-label">D</view>
-                <input class="item-content" bindinput="DItemInput" data-id="{{index}}"></input>
+                <input class="item-content" cursor-spacing="20" bindinput="DItemInput" data-id="{{index}}"></input>
               </view>
             </view>
           </view>
@@ -374,10 +374,12 @@
 .question-item-ques{
   display: flex;
   flex-direction: row;
+  padding-left: 5px;
 }
 .question-item-label{
-  padding-left: 5px;
   font-weight: bold;
+  font-size: 14px;
+  width: 25%;
 }
 .question-item-desc{
   padding-left: 5px;
@@ -411,7 +413,8 @@
   font-size: 14px;
 }
 .question-list-add-btn{
-  padding-top: 5px;
+  padding-top: 25px;
+  padding-bottom: 20px;
 }
 </style>
 <style lang="less" scoped>
