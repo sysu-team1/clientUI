@@ -1,6 +1,6 @@
 <template>
 <view>
-  <view class="head">  
+  <view class="head">
     <view class="weui-cell__bd">
       <input class="weui-input" placeholder="标题" />
       <input class="weui-input" placeholder="描述任务详情" />
@@ -15,7 +15,7 @@
     <!-- <view class="divLine"></view> -->
     <view>
       <picker value="{{newIndex}}" range='{{typeArray}}' bindchange="bindTypeChange">
-          <image class='addNewQuestion' src='{{addIconPath}}'/> 
+          <image class='addNewQuestion' src='{{addIconPath}}'/>
       </picker>
     </view>
   </view>
@@ -59,7 +59,7 @@
           </view>
         </view>
       </view>
-      
+
       <view wx:if="{{item.type === 'SAQ'}}">
         <view class = 'SAQ' data-id='{{fatherIndex}}'>
           <view class='SAQTitle'>
@@ -72,7 +72,7 @@
           <textarea auto-height='true' class = "SAQAnswer" value='{{item.content.answer}}' bindblur='bindblurAnswerOfSAQ' data-id='{{fatherIndex}}'></textarea>
         </view>
       </view> -->
-      
+
     </view>
     <button class="weui-btn" type="primary" bindtap='showQ'>下一步</button>
   </view>
@@ -204,7 +204,6 @@
       this.setData({
         newIndex: e.detail.value
       })
-      console.log(e.detail.value)
       var tempArray = this.data.questionnaireArray
       if (this.data.newIndex == 0) {  //eslint-disable-line
         var temp0 = {
@@ -256,7 +255,6 @@
 
     deleteSCQ(input) {
       var tempIndex = input.currentTarget.dataset.id
-      console.log(tempIndex)
       var tempArray = this.data.questionnaireArray
       tempArray.splice(tempIndex, 1)
       this.setData({
@@ -266,7 +264,6 @@
 
     deleteMCQ(input) {
       var tempIndex = input.currentTarget.dataset.id
-      console.log(tempIndex)
       var tempArray = this.data.questionnaireArray
       tempArray.splice(tempIndex, 1)
       this.setData({
@@ -276,7 +273,6 @@
 
     deleteSAQ(input) {
       var tempIndex = input.currentTarget.dataset.id
-      console.log(tempIndex)
       var tempArray = this.data.questionnaireArray
       tempArray.splice(tempIndex, 1)
       this.setData({
@@ -286,7 +282,6 @@
 
     getTempFatherIndex(input) {
       var tempFatherIndex = input.currentTarget.dataset.id
-      console.log('currentFatherIndex: ' + tempFatherIndex)
       this.currentFatherIndex = tempFatherIndex
       // this.setData({
       //   currentFatherIndex: tempFatherIndex
@@ -296,9 +291,7 @@
     deleteOneOfSCQ(input) {
       var tempFatherIndex = this.data.currentFatherIndex
       var tempSonIndex = input.target.dataset.id
-      console.log(tempSonIndex)
       var tempArray = this.data.questionnaireArray
-      console.log(tempArray[tempFatherIndex].content.options[tempSonIndex])
       tempArray[tempFatherIndex].content.options.splice(tempSonIndex, 1)
       this.setData({
         questionnaireArray: tempArray
@@ -322,7 +315,6 @@
       var tempIndex = input.currentTarget.dataset.id
       var tempArray = this.data.questionnaireArray
       var tempSCQ = { 'id': 1, 'name': '', 'isSelected': false }
-      console.log(tempIndex)
       tempArray[tempIndex].content.options.push(tempSCQ)
       this.setData({
         questionnaireArray: tempArray
@@ -333,7 +325,6 @@
       var tempIndex = input.currentTarget.dataset.id
       var tempArray = this.data.questionnaireArray
       var tempMCQ = { 'id': 1, 'name': 'Lua', 'isSelected': false }
-      console.log(tempIndex)
       tempArray[tempIndex].content.options.push(tempMCQ)
       this.setData({
         questionnaireArray: tempArray
@@ -341,7 +332,6 @@
     }
 
     showQ() {
-      console.log(this.data.questionnaireArray)
       var tempArray = this.data.questionnaireArray
       var len = tempArray.length
       var QuestionContent = ''
@@ -357,12 +347,10 @@
           }
         }
       }
-      console.log(QuestionContent)
     }
 
     bindblurSCQ(input) {
       var tempIndex = input.currentTarget.dataset.id
-      console.log('sdhbuias' + tempIndex)
       var tempArray = this.data.questionnaireArray
       tempArray[tempIndex].content.description = input.detail.value
       this.setData({

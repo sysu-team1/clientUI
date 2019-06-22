@@ -68,21 +68,17 @@
       ]
     }
     isChecked(type) {
-      console.log(type)
       return type === this.loginType ? type : ''
     }
     async loginBtnClick() {
-      console.log('login in button')
       var email = this.data.userEmail + this.data.MailTypes[this.data.MailTypeIndex]
       var password = this.data.userPassword
       var type = this.data.loginType
-      console.log(email, password, type)
       // 网络请求
       var result = await login(email, password, type)
       if (result != null) {
         if (result.error === 1) {
           // 登陆失败，反馈信息
-          console.log(result.error_message)
           await wx.showToast({
             title: result.error_message,
             icon: 'error',
@@ -108,17 +104,12 @@
       }
     }
     Email(e) {
-      console.log(e)
       this.data.userEmail = e.detail.value
-      console.log(this.data.userEmail)
     }
     Password(e) {
-      console.log(e)
       this.data.userPassword = e.detail.value
-      console.log(this.data.userPassword)
     }
     registerTap(e) {
-      console.log('前往注册')
       wepy.navigateTo({
         url: 'register'
       })
@@ -127,14 +118,12 @@
       this.MailTypeIndex = e.detail.value
     }
     radioChange(e) {
-      console.log(e)
       this.data.loginType = e.detail.value
     }
     navigationToHome() {
       wepy.reLaunch({url: '/pages/home'})
     }
     onLoad() {
-      console.log('login页面')
     }
   }
 </script>

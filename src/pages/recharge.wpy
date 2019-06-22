@@ -66,7 +66,6 @@ export default class ReCharge extends wepy.page {
   async recharge(value) {
     let userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
     let openid = userLoginInfo.openid
-    console.log(openid)
     let res = await addCash(openid, value)
     if (res.error === 0) {
       wx.showToast({

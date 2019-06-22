@@ -116,7 +116,6 @@
         try {
           wx.removeStorageSync(USER_LOGIN_INFO)
           wx.removeStorageSync(USER_DETAIL_INFO)
-          console.log('应该都删了出了bug不怪我')
           wepy.reLaunch({
             url: 'login'
           })
@@ -127,7 +126,6 @@
     }
 
     onLoad() {
-      console.log('onLoad')
       let userinfo = wepy.getStorageSync(USER_WEIXIN_INFO)
       this.avatarUrl = userinfo.avatarUrl
       // let userLogininfo = wepy.getStorageSync(USER_LOGIN_INFO)

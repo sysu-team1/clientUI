@@ -1,0 +1,164 @@
+<template>
+    <view class="swiper-item-wrapper">
+      <view @touchstart="ts" @touchmove="tm" @touchend="te" class="swiper-content" style="{{swiperData.txtStyle}}">
+        <slot></slot>
+      </view>
+      <view class="swiper-actions actions-right">
+        <view class="swiper-btn del"  @tap.stop="del">删除</view>
+      </view>
+</view>
+</template>
+
+<script>
+import wepy from 'wepy'
+
+export default class SwiperDelete extends wepy.component {
+  components = {};
+
+  props = {
+    swiperData: { // 父组件传过来的数据
+      type: Object,
+      default: []
+    }
+  };
+
+  mixins = [];
+
+  data = {
+    delBtnWidth: 180, // 单位rpx
+    startX: 0
+  };
+
+  computed = {};
+
+  methods = {
+    ts(e) {
+      // 触摸开始
+      let that = this
+      if (e.touches.length === 1) {
+        that.startX = e.touches[0].clientX
+      }
+    },
+    tm(e) {
+      // 触摸过程
+      let that = this
+
+      if (e.touches.length === 1) {
+        // 手指移动方向水平
+        let moveX = e.touches[0].clientX // 这里的clientX获取的是屏幕可视区的坐标，其实是逻辑像素px,所以要用getEleWidth方法进行换算
+
+        // 手指起始点位置与移动期间的产值
+        let disX = that.startX - moveX
+        let txtStyle = ''
+        if (disX === 0 || disX < 0) {
+          // 往右移动或者没移动
+          txtStyle = 'left: 0px'
+        } else if (disX > 0) {
+          // 移动距离大于0
+          txtStyle = 'left:-' + disX + 'px'
+          if (disX >= that.delBtnWidth) {
+            // 移动超过删除按钮的宽度
+            txtStyle = 'left:-' + that.delBtnWidth + 'px'
+          }
+        }
+
+        // 获取手指触摸的是哪一项
+        that.swiperData.txtStyle = txtStyle
+      }
+    },
+    te(e) {
+      // 触摸结束
+      let that = this
+      if (e.changedTouches.length === 1) {
+        // 手指移动结束后水平位置
+        let endX = e.changedTouches[0].clientX
+
+        // 触摸开始与结束，是指移动的距离
+        let disX = that.startX - endX
+        let delBtnWidth = that.delBtnWidth
+
+        // 如果距离小于删除按钮的1/2，不显示删除按钮
+        let txtStyle =
+          disX > delBtnWidth / 2 ? 'left:-' + delBtnWidth + 'px' : 'left:0px'
+        // 手指触摸的是哪一项
+        that.swiperData.txtStyle = txtStyle
+      }
+    },
+    del() {
+      // 删除
+    }
+  };
+
+  events = {};
+  initEleWidth() {
+    let that = this
+    that.delBtnWidth = that.getEleWidth(that.delBtnWidth)
+    console.log(that.delBtnWidth)
+  }
+
+  getEleWidth(w) {
+    // 获取元素自适应后的实际宽度（也就是根据设计稿宽度换算成px像素）
+    let real = 0
+    try {
+      let resWidth = wx.getSystemInfoSync().windowWidth
+      let scale = 750 / w
+      real = Math.floor(resWidth / scale)
+      return real
+    } catch (e) {
+      return false
+    }
+  }
+  onLoad() {
+    this.initEleWidth()
+  }
+}
+</script>
+<style lang="less">
+.swiper-item-wrapper {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  .swiper-content {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    padding: 0 18rpx;
+    background-color: #fff;
+  }
+  .swiper-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 140rpx;
+    height: 100%;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    &.actions-left {
+      left: 0;
+    }
+    &.actions-right {
+      right: 0;
+    }
+  }
+  .swiper-btn {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #ffffff;
+    &.del {
+      background-color: rgb(244, 51, 60);
+    }
+    &.edit {
+      background-color: rgb(16, 142, 233);
+    }
+  }
+}
+</style>
