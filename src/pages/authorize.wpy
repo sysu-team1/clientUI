@@ -23,7 +23,7 @@ export default class Authorize extends wepy.page {
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   }
   async onLoad() {
-    let _prePage = this.getCurrentPages().slice(-2)[0]
+    // let _prePage = this.getCurrentPages().slice(-2)[0]
   }
   async bindGetUserInfo(e) {
     if (e.detail.userInfo) {

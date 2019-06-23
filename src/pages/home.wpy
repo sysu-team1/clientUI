@@ -183,7 +183,6 @@
           url: 'authorize'
         })
       } else {
-
         // 是否有缓存登录信息，存在缓存自动登录获取对应的数据
         let userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
         if (!userLoginInfo) {

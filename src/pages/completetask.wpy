@@ -61,6 +61,7 @@
     }
     async commitTask() {
       let res = await finishTask(parseInt(this.taskid), parseInt(this.openid))
+      console.log(res)
     }
     onLoad(prop) {
       this.taskid = prop.id
