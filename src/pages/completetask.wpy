@@ -49,9 +49,7 @@
             filePath: that.tempFilePath[0],
             name: 'photo',
             success (res) {
-              console.log(res)
               var datas = JSON.parse(res.data.replace(/'/g, '"'))
-              console.log(datas)
               that.setData({
                 image_src: datas.data.url
               })
@@ -62,15 +60,11 @@
       })
     }
     async commitTask() {
-      console.log(this.image_src, this.taskid, this.openid)
       let res = await finishTask(parseInt(this.taskid), parseInt(this.openid))
-      console.log(res)
     }
     onLoad(prop) {
-      console.log(prop, prop.id)
       this.taskid = prop.id
       var userLoginInfo = wepy.getStorageSync(USER_LOGIN_INFO)
-      console.log(userLoginInfo.openid)
       this.openid = userLoginInfo.openid
       this.setData({
         image_src: '../images/add-picture.png'

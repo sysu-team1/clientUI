@@ -72,7 +72,7 @@ export default class ReCharge extends wepy.page {
         title: '充值成功'
       })
       res = await getInfo(openid)
-      wepy.setStorageSync(USER_DETAIL_INFO, res)
+      wepy.setStorageSync(USER_DETAIL_INFO, res.data)
     } else {
       wx.showToast({
         title: '出了点异常,请稍后重试',
